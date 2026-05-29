@@ -1,7 +1,18 @@
-import type { NextConfig } from "next";
+import type { NextConfig } from 'next'
 
-const nextConfig: NextConfig = {
-  /* config options here */
-};
+// Patch broken localStorage injected by the Claude Code harness
+if (typeof localStorage !== 'undefined' && typeof localStorage.getItem !== 'function') {
+  const store: Record<string, string> = {}
+  ;(globalThis as Record<string, unknown>).localStorage = {
+    getItem: (key: string) => store[key] ?? null,
+    setItem: (key: string, value: string) => { store[key] = value },
+    removeItem: (key: string) => { delete store[key] },
+    clear: () => { Object.keys(store).forEach(k => delete store[k]) },
+    key: (i: number) => Object.keys(store)[i] ?? null,
+    get length() { return Object.keys(store).length },
+  }
+}
 
-export default nextConfig;
+const nextConfig: NextConfig = {}
+
+export default nextConfig
