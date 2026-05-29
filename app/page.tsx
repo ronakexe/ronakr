@@ -3,26 +3,47 @@ import CloverIcon from '@/components/CloverIcon'
 
 export default function Home() {
   return (
-    <main className="h-screen w-screen flex items-center">
-      <nav className="w-full flex items-center justify-between px-8">
-        {/* Name — left */}
+    <main className="h-screen w-screen">
+      {/* Desktop layout */}
+      <nav className="hidden md:flex w-full h-full items-center justify-between px-8">
         <span
           className="text-[50px] font-semibold leading-none whitespace-nowrap"
           style={{ color: 'var(--color-blue)', fontFamily: 'var(--font-dm-sans)' }}
         >
           Ronak Ramnani
         </span>
-
-        {/* Nav links — center */}
         <div className="flex items-start gap-12">
           <NavItem href="/builds" label="builds" icon={<TriangleIcon />} />
           <NavItem href="/pieces" label="pieces" icon={<DiamondIcon />} />
           <NavItem href="/finds" label="finds" icon={<CircleIcon />} />
         </div>
-
-        {/* Clover logo — right */}
         <CloverIcon />
       </nav>
+
+      {/* Mobile layout */}
+      <div className="flex md:hidden flex-col h-full">
+        {/* Name — top */}
+        <div className="px-6 pt-10">
+          <span
+            className="text-[36px] font-semibold leading-none"
+            style={{ color: 'var(--color-blue)', fontFamily: 'var(--font-dm-sans)' }}
+          >
+            Ronak Ramnani
+          </span>
+        </div>
+
+        {/* Clover — center */}
+        <div className="flex-1 flex items-center justify-center">
+          <CloverIcon />
+        </div>
+
+        {/* Nav menu — bottom */}
+        <div className="flex items-start justify-center gap-12 px-6 pb-14">
+          <NavItem href="/builds" label="builds" icon={<TriangleIcon />} />
+          <NavItem href="/pieces" label="pieces" icon={<DiamondIcon />} />
+          <NavItem href="/finds" label="finds" icon={<CircleIcon />} />
+        </div>
+      </div>
     </main>
   )
 }
