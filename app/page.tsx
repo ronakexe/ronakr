@@ -22,20 +22,19 @@ export default function Home() {
 
       {/* Mobile layout */}
       <div className="flex md:hidden flex-col h-full">
-        {/* Name — top */}
-        <div className="px-6 pt-10">
+        {/* Name + Clover — top row */}
+        <div className="flex items-center justify-between px-6 pt-10">
           <span
             className="text-[36px] font-semibold leading-none"
             style={{ color: 'var(--color-blue)', fontFamily: 'var(--font-dm-sans)' }}
           >
             Ronak Ramnani
           </span>
-        </div>
-
-        {/* Clover — center */}
-        <div className="flex-1 flex items-center justify-center">
           <CloverIcon />
         </div>
+
+        {/* Spacer */}
+        <div className="flex-1" />
 
         {/* Nav menu — bottom */}
         <div className="flex items-start justify-center gap-12 px-6 pb-14">
