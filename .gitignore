@@ -12,3 +12,8 @@ out/
 # misc
 .DS_Store
 *.pem
+
+# editors
+.cursor/
+.vscode/
+.idea/
