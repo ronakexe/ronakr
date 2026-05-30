@@ -20,3 +20,11 @@ body {
 p, .body-text {
   font-family: var(--font-crimson-pro), serif;
 }
+
+.nav-label {
+  transition: top 200ms ease;
+}
+
+.nav-shape {
+  transition: top 200ms ease, color 200ms ease;
+}
