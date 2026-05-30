@@ -6,12 +6,13 @@ export default function Home() {
     <main className="h-screen w-screen">
       {/* Desktop layout */}
       <nav className="hidden md:flex w-full h-full items-center justify-between px-8">
-        <span
+        <Link
+          href="/"
           className="text-[50px] font-semibold leading-none whitespace-nowrap"
           style={{ color: 'var(--color-blue)', fontFamily: 'var(--font-dm-sans)' }}
         >
           Ronak Ramnani
-        </span>
+        </Link>
         <div className="flex items-start gap-12">
           <NavItem href="/builds" label="builds" icon={<TriangleIcon />} />
           <NavItem href="/pieces" label="pieces" icon={<DiamondIcon />} />
@@ -24,12 +25,13 @@ export default function Home() {
       <div className="flex md:hidden flex-col h-full">
         {/* Name + Clover — top row */}
         <div className="flex items-center justify-between px-6 pt-10">
-          <span
+          <Link
+            href="/"
             className="text-[36px] font-semibold leading-none"
             style={{ color: 'var(--color-blue)', fontFamily: 'var(--font-dm-sans)' }}
           >
             Ronak Ramnani
-          </span>
+          </Link>
           <CloverIcon />
         </div>
 
