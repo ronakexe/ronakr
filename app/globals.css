@@ -28,3 +28,7 @@ p, .body-text {
 .nav-shape {
   transition: top 200ms ease, color 200ms ease;
 }
+
+.nav-shape svg {
+  transition: transform 200ms ease;
+}

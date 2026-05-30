@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "ronak-ramanni",
+      "runtimeExecutable": "node_modules/.bin/next",
+      "runtimeArgs": ["dev", "--turbopack"],
+      "port": 3099
+    }
+  ]
+}

@@ -156,41 +156,52 @@ function NavItem({
           color: isActive ? 'var(--color-green)' : 'black',
         }}
       >
-        {navKey === 'builds' && <TriangleIcon />}
-        {navKey === 'pieces' && <DiamondIcon />}
-        {navKey === 'finds' && <CircleIcon />}
+        {navKey === 'builds' && <TriangleIcon active={isActive} />}
+        {navKey === 'pieces' && <DiamondIcon active={isActive} />}
+        {navKey === 'finds' && <EllipseIcon active={isActive} />}
       </span>
     </Link>
   )
 }
 
-function TriangleIcon() {
+function TriangleIcon({ active }: { active: boolean }) {
   return (
-    <svg width="10" height="9" viewBox="0 0 10 9" fill="none">
+    <svg
+      width="10"
+      height="9"
+      viewBox="0 0 10 9"
+      fill="none"
+      style={{ transform: `rotate(${active ? 159.14 : 125.14}deg)` }}
+    >
       <polygon points="5,0 10,9 0,9" fill="currentColor" />
     </svg>
   )
 }
 
-function DiamondIcon() {
+function DiamondIcon({ active }: { active: boolean }) {
   return (
-    <svg width="9" height="9" viewBox="0 0 9 9" fill="none">
-      <rect
-        x="0.5"
-        y="0.5"
-        width="8"
-        height="8"
-        fill="currentColor"
-        transform="rotate(-15 4.5 4.5)"
-      />
+    <svg
+      width="9"
+      height="9"
+      viewBox="0 0 9 9"
+      fill="none"
+      style={{ transform: `rotate(${active ? 27.03 : 14.88}deg)` }}
+    >
+      <rect x="0.5" y="0.5" width="8" height="8" fill="currentColor" />
     </svg>
   )
 }
 
-function CircleIcon() {
+function EllipseIcon({ active }: { active: boolean }) {
   return (
-    <svg width="9" height="9" viewBox="0 0 9 9" fill="none">
-      <circle cx="4.5" cy="4.5" r="4.5" fill="currentColor" />
+    <svg
+      width="10.5"
+      height="9.75"
+      viewBox="0 0 10.5 9.75"
+      fill="none"
+      style={{ transform: `rotate(${active ? 72.83 : 33.27}deg)` }}
+    >
+      <ellipse cx="5.25" cy="4.875" rx="5.25" ry="4.875" fill="currentColor" />
     </svg>
   )
 }
