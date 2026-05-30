@@ -20,24 +20,24 @@ export default function Nav() {
   const [active, setActive] = useState<NavKey | null>(null)
 
   const [cloverRotation, setCloverRotation] = useState(0)
+  const [cloverOffset, setCloverOffset] = useState({ x: 0, y: 0 })
+  const [isDragging, setIsDragging] = useState(false)
 
+  // --- spin state ---
   const speedRef = useRef(0)
   const rotationRef = useRef(0)
-
-  useEffect(() => {
-    const saved = parseFloat(localStorage.getItem('clover-rotation') ?? '0')
-    if (saved) {
-      rotationRef.current = saved
-      setCloverRotation(saved)
-    }
-  }, [])
   const targetSpeedRef = useRef(0)
   const rafRef = useRef<number | null>(null)
 
-  const SLOW = 360 / (3 * 60)    // ~2 deg/frame → 3s/revolution
-  const FAST = 360 / (0.4 * 60)  // ~15 deg/frame → 0.4s/revolution
+  const SLOW = 360 / (3 * 60)
+  const FAST = 360 / (0.4 * 60)
   const ACCEL = 0.4
   const DECEL = 0.15
+
+  useEffect(() => {
+    const saved = parseFloat(localStorage.getItem('clover-rotation') ?? '0')
+    if (saved) { rotationRef.current = saved; setCloverRotation(saved) }
+  }, [])
 
   const tick = useCallback(() => {
     const target = targetSpeedRef.current
@@ -64,6 +64,78 @@ export default function Nav() {
   const handleNameMouseLeave = useCallback(() => { targetSpeedRef.current = 0 }, [])
   const handleNameMouseDown = useCallback(() => { targetSpeedRef.current = FAST; startLoop() }, [startLoop])
   const handleNameMouseUp = useCallback(() => { targetSpeedRef.current = SLOW; startLoop() }, [startLoop])
+
+  // --- spring drag state ---
+  const dragRef = useRef({
+    active: false,
+    startX: 0, startY: 0,
+    posX: 0, posY: 0,
+    velX: 0, velY: 0,
+    prevX: 0, prevY: 0,
+    springRaf: null as number | null,
+  })
+
+  const TENSION = 80   // px — max resistance envelope
+  const SPRING_K = 0.1
+  const SPRING_DAMP = 0.22
+
+  const handleCloverMouseDown = useCallback((e: React.MouseEvent) => {
+    e.preventDefault()
+    const d = dragRef.current
+    if (d.springRaf) { cancelAnimationFrame(d.springRaf); d.springRaf = null }
+    d.active = true
+    d.startX = e.clientX; d.startY = e.clientY
+    d.posX = 0; d.posY = 0
+    d.velX = 0; d.velY = 0
+    d.prevX = e.clientX; d.prevY = e.clientY
+    setIsDragging(true)
+  }, [])
+
+  useEffect(() => {
+    function onMouseMove(e: MouseEvent) {
+      const d = dragRef.current
+      if (!d.active) return
+      d.velX = e.clientX - d.prevX
+      d.velY = e.clientY - d.prevY
+      d.prevX = e.clientX; d.prevY = e.clientY
+      const rawX = e.clientX - d.startX
+      const rawY = e.clientY - d.startY
+      d.posX = Math.sign(rawX) * TENSION * (1 - Math.exp(-Math.abs(rawX) / TENSION))
+      d.posY = Math.sign(rawY) * TENSION * (1 - Math.exp(-Math.abs(rawY) / TENSION))
+      setCloverOffset({ x: d.posX, y: d.posY })
+    }
+
+    function onMouseUp() {
+      const d = dragRef.current
+      if (!d.active) return
+      d.active = false
+      setIsDragging(false)
+      let vx = d.velX * 0.3
+      let vy = d.velY * 0.3
+      let px = d.posX
+      let py = d.posY
+      function springTick() {
+        vx += -SPRING_K * px - SPRING_DAMP * vx
+        vy += -SPRING_K * py - SPRING_DAMP * vy
+        px += vx; py += vy
+        setCloverOffset({ x: px, y: py })
+        if (Math.abs(px) > 0.3 || Math.abs(py) > 0.3 || Math.abs(vx) > 0.05 || Math.abs(vy) > 0.05) {
+          d.springRaf = requestAnimationFrame(springTick)
+        } else {
+          d.springRaf = null
+          setCloverOffset({ x: 0, y: 0 })
+        }
+      }
+      d.springRaf = requestAnimationFrame(springTick)
+    }
+
+    window.addEventListener('mousemove', onMouseMove)
+    window.addEventListener('mouseup', onMouseUp)
+    return () => {
+      window.removeEventListener('mousemove', onMouseMove)
+      window.removeEventListener('mouseup', onMouseUp)
+    }
+  }, [])
 
   useEffect(() => {
     const key = pathname.slice(1) as NavKey
@@ -115,7 +187,7 @@ export default function Nav() {
           Ronak Ramnani
         </Link>
         {navItems}
-        <CloverIcon rotation={cloverRotation} />
+        <CloverIcon rotation={cloverRotation} offset={cloverOffset} dragging={isDragging} onMouseDown={handleCloverMouseDown} />
       </nav>
 
       {/* Mobile */}
@@ -132,7 +204,7 @@ export default function Nav() {
           >
             Ronak Ramnani
           </Link>
-          <CloverIcon rotation={cloverRotation} />
+          <CloverIcon rotation={cloverRotation} offset={cloverOffset} dragging={isDragging} onMouseDown={handleCloverMouseDown} />
         </div>
         <div className="flex-1" />
         <div className="flex items-start justify-center gap-12 px-6 pb-14">
