@@ -17,11 +17,7 @@ const NAV_ITEMS: { href: string; label: string; key: NavKey }[] = [
 
 export default function Nav() {
   const pathname = usePathname()
-  const [active, setActive] = useState<NavKey | null>(() => {
-    if (typeof window === 'undefined') return null
-    const key = window.location.pathname.slice(1) as NavKey
-    return NAV_KEYS.includes(key) ? key : null
-  })
+  const [active, setActive] = useState<NavKey | null>(null)
 
   useEffect(() => {
     const key = pathname.slice(1) as NavKey
@@ -48,9 +44,19 @@ export default function Nav() {
   )
 
   return (
-    <div className="h-screen w-screen">
+    <div className="fixed inset-0 pointer-events-none" style={{ zIndex: 10 }}>
       {/* Desktop */}
-      <nav className="hidden md:flex w-full h-full items-center justify-between px-8">
+      <nav
+        className="hidden md:flex w-full items-center justify-between px-8 pointer-events-auto"
+        style={{
+          position: 'absolute',
+          left: 0,
+          right: 0,
+          top: active ? '32px' : '50%',
+          transform: active ? 'translateY(0)' : 'translateY(-50%)',
+          transition: 'top 400ms ease, transform 400ms ease',
+        }}
+      >
         <Link
           href="/"
           className="text-[50px] font-semibold leading-none whitespace-nowrap"
@@ -63,7 +69,7 @@ export default function Nav() {
       </nav>
 
       {/* Mobile */}
-      <div className="flex md:hidden flex-col h-full">
+      <div className="flex md:hidden flex-col h-full pointer-events-auto">
         <div className="flex items-center justify-between px-6 pt-10">
           <Link
             href="/"
