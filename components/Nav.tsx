@@ -207,7 +207,7 @@ export default function Nav() {
           <CloverIcon rotation={cloverRotation} offset={cloverOffset} dragging={isDragging} onMouseDown={handleCloverMouseDown} />
         </div>
         <div className="flex-1" />
-        <div className="flex items-start justify-center gap-12 px-6 pb-14">
+        <div className="flex items-start justify-center gap-12 px-6 pb-6">
           {NAV_ITEMS.map((item) => (
             <NavItem
               key={item.key}
