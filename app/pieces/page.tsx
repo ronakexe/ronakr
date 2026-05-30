@@ -1,4 +1,4 @@
-import Image from 'next/image'
+import Image, { StaticImageData } from 'next/image'
 import doubleTrouble from './piece-assets/double trouble/double-trouble-icon.png'
 import failedComic from './piece-assets/failed comic/failed-comic-icon.png'
 import humanError from './piece-assets/human error/human-error-icon.png'
@@ -54,31 +54,84 @@ export default function PiecesPage() {
         </div>
       </main>
 
-      {/* Mobile */}
-      <main
-        className="flex md:hidden flex-col items-center justify-center gap-8"
-        style={{
-          minHeight: '100vh',
-          paddingTop: '90px',
-          paddingBottom: '80px',
-          paddingLeft: '32px',
-          paddingRight: '32px',
-          boxSizing: 'border-box',
-        }}
-      >
-        {pieces.map((piece) => (
-          <div key={piece.title} style={{ width: '200px', flexShrink: 0 }}>
-            <Image
-              src={piece.image}
-              alt={piece.title}
-              style={{ width: '100%', height: 'auto', borderRadius: '12px', display: 'block' }}
-            />
-            <h2 style={{ fontFamily: 'var(--font-dm-sans)', fontSize: '18px', fontWeight: 600, margin: '8px 0 0' }}>
-              {piece.title}
-            </h2>
-          </div>
-        ))}
-      </main>
+      {/* Mobile — 2-row zigzag horizontal scroll */}
+      <MobilePieces pieces={pieces} />
     </>
+  )
+}
+
+// ─── Mobile zigzag layout ────────────────────────────────────────────────────
+
+const M_CARD_W  = 155          // card width
+const M_H_GAP   = 20           // horizontal gap between cards
+const M_STEP    = M_CARD_W + M_H_GAP   // one column step
+const M_OFFSET  = M_STEP / 2           // row-2 shifts right by half a step
+const M_CARD_H  = Math.round(M_CARD_W * 9 / 16)  // image height (16:9)
+const M_TITLE_H = 34           // title line height
+const M_V_GAP   = 36           // vertical gap between rows
+const M_BLOCK_H = M_CARD_H + M_TITLE_H + M_V_GAP + M_CARD_H + M_TITLE_H
+
+type Piece = { title: string; image: StaticImageData; left: number; top: number }
+
+function MobilePieces({ pieces }: { pieces: Piece[] }) {
+  // Split into top row (even indices) and bottom row (odd indices)
+  const topRow    = pieces.filter((_, i) => i % 2 === 0)
+  const bottomRow = pieces.filter((_, i) => i % 2 === 1)
+
+  // Content width: whichever row is wider
+  const topW    = topRow.length    * M_STEP - M_H_GAP + 32
+  const bottomW = bottomRow.length * M_STEP - M_H_GAP + 32 + M_OFFSET
+  const contentW = Math.max(topW, bottomW) + 32   // extra right padding
+
+  return (
+    <main
+      className="md:hidden"
+      style={{
+        position: 'fixed',
+        top: '90px',
+        bottom: '70px',
+        left: 0,
+        right: 0,
+        overflowX: 'auto',
+        overflowY: 'hidden',
+      }}
+    >
+      <div style={{
+        position: 'relative',
+        flexShrink: 0,
+        height: M_BLOCK_H,
+        width: contentW,
+        marginTop: `calc((100vh - 90px - 70px - ${M_BLOCK_H}px) / 2)`,
+      }}>
+        {/* Top row */}
+        {topRow.map((piece, i) => (
+          <MobileCard key={piece.title} piece={piece} left={32 + i * M_STEP} top={0} />
+        ))}
+        {/* Bottom row — offset right by half a step */}
+        {bottomRow.map((piece, i) => (
+          <MobileCard
+            key={piece.title}
+            piece={piece}
+            left={32 + M_OFFSET + i * M_STEP}
+            top={M_CARD_H + M_TITLE_H + M_V_GAP}
+          />
+        ))}
+      </div>
+    </main>
+  )
+}
+
+function MobileCard({ piece, left, top }: { piece: Piece; left: number; top: number }) {
+  return (
+    <div style={{ position: 'absolute', left, top, width: M_CARD_W }}>
+      <Image
+        src={piece.image}
+        alt={piece.title}
+        style={{ width: '100%', height: 'auto', borderRadius: '10px', display: 'block' }}
+      />
+      <h2 style={{ fontFamily: 'var(--font-dm-sans)', fontSize: '15px', fontWeight: 600, margin: '6px 0 0' }}>
+        {piece.title}
+      </h2>
+    </div>
   )
 }
