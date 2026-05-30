@@ -1,3 +1,3 @@
-export default function Home() {
+export default function PiecesPage() {
   return <main className="h-screen w-screen" />
 }

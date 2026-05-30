@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { DM_Sans, Crimson_Pro } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
+import Nav from '@/components/Nav'
 import './globals.css'
 
 const dmSans = DM_Sans({
@@ -25,7 +26,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${dmSans.variable} ${crimsonPro.variable}`}>
-      <body>{children}<Analytics /></body>
+      <body>
+        <Nav />
+        {children}
+        <Analytics />
+      </body>
     </html>
   )
 }
