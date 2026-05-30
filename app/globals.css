@@ -32,3 +32,16 @@ p, .body-text {
 .nav-shape svg {
   transition: transform 200ms ease;
 }
+
+@keyframes clover-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+.clover-slow {
+  animation: clover-spin 3s linear infinite;
+}
+
+.clover-fast {
+  animation: clover-spin 0.4s linear infinite;
+}

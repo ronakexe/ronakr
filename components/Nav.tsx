@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import CloverIcon from '@/components/CloverIcon'
@@ -18,6 +18,47 @@ const NAV_ITEMS: { href: string; label: string; key: NavKey }[] = [
 export default function Nav() {
   const pathname = usePathname()
   const [active, setActive] = useState<NavKey | null>(null)
+
+  const savedRotation = typeof window !== 'undefined'
+    ? parseFloat(localStorage.getItem('clover-rotation') ?? '0')
+    : 0
+  const [cloverRotation, setCloverRotation] = useState(savedRotation)
+
+  const speedRef = useRef(0)
+  const rotationRef = useRef(savedRotation)
+  const targetSpeedRef = useRef(0)
+  const rafRef = useRef<number | null>(null)
+
+  const SLOW = 360 / (3 * 60)    // ~2 deg/frame → 3s/revolution
+  const FAST = 360 / (0.4 * 60)  // ~15 deg/frame → 0.4s/revolution
+  const ACCEL = 0.4
+  const DECEL = 0.15
+
+  const tick = useCallback(() => {
+    const target = targetSpeedRef.current
+    const cur = speedRef.current
+    if (cur < target) speedRef.current = Math.min(cur + ACCEL, target)
+    else if (cur > target) speedRef.current = Math.max(cur - DECEL, 0)
+
+    if (speedRef.current > 0.01) {
+      rotationRef.current = (rotationRef.current + speedRef.current) % 360
+      setCloverRotation(rotationRef.current)
+      rafRef.current = requestAnimationFrame(tick)
+    } else {
+      speedRef.current = 0
+      rafRef.current = null
+      localStorage.setItem('clover-rotation', String(rotationRef.current))
+    }
+  }, [])
+
+  const startLoop = useCallback(() => {
+    if (!rafRef.current) rafRef.current = requestAnimationFrame(tick)
+  }, [tick])
+
+  const handleNameMouseEnter = useCallback(() => { targetSpeedRef.current = SLOW; startLoop() }, [startLoop])
+  const handleNameMouseLeave = useCallback(() => { targetSpeedRef.current = 0 }, [])
+  const handleNameMouseDown = useCallback(() => { targetSpeedRef.current = FAST; startLoop() }, [startLoop])
+  const handleNameMouseUp = useCallback(() => { targetSpeedRef.current = SLOW; startLoop() }, [startLoop])
 
   useEffect(() => {
     const key = pathname.slice(1) as NavKey
@@ -61,11 +102,15 @@ export default function Nav() {
           href="/"
           className="text-[50px] font-semibold leading-none whitespace-nowrap"
           style={{ color: 'var(--color-blue)', fontFamily: 'var(--font-dm-sans)' }}
+          onMouseEnter={handleNameMouseEnter}
+          onMouseLeave={handleNameMouseLeave}
+          onMouseDown={handleNameMouseDown}
+          onMouseUp={handleNameMouseUp}
         >
           Ronak Ramnani
         </Link>
         {navItems}
-        <CloverIcon />
+        <CloverIcon rotation={cloverRotation} />
       </nav>
 
       {/* Mobile */}
@@ -75,10 +120,14 @@ export default function Nav() {
             href="/"
             className="text-[36px] font-semibold leading-none"
             style={{ color: 'var(--color-blue)', fontFamily: 'var(--font-dm-sans)' }}
+            onMouseEnter={handleNameMouseEnter}
+            onMouseLeave={handleNameMouseLeave}
+            onMouseDown={handleNameMouseDown}
+            onMouseUp={handleNameMouseUp}
           >
             Ronak Ramnani
           </Link>
-          <CloverIcon />
+          <CloverIcon rotation={cloverRotation} />
         </div>
         <div className="flex-1" />
         <div className="flex items-start justify-center gap-12 px-6 pb-14">
