@@ -48,9 +48,9 @@ export default function Nav() {
   )
 
   return (
-    <nav className="fixed inset-0 pointer-events-none z-10">
+    <div className="h-screen w-screen">
       {/* Desktop */}
-      <div className="hidden md:flex w-full h-full items-center justify-between px-8 pointer-events-auto">
+      <nav className="hidden md:flex w-full h-full items-center justify-between px-8">
         <Link
           href="/"
           className="text-[50px] font-semibold leading-none whitespace-nowrap"
@@ -60,11 +60,11 @@ export default function Nav() {
         </Link>
         {navItems}
         <CloverIcon />
-      </div>
+      </nav>
 
       {/* Mobile */}
       <div className="flex md:hidden flex-col h-full">
-        <div className="flex items-center justify-between px-6 pt-10 pointer-events-auto">
+        <div className="flex items-center justify-between px-6 pt-10">
           <Link
             href="/"
             className="text-[36px] font-semibold leading-none"
@@ -75,7 +75,7 @@ export default function Nav() {
           <CloverIcon />
         </div>
         <div className="flex-1" />
-        <div className="flex items-start justify-center gap-12 px-6 pb-14 pointer-events-auto">
+        <div className="flex items-start justify-center gap-12 px-6 pb-14">
           {NAV_ITEMS.map((item) => (
             <NavItem
               key={item.key}
@@ -88,7 +88,7 @@ export default function Nav() {
           ))}
         </div>
       </div>
-    </nav>
+    </div>
   )
 }
 
