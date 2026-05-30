@@ -19,13 +19,18 @@ export default function Nav() {
   const pathname = usePathname()
   const [active, setActive] = useState<NavKey | null>(null)
 
-  const savedRotation = typeof window !== 'undefined'
-    ? parseFloat(localStorage.getItem('clover-rotation') ?? '0')
-    : 0
-  const [cloverRotation, setCloverRotation] = useState(savedRotation)
+  const [cloverRotation, setCloverRotation] = useState(0)
 
   const speedRef = useRef(0)
-  const rotationRef = useRef(savedRotation)
+  const rotationRef = useRef(0)
+
+  useEffect(() => {
+    const saved = parseFloat(localStorage.getItem('clover-rotation') ?? '0')
+    if (saved) {
+      rotationRef.current = saved
+      setCloverRotation(saved)
+    }
+  }, [])
   const targetSpeedRef = useRef(0)
   const rafRef = useRef<number | null>(null)
 
