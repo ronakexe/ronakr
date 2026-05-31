@@ -103,7 +103,7 @@ function Card({ piece }: { piece: Placed }) {
       )}
       <h2 style={{
         fontFamily: 'var(--font-dm-sans)',
-        fontSize: '22px',
+        fontSize: '18px',
         fontWeight: 600,
         margin: '10px 0 0',
       }}>

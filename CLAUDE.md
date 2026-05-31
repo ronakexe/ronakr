@@ -84,3 +84,32 @@ p, .body-text {
 - Body/paragraph text only: Crimson Pro
 - Do not use any other fonts
 - Do not use system fonts or fallbacks as primary
+
+---
+
+## Type Scale
+
+Use these sizes consistently across all pages. Tailwind breakpoint syntax: `text-[mobile] md:text-[desktop]`.
+
+| Role | Mobile | Desktop | Font | Weight |
+|---|---|---|---|---|
+| Nav name | 36px | 50px | DM Sans | 600 |
+| Nav items | 21px | 21px | DM Sans | 400 |
+| H1 — page/section title | 32px | 52px | DM Sans | 700 |
+| H2 — subsection title | 24px | 36px | DM Sans | 600 |
+| Body | 16px | 20px | Crimson Pro | 400 |
+| Card label | 18px | 18px | DM Sans | 600 |
+
+```tsx
+// H1
+<h1 className="text-[32px] md:text-[52px]" style={{ fontFamily: 'var(--font-dm-sans)', fontWeight: 700 }}>
+
+// H2
+<h2 className="text-[24px] md:text-[36px]" style={{ fontFamily: 'var(--font-dm-sans)', fontWeight: 600 }}>
+
+// Body paragraph
+<p className="text-[16px] md:text-[20px]" style={{ fontFamily: 'var(--font-crimson-pro)', fontWeight: 400 }}>
+
+// Card label
+<h2 style={{ fontFamily: 'var(--font-dm-sans)', fontSize: '18px', fontWeight: 600 }}>
+```

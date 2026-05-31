@@ -63,7 +63,7 @@ export default function SupernovaPage() {
           {/* Synopsis — last column */}
           <div className="md:col-start-4 mt-12 md:mt-0" style={{ paddingLeft: 12, paddingRight: 8 }}>
             <h1
-              className="text-[30px] md:text-[48px]"
+              className="text-[32px] md:text-[52px]"
               style={{
                 fontFamily: 'var(--font-dm-sans)',
                 fontWeight: 700,
@@ -75,7 +75,7 @@ export default function SupernovaPage() {
               Synopsis
             </h1>
             <p
-              className="text-[17px] md:text-[24px]"
+              className="text-[16px] md:text-[20px]"
               style={{
                 fontFamily: 'var(--font-crimson-pro)',
                 fontWeight: 400,
