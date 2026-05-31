@@ -247,10 +247,14 @@ function NavItem({
   isActive: boolean
   onClick: (key: NavKey) => void
 }) {
+  const [hovered, setHovered] = useState(false)
+
   return (
     <Link
       href={href}
       onClick={() => onClick(navKey)}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
       style={{ position: 'relative', display: 'inline-block', height: '34px' }}
     >
       {/* invisible width-setter so container doesn't collapse */}
@@ -295,7 +299,8 @@ function NavItem({
           right: 0,
           display: 'flex',
           justifyContent: 'center',
-          color: isActive ? 'var(--color-green)' : 'black',
+          color: isActive || hovered ? 'var(--color-green)' : 'black',
+          animation: hovered && !isActive ? 'nav-shape-float 0.8s ease-in-out infinite' : 'none',
         }}
       >
         {navKey === 'builds' && <TriangleIcon active={isActive} />}
