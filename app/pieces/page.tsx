@@ -5,127 +5,99 @@ import humanError from './piece-assets/human error/human-error-icon.png'
 import jimmySidewalk from './piece-assets/jimmy sidewalk/sidewalk-jimmy-icon.png'
 import supernova from './piece-assets/supernova/supernova-icon.png'
 
-const pieces = [
-  { title: 'Double Trouble', image: doubleTrouble, left: 0,   top: 0   },
-  { title: 'Failed Comic',   image: failedComic,   left: 0,   top: 240 },
-  { title: 'Human Error',    image: humanError,    left: 350, top: 80  },
-  { title: 'Sidewalk Jimmy', image: jimmySidewalk, left: 350, top: 320 },
-  { title: 'Supernova',      image: supernova,     left: 700, top: 0   },
+type Source   = { title: string; image: StaticImageData | null }
+type Placed   = Source & { left: number; top: number }
+
+// ─── Pieces: 5 real + 20 placeholder, in display order ───────────────────────
+const sources: Source[] = [
+  { title: 'Double Trouble', image: doubleTrouble },
+  { title: 'Failed Comic',   image: failedComic },
+  { title: 'Human Error',    image: humanError },
+  { title: 'Sidewalk Jimmy', image: jimmySidewalk },
+  { title: 'Supernova',      image: supernova },
+  ...['I','II','III','IV','V','VI','VII','VIII','IX','X',
+      'XI','XII','XIII','XIV','XV','XVI','XVII','XVIII','XIX','XX']
+    .map(n => ({ title: `Untitled ${n}`, image: null as StaticImageData | null })),
 ]
 
-const CARD_W  = 270
-const BLOCK_H = 520
+// ─── Honeycomb layout math ───────────────────────────────────────────────────
+const CARD_W = 270 * 0.75                    // thumbnails at 75% of the original size
+const IMG_H  = Math.round(CARD_W * 562 / 1000) // height from the true 1000×562 ratio (no crop)
+const CARD_H = IMG_H + 48          // image + title
+const STEP   = CARD_H + 24         // vertical distance between cards in a column
+const COL_W  = CARD_W + 50         // horizontal distance between columns
 
-export default function PiecesPage() {
-  const contentW = Math.max(...pieces.map(p => p.left)) + CARD_W + 120
+// Column card-counts repeat 2,3 — 2-card columns sit a half-step lower so they
+// nestle into the gaps of the neighboring 3-card columns (hexagonal packing).
+const COL_COUNTS = [2, 3, 2, 3, 2, 3, 2, 3, 2, 3] // = 25 cards
 
-  return (
-    <>
-      {/* Desktop */}
-      <main
-        className="hidden md:flex"
-        style={{
-          marginTop: '80px',
-          height: 'calc(100vh - 80px)',
-          overflowX: 'auto',
-          overflowY: 'hidden',
-          alignItems: 'center',
-          paddingLeft: '40px',
-          paddingRight: '40px',
-          boxSizing: 'border-box',
-        }}
-      >
-        <div style={{ position: 'relative', flexShrink: 0, height: BLOCK_H, width: contentW }}>
-          {pieces.map((piece) => (
-            <div
-              key={piece.title}
-              style={{ position: 'absolute', left: piece.left, top: piece.top, width: CARD_W }}
-            >
-              <Image
-                src={piece.image}
-                alt={piece.title}
-                style={{ width: '100%', height: 'auto', borderRadius: '12px', display: 'block' }}
-              />
-              <h2 style={{ fontFamily: 'var(--font-dm-sans)', fontSize: '26px', fontWeight: 600, margin: '10px 0 0' }}>
-                {piece.title}
-              </h2>
-            </div>
-          ))}
-        </div>
-      </main>
-
-      {/* Mobile — 2-row zigzag horizontal scroll */}
-      <MobilePieces pieces={pieces} />
-    </>
-  )
+function buildLayout(): { cards: Placed[]; width: number; height: number } {
+  const cards: Placed[] = []
+  let idx = 0
+  let maxBottom = 0
+  COL_COUNTS.forEach((count, colIdx) => {
+    const isTall   = count === 3
+    const startTop = isTall ? 0 : STEP / 2   // 2-card columns drop half a step
+    const left     = 20 + colIdx * COL_W
+    for (let row = 0; row < count && idx < sources.length; row++) {
+      const top = startTop + row * STEP
+      cards.push({ ...sources[idx], left, top })
+      maxBottom = Math.max(maxBottom, top + CARD_H)
+      idx++
+    }
+  })
+  const width = 20 + (COL_COUNTS.length - 1) * COL_W + CARD_W + 60
+  return { cards, width, height: maxBottom + 20 }
 }
 
-// ─── Mobile zigzag layout ────────────────────────────────────────────────────
+const { cards: PLACED, width: BLOCK_W, height: BLOCK_H } = buildLayout()
 
-const M_CARD_W = 230           // card width
-const M_H_GAP  = 20            // horizontal gap between cards
-const M_STEP   = M_CARD_W + M_H_GAP
-const M_OFFSET = M_STEP / 2   // bottom row shifts right by half a step
-const M_V_GAP  = 36            // vertical gap between rows
-
-type Piece = { title: string; image: StaticImageData; left: number; top: number }
-
-function MobilePieces({ pieces }: { pieces: Piece[] }) {
-  const topRow    = pieces.filter((_, i) => i % 2 === 0)
-  const bottomRow = pieces.filter((_, i) => i % 2 === 1)
-
+export default function PiecesPage() {
   return (
-    // `block md:hidden` keeps display out of inline style so md:hidden can override it.
-    // overflow-x: scroll on the block container scrolls inline content that overflows.
     <main
-      className="block md:hidden"
+      className="flex"
       style={{
-        position: 'fixed',
-        top: '90px',
-        bottom: '70px',
-        left: 0,
-        right: 0,
-        overflowX: 'scroll',
+        marginTop: '80px',
+        height: 'calc(100vh - 80px)',
+        overflowX: 'auto',
         overflowY: 'hidden',
+        alignItems: 'center',
+        paddingLeft: '40px',
+        paddingRight: '80px',
+        boxSizing: 'border-box',
       }}
     >
-      {/*
-        inline-flex: sizes to natural content width → overflows the block parent
-        → triggers parent overflow-x scroll. height: 100% + justifyContent: center
-        → vertically centers the two rows without any calc magic.
-      */}
-      <div style={{
-        display: 'inline-flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        height: '100%',
-        paddingLeft: '32px',
-        paddingRight: '32px',
-        gap: `${M_V_GAP}px`,
-        verticalAlign: 'top',
-      }}>
-        {/* Top row */}
-        <div style={{ display: 'flex', gap: `${M_H_GAP}px` }}>
-          {topRow.map(piece => <MobileCard key={piece.title} piece={piece} />)}
-        </div>
-        {/* Bottom row — zigzag offset */}
-        <div style={{ display: 'flex', gap: `${M_H_GAP}px`, paddingLeft: `${M_OFFSET}px` }}>
-          {bottomRow.map(piece => <MobileCard key={piece.title} piece={piece} />)}
-        </div>
+      <div style={{ position: 'relative', flexShrink: 0, height: BLOCK_H, width: BLOCK_W }}>
+        {PLACED.map((piece) => (
+          <Card key={piece.title} piece={piece} />
+        ))}
       </div>
     </main>
   )
 }
 
-function MobileCard({ piece }: { piece: Piece }) {
+function Card({ piece }: { piece: Placed }) {
   return (
-    <div style={{ width: M_CARD_W, flexShrink: 0 }}>
-      <Image
-        src={piece.image}
-        alt={piece.title}
-        style={{ width: '100%', height: 'auto', borderRadius: '10px', display: 'block' }}
-      />
-      <h2 style={{ fontFamily: 'var(--font-dm-sans)', fontSize: '21px', fontWeight: 600, margin: '8px 0 0' }}>
+    <div style={{ position: 'absolute', left: piece.left, top: piece.top, width: CARD_W }}>
+      <div style={{ width: '100%', height: IMG_H, borderRadius: '12px', overflow: 'hidden' }}>
+        {piece.image ? (
+          <Image
+            src={piece.image}
+            alt={piece.title}
+            width={CARD_W}
+            height={IMG_H}
+            style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+          />
+        ) : (
+          <div style={{ width: '100%', height: '100%', backgroundColor: '#e2e2e2' }} />
+        )}
+      </div>
+      <h2 style={{
+        fontFamily: 'var(--font-dm-sans)',
+        fontSize: '22px',
+        fontWeight: 600,
+        margin: '10px 0 0',
+      }}>
         {piece.title}
       </h2>
     </div>

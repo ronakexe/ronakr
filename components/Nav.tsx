@@ -190,9 +190,10 @@ export default function Nav() {
         <CloverIcon rotation={cloverRotation} offset={cloverOffset} dragging={isDragging} onMouseDown={handleCloverMouseDown} />
       </nav>
 
-      {/* Mobile */}
-      <div className="flex md:hidden flex-col h-full pointer-events-auto">
-        <div className="flex items-center justify-between px-6 pt-10">
+      {/* Mobile — container lets touches through so the page can scroll; only the
+          header and footer rows capture pointer events. */}
+      <div className="flex md:hidden flex-col h-full pointer-events-none">
+        <div className="flex items-center justify-between px-6 pt-10 pointer-events-auto">
           <Link
             href="/"
             className="text-[36px] font-semibold leading-none"
@@ -207,7 +208,7 @@ export default function Nav() {
           <CloverIcon rotation={cloverRotation} offset={cloverOffset} dragging={isDragging} onMouseDown={handleCloverMouseDown} />
         </div>
         <div className="flex-1" />
-        <div className="flex items-start justify-center gap-12 px-6 pb-6">
+        <div className="flex items-start justify-center gap-12 px-6 pb-6 pointer-events-auto">
           {NAV_ITEMS.map((item) => (
             <NavItem
               key={item.key}
