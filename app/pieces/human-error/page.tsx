@@ -70,7 +70,7 @@ export default function HumanErrorPage() {
               Synopsis
             </h1>
             <p
-              className="text-[16px] md:text-[20px]"
+              className="text-[15px] md:text-[18px]"
               style={{
                 fontFamily: 'var(--font-crimson-pro)',
                 fontWeight: 400,
