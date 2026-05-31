@@ -11,7 +11,7 @@ type Placed   = Source & { left: number; top: number }
 
 // ─── Pieces: 5 real + 20 placeholder, in display order ───────────────────────
 const sources: Source[] = [
-  { title: 'Human Error',    image: humanError },
+  { title: 'Human Error',    image: humanError, href: '/pieces/human-error' },
   { title: 'Supernova',      image: supernova, href: '/pieces/supernova' },
   { title: 'Double Trouble', image: doubleTrouble },
   { title: 'Sidewalk Jimmy', image: jimmySidewalk },
