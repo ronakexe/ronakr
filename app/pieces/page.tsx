@@ -1,20 +1,21 @@
 import Image, { StaticImageData } from 'next/image'
+import Link from 'next/link'
 import doubleTrouble from './piece-assets/double trouble/double-trouble-icon.png'
 import failedComic from './piece-assets/failed comic/failed-comic-icon.png'
 import humanError from './piece-assets/human error/human-error-icon.png'
 import jimmySidewalk from './piece-assets/jimmy sidewalk/sidewalk-jimmy-icon.png'
 import supernova from './piece-assets/supernova/supernova-icon.png'
 
-type Source   = { title: string; image: StaticImageData | null }
+type Source   = { title: string; image: StaticImageData | null; href?: string }
 type Placed   = Source & { left: number; top: number }
 
 // ─── Pieces: 5 real + 20 placeholder, in display order ───────────────────────
 const sources: Source[] = [
-  { title: 'Double Trouble', image: doubleTrouble },
-  { title: 'Failed Comic',   image: failedComic },
   { title: 'Human Error',    image: humanError },
+  { title: 'Supernova',      image: supernova, href: '/pieces/supernova' },
+  { title: 'Double Trouble', image: doubleTrouble },
   { title: 'Sidewalk Jimmy', image: jimmySidewalk },
-  { title: 'Supernova',      image: supernova },
+  { title: 'Failed Comic',   image: failedComic },
   ...['I','II','III','IV','V','VI','VII','VIII','IX','X',
       'XI','XII','XIII','XIV','XV','XVI','XVII','XVIII','XIX','XX']
     .map(n => ({ title: `Untitled ${n}`, image: null as StaticImageData | null })),
@@ -77,21 +78,29 @@ export default function PiecesPage() {
 }
 
 function Card({ piece }: { piece: Placed }) {
+  const thumb = (
+    <div style={{ width: '100%', height: IMG_H, borderRadius: '12px', overflow: 'hidden' }}>
+      {piece.image ? (
+        <Image
+          src={piece.image}
+          alt={piece.title}
+          width={CARD_W}
+          height={IMG_H}
+          style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+        />
+      ) : (
+        <div style={{ width: '100%', height: '100%', backgroundColor: '#e2e2e2' }} />
+      )}
+    </div>
+  )
+
   return (
     <div style={{ position: 'absolute', left: piece.left, top: piece.top, width: CARD_W }}>
-      <div style={{ width: '100%', height: IMG_H, borderRadius: '12px', overflow: 'hidden' }}>
-        {piece.image ? (
-          <Image
-            src={piece.image}
-            alt={piece.title}
-            width={CARD_W}
-            height={IMG_H}
-            style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-          />
-        ) : (
-          <div style={{ width: '100%', height: '100%', backgroundColor: '#e2e2e2' }} />
-        )}
-      </div>
+      {piece.href ? (
+        <Link href={piece.href} style={{ display: 'block' }}>{thumb}</Link>
+      ) : (
+        thumb
+      )}
       <h2 style={{
         fontFamily: 'var(--font-dm-sans)',
         fontSize: '22px',

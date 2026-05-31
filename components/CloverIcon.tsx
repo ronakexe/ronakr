@@ -5,11 +5,13 @@ export default function CloverIcon({
   offset = { x: 0, y: 0 },
   dragging = false,
   onMouseDown,
+  className,
 }: {
   rotation?: number
   offset?: { x: number; y: number }
   dragging?: boolean
   onMouseDown?: (e: React.MouseEvent) => void
+  className?: string
 }) {
   return (
     <svg
@@ -18,6 +20,7 @@ export default function CloverIcon({
       viewBox="0 0 51 49"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      className={className}
       onMouseDown={onMouseDown}
       style={{
         transform: `translate(${offset.x}px, ${offset.y}px) rotate(${rotation}deg)`,

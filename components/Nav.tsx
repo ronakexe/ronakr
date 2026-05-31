@@ -138,7 +138,7 @@ export default function Nav() {
   }, [])
 
   useEffect(() => {
-    const key = pathname.slice(1) as NavKey
+    const key = pathname.split('/')[1] as NavKey
     setActive(NAV_KEYS.includes(key) ? key : null)
   }, [pathname])
 
@@ -205,7 +205,7 @@ export default function Nav() {
           >
             Ronak Ramnani
           </Link>
-          <CloverIcon rotation={cloverRotation} offset={cloverOffset} dragging={isDragging} onMouseDown={handleCloverMouseDown} />
+          <CloverIcon className="w-[38px] h-[37px]" rotation={cloverRotation} offset={cloverOffset} dragging={isDragging} onMouseDown={handleCloverMouseDown} />
         </div>
         <div className="flex-1" />
         <div className="flex items-start justify-center gap-12 px-6 pb-6 pointer-events-auto">
