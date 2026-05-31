@@ -1,24 +1,24 @@
 <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g clip-path="url(#clip0_2112_216)">
 <g clip-path="url(#clip1_2112_216)">
-<rect width="30" height="30" fill="#F1E9E9" stroke="#E1DADA" stroke-width="0.75"/>
-<rect x="0.375" y="0.375" width="29.25" height="29.25" rx="14.625" fill="#F1E9E9" stroke="#E1DADA" stroke-width="0.75"/>
-<path d="M2.65918 7.875L27.3408 7.875L15 29.25L2.65918 7.875Z" fill="#F1E9E9" stroke="#E1DADA" stroke-width="0.75"/>
+<rect width="30" height="30" fill="#F1EEE9" stroke="#E1DFDA" stroke-width="0.75"/>
+<rect x="0.375" y="0.375" width="29.25" height="29.25" rx="14.625" fill="#F1EEE9" stroke="#E1DFDA" stroke-width="0.75"/>
+<path d="M2.65918 7.875L27.3408 7.875L15 29.25L2.65918 7.875Z" fill="#F1EEE9" stroke="#E1DFDA" stroke-width="0.75"/>
 </g>
 <g clip-path="url(#clip2_2112_216)">
-<rect y="30" width="30" height="30" fill="#F1E9E9" stroke="#E1DADA" stroke-width="0.75"/>
-<rect x="0.375" y="30.375" width="29.25" height="29.25" rx="14.625" fill="#F1E9E9" stroke="#E1DADA" stroke-width="0.75"/>
-<path d="M22.1251 57.3415L0.750183 45.0007L22.1251 32.6598L22.1251 57.3415Z" fill="#F1E9E9" stroke="#E1DADA" stroke-width="0.75"/>
+<rect y="30" width="30" height="30" fill="#F1EEE9" stroke="#E1DFDA" stroke-width="0.75"/>
+<rect x="0.375" y="30.375" width="29.25" height="29.25" rx="14.625" fill="#F1EEE9" stroke="#E1DFDA" stroke-width="0.75"/>
+<path d="M22.1251 57.3415L0.750183 45.0007L22.1251 32.6598L22.1251 57.3415Z" fill="#F1EEE9" stroke="#E1DFDA" stroke-width="0.75"/>
 </g>
 <g clip-path="url(#clip3_2112_216)">
-<rect x="30" width="30" height="30" fill="#F1E9E9" stroke="#E1DADA" stroke-width="0.75"/>
-<rect x="30.375" y="0.375" width="29.25" height="29.25" rx="14.625" fill="#F1E9E9" stroke="#E1DADA" stroke-width="0.75"/>
-<path d="M37.875 27.3408L37.875 2.65918L59.25 15L37.875 27.3408Z" fill="#F1E9E9" stroke="#E1DADA" stroke-width="0.75"/>
+<rect x="30" width="30" height="30" fill="#F1EEE9" stroke="#E1DFDA" stroke-width="0.75"/>
+<rect x="30.375" y="0.375" width="29.25" height="29.25" rx="14.625" fill="#F1EEE9" stroke="#E1DFDA" stroke-width="0.75"/>
+<path d="M37.875 27.3408L37.875 2.65918L59.25 15L37.875 27.3408Z" fill="#F1EEE9" stroke="#E1DFDA" stroke-width="0.75"/>
 </g>
 <g clip-path="url(#clip4_2112_216)">
-<rect x="30" y="30" width="30" height="30" fill="#F1E9E9" stroke="#E1DADA" stroke-width="0.75"/>
-<rect x="30.375" y="30.375" width="29.25" height="29.25" rx="14.625" fill="#F1E9E9" stroke="#E1DADA" stroke-width="0.75"/>
-<path d="M57.3408 52.125H32.6592L45 30.75L57.3408 52.125Z" fill="#F1E9E9" stroke="#E1DADA" stroke-width="0.75"/>
+<rect x="30" y="30" width="30" height="30" fill="#F1EEE9" stroke="#E1DFDA" stroke-width="0.75"/>
+<rect x="30.375" y="30.375" width="29.25" height="29.25" rx="14.625" fill="#F1EEE9" stroke="#E1DFDA" stroke-width="0.75"/>
+<path d="M57.3408 52.125H32.6592L45 30.75L57.3408 52.125Z" fill="#F1EEE9" stroke="#E1DFDA" stroke-width="0.75"/>
 </g>
 </g>
 <defs>
