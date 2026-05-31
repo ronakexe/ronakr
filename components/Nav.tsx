@@ -193,7 +193,16 @@ export default function Nav() {
       {/* Mobile — container lets touches through so the page can scroll; only the
           header and footer rows capture pointer events. */}
       <div className="flex md:hidden flex-col h-full pointer-events-none">
-        <div className="flex items-center justify-between px-6 pt-10 pointer-events-auto">
+        {/* Name + clover: vertically centered on the home page, slides to the
+            top once a section (builds/pieces/finds) is active. */}
+        <div
+          className="absolute left-0 right-0 flex items-center justify-between px-6 pointer-events-auto"
+          style={{
+            top: active ? '40px' : '50%',
+            transform: active ? 'none' : 'translateY(-50%)',
+            transition: 'top 400ms ease, transform 400ms ease',
+          }}
+        >
           <Link
             href="/"
             className="text-[36px] font-semibold leading-none"
