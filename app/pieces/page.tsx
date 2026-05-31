@@ -62,76 +62,64 @@ export default function PiecesPage() {
 
 // ─── Mobile zigzag layout ────────────────────────────────────────────────────
 
-const M_CARD_W  = 230          // card width
-const M_H_GAP   = 20           // horizontal gap between cards
-const M_STEP    = M_CARD_W + M_H_GAP   // one column step
-const M_OFFSET  = M_STEP / 2           // row-2 shifts right by half a step
-const M_CARD_H  = Math.round(M_CARD_W * 9 / 16)  // image height (16:9)
-const M_TITLE_H = 44           // title line height
-const M_V_GAP   = 36           // vertical gap between rows
-const M_BLOCK_H = M_CARD_H + M_TITLE_H + M_V_GAP + M_CARD_H + M_TITLE_H
+const M_CARD_W = 230           // card width
+const M_H_GAP  = 20            // horizontal gap between cards
+const M_STEP   = M_CARD_W + M_H_GAP
+const M_OFFSET = M_STEP / 2   // bottom row shifts right by half a step
+const M_V_GAP  = 36            // vertical gap between rows
 
 type Piece = { title: string; image: StaticImageData; left: number; top: number }
 
 function MobilePieces({ pieces }: { pieces: Piece[] }) {
-  // Split into top row (even indices) and bottom row (odd indices)
   const topRow    = pieces.filter((_, i) => i % 2 === 0)
   const bottomRow = pieces.filter((_, i) => i % 2 === 1)
 
-  // Content width: whichever row is wider
-  const topW    = topRow.length    * M_STEP - M_H_GAP + 32
-  const bottomW = bottomRow.length * M_STEP - M_H_GAP + 32 + M_OFFSET
-  const contentW = Math.max(topW, bottomW) + 32   // extra right padding
-
   return (
-    // Outer: fixed frame, vertically centers the scroll strip
+    // `block md:hidden` keeps display out of inline style so md:hidden can override it.
+    // overflow-x: scroll on the block container scrolls inline content that overflows.
     <main
-      className="flex md:hidden"
+      className="block md:hidden"
       style={{
         position: 'fixed',
         top: '90px',
         bottom: '70px',
         left: 0,
         right: 0,
-        alignItems: 'center',
+        overflowX: 'scroll',
+        overflowY: 'hidden',
       }}
     >
-      {/* Inner: the actual horizontal scroll container */}
+      {/*
+        inline-flex: sizes to natural content width → overflows the block parent
+        → triggers parent overflow-x scroll. height: 100% + justifyContent: center
+        → vertically centers the two rows without any calc magic.
+      */}
       <div style={{
-        width: '100%',
-        overflowX: 'auto',
-        overflowY: 'hidden',
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        WebkitOverflowScrolling: 'touch' as any,
+        display: 'inline-flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        height: '100%',
+        paddingLeft: '32px',
+        paddingRight: '32px',
+        gap: `${M_V_GAP}px`,
+        verticalAlign: 'top',
       }}>
-        <div style={{
-          position: 'relative',
-          height: M_BLOCK_H,
-          width: contentW,
-          flexShrink: 0,
-        }}>
-          {/* Top row */}
-          {topRow.map((piece, i) => (
-            <MobileCard key={piece.title} piece={piece} left={32 + i * M_STEP} top={0} />
-          ))}
-          {/* Bottom row — offset right by half a step */}
-          {bottomRow.map((piece, i) => (
-            <MobileCard
-              key={piece.title}
-              piece={piece}
-              left={32 + M_OFFSET + i * M_STEP}
-              top={M_CARD_H + M_TITLE_H + M_V_GAP}
-            />
-          ))}
+        {/* Top row */}
+        <div style={{ display: 'flex', gap: `${M_H_GAP}px` }}>
+          {topRow.map(piece => <MobileCard key={piece.title} piece={piece} />)}
+        </div>
+        {/* Bottom row — zigzag offset */}
+        <div style={{ display: 'flex', gap: `${M_H_GAP}px`, paddingLeft: `${M_OFFSET}px` }}>
+          {bottomRow.map(piece => <MobileCard key={piece.title} piece={piece} />)}
         </div>
       </div>
     </main>
   )
 }
 
-function MobileCard({ piece, left, top }: { piece: Piece; left: number; top: number }) {
+function MobileCard({ piece }: { piece: Piece }) {
   return (
-    <div style={{ position: 'absolute', left, top, width: M_CARD_W }}>
+    <div style={{ width: M_CARD_W, flexShrink: 0 }}>
       <Image
         src={piece.image}
         alt={piece.title}
