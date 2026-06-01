@@ -7,7 +7,7 @@ import jimmySidewalk from './piece-assets/jimmy sidewalk/sidewalk-jimmy-icon.png
 import supernova from './piece-assets/supernova/supernova-icon.png'
 
 type Source   = { title: string; image: StaticImageData | null; href?: string }
-type Placed   = Source & { left: number; top: number }
+type Placed   = Source & { left: number; top: number; colIdx: number }
 
 // ─── Pieces: 5 real + 20 placeholder, in display order ───────────────────────
 const sources: Source[] = [
@@ -42,7 +42,7 @@ function buildLayout(): { cards: Placed[]; width: number; height: number } {
     const left     = 20 + colIdx * COL_W
     for (let row = 0; row < count && idx < sources.length; row++) {
       const top = startTop + row * STEP
-      cards.push({ ...sources[idx], left, top })
+      cards.push({ ...sources[idx], left, top, colIdx })
       maxBottom = Math.max(maxBottom, top + CARD_H)
       idx++
     }
@@ -94,8 +94,19 @@ function Card({ piece }: { piece: Placed }) {
     </div>
   )
 
+  const delay = `${piece.colIdx * 60}ms`
+
   return (
-    <div style={{ position: 'absolute', left: piece.left, top: piece.top, width: CARD_W }}>
+    <div
+      style={{
+        position: 'absolute',
+        left: piece.left,
+        top: piece.top,
+        width: CARD_W,
+        animation: `piece-in 400ms ease both`,
+        animationDelay: delay,
+      }}
+    >
       {piece.href ? (
         <Link href={piece.href} style={{ display: 'block' }}>{thumb}</Link>
       ) : (
