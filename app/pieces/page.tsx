@@ -13,7 +13,7 @@ type Placed   = Source & { left: number; top: number; colIdx: number }
 const sources: Source[] = [
   { title: 'Human Error',    image: humanError, href: '/pieces/human-error' },
   { title: 'Supernova',      image: supernova, href: '/pieces/supernova' },
-  { title: 'Double Trouble', image: doubleTrouble },
+  { title: 'Double Trouble', image: doubleTrouble, href: '/pieces/double-trouble' },
   { title: 'Sidewalk Jimmy', image: jimmySidewalk },
   { title: 'Failed Comic',   image: failedComic, href: '/pieces/failed-comic' },
   ...['I','II','III','IV','V','VI','VII','VIII','IX','X',
