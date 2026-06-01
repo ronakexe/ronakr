@@ -3,7 +3,7 @@ import Script from 'next/script'
 const LINE = '#5387FF'
 const BG   = '#fcf8f8'
 
-export default function DoubleTroublePage() {
+export default function SidewalkJimmyPage() {
   return (
     <>
       <Script src="https://player.vimeo.com/api/player.js" strategy="lazyOnload" />
@@ -49,8 +49,8 @@ export default function DoubleTroublePage() {
                   }}
                 >
                   <iframe
-                    src="https://player.vimeo.com/video/943628645?badge=0&autopause=0&player_id=0&app_id=58479"
-                    title="Double Trouble"
+                    src="https://player.vimeo.com/video/1054577008?badge=0&autopause=0&player_id=0&app_id=58479"
+                    title="Sidewalk Jimmy"
                     allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media"
                     referrerPolicy="strict-origin-when-cross-origin"
                     allowFullScreen
@@ -84,10 +84,9 @@ export default function DoubleTroublePage() {
                   marginTop: 12,
                 }}
               >
-                A man&apos;s late night walk home takes an unexpected turn when not one, but two
-                killers set their sights on him, except they always seem to be bumping into
-                each other and ruining each other&apos;s kill. Through their long arguments, the
-                man is able to escape, until an unexpected twist changes everything.
+                While on a walk, Jimmy accidentally trips which teleports him into a party he
+                never expected to be at. Teleporting again, he desperately tries to trip back
+                into the party but ends up in a series of unexpected locations.
               </p>
             </div>
           </div>

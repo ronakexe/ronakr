@@ -14,7 +14,7 @@ const sources: Source[] = [
   { title: 'Human Error',    image: humanError, href: '/pieces/human-error' },
   { title: 'Supernova',      image: supernova, href: '/pieces/supernova' },
   { title: 'Double Trouble', image: doubleTrouble, href: '/pieces/double-trouble' },
-  { title: 'Sidewalk Jimmy', image: jimmySidewalk },
+  { title: 'Sidewalk Jimmy', image: jimmySidewalk, href: '/pieces/sidewalk-jimmy' },
   { title: 'Failed Comic',   image: failedComic, href: '/pieces/failed-comic' },
   ...['I','II','III','IV','V','VI','VII','VIII','IX','X',
       'XI','XII','XIII','XIV','XV','XVI','XVII','XVIII','XIX','XX']
