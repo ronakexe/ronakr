@@ -15,7 +15,7 @@ const sources: Source[] = [
   { title: 'Supernova',      image: supernova, href: '/pieces/supernova' },
   { title: 'Double Trouble', image: doubleTrouble },
   { title: 'Sidewalk Jimmy', image: jimmySidewalk },
-  { title: 'Failed Comic',   image: failedComic },
+  { title: 'Failed Comic',   image: failedComic, href: '/pieces/failed-comic' },
   ...['I','II','III','IV','V','VI','VII','VIII','IX','X',
       'XI','XII','XIII','XIV','XV','XVI','XVII','XVIII','XIX','XX']
     .map(n => ({ title: `Untitled ${n}`, image: null as StaticImageData | null })),
