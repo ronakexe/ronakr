@@ -63,7 +63,7 @@ export default function SidewalkJimmyPage() {
             {/* Synopsis — last column */}
             <div className="md:col-start-4 mt-12 md:mt-0" style={{ paddingLeft: 12, paddingRight: 8 }}>
               <h1
-                className="text-[32px] md:text-[52px]"
+                className="text-[32px] md:text-[48px]"
                 style={{
                   fontFamily: 'var(--font-dm-sans)',
                   fontWeight: 700,

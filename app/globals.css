@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+/* Custom breakpoint: piece pages drop from 4 columns to 3 below this width. */
+@theme {
+  --breakpoint-mid: 62.5rem; /* 1000px — sorts between md (48rem) and lg (64rem) */
+}
+
 :root {
   --color-blue: #0000FF;
   --color-green: #109066;

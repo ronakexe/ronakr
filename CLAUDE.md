@@ -95,14 +95,14 @@ Use these sizes consistently across all pages. Tailwind breakpoint syntax: `text
 |---|---|---|---|---|
 | Nav name | 36px | 50px | DM Sans | 600 |
 | Nav items | 21px | 21px | DM Sans | 400 |
-| H1 — page/section title | 32px | 52px | DM Sans | 700 |
+| H1 — page/section title | 32px | 48px | DM Sans | 700 |
 | H2 — subsection title | 24px | 36px | DM Sans | 600 |
 | Body | 15px | 18px | Crimson Pro | 400 |
 | Card label | 18px | 18px | DM Sans | 600 |
 
 ```tsx
 // H1
-<h1 className="text-[32px] md:text-[52px]" style={{ fontFamily: 'var(--font-dm-sans)', fontWeight: 700 }}>
+<h1 className="text-[32px] md:text-[48px]" style={{ fontFamily: 'var(--font-dm-sans)', fontWeight: 700 }}>
 
 // H2
 <h2 className="text-[24px] md:text-[36px]" style={{ fontFamily: 'var(--font-dm-sans)', fontWeight: 600 }}>
