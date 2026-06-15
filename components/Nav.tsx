@@ -191,7 +191,7 @@ export default function Nav() {
       </nav>
 
       {/* Mobile — container lets touches through so the page can scroll; only the
-          header and footer rows capture pointer events. */}
+          header row captures pointer events. */}
       <div className="flex md:hidden flex-col h-full pointer-events-none">
         {/* Name + clover: vertically centered on the home page, slides to the
             top once a section (builds/pieces/finds) is active. */}
@@ -216,19 +216,23 @@ export default function Nav() {
           </Link>
           <CloverIcon className="w-[38px] h-[37px]" rotation={cloverRotation} offset={cloverOffset} dragging={isDragging} onMouseDown={handleCloverMouseDown} />
         </div>
-        <div className="flex-1" />
-        <div className="flex items-start justify-center gap-12 px-6 pb-6 pointer-events-auto">
-          {NAV_ITEMS.map((item) => (
-            <NavItem
-              key={item.key}
-              href={item.href}
-              label={item.label}
-              navKey={item.key}
-              isActive={active === item.key}
-              onClick={handleClick}
-            />
-          ))}
-        </div>
+      </div>
+
+      {/* Mobile bottom nav — always fixed to viewport bottom regardless of scroll */}
+      <div
+        className="flex md:hidden items-start justify-center gap-12 px-6 pb-6 pointer-events-auto"
+        style={{ position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 10 }}
+      >
+        {NAV_ITEMS.map((item) => (
+          <NavItem
+            key={item.key}
+            href={item.href}
+            label={item.label}
+            navKey={item.key}
+            isActive={active === item.key}
+            onClick={handleClick}
+          />
+        ))}
       </div>
     </div>
   )
