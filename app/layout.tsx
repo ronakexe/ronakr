@@ -17,6 +17,13 @@ const crimsonPro = Crimson_Pro({
 export const metadata: Metadata = {
   title: 'Ronak Ramnani',
   description: 'Personal portfolio of Ronak Ramnani',
+  openGraph: {
+    images: [{ url: '/og-image.png' }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    images: ['/og-image.png'],
+  },
 }
 
 export default function RootLayout({
