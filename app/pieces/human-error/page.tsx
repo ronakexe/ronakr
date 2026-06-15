@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import ScriptViewer from './ScriptViewer'
 
 const LINE = '#5387FF'   // blue column lines
 const BG   = '#fcf8f8'   // page background (no pattern on piece pages)
@@ -162,27 +163,9 @@ export default function HumanErrorPage() {
             </div>
           </div>
 
-          {/* Script pages — black A4 box, center columns */}
+          {/* Script pages — black A4 box, center columns; draft selector below */}
           <div className="md:col-start-2 md:col-span-2 mt-10 md:mt-0" style={{ paddingLeft: 16 }}>
-            <div
-              style={{
-                background: '#000',
-                border: '5px solid #fcf8f8',
-                width: '100%',
-                aspectRatio: '595 / 842',
-                overflowY: 'auto',
-              }}
-            >
-              {Array.from({ length: 8 }, (_, i) => (
-                <img
-                  key={i}
-                  src={`/human-error-script/page-${i + 1}.svg`}
-                  alt={`Official script page ${i + 1}`}
-                  loading="lazy"
-                  style={{ display: 'block', width: '100%', height: 'auto', background: '#fff' }}
-                />
-              ))}
-            </div>
+            <ScriptViewer />
           </div>
         </div>
       </div>
