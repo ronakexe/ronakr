@@ -109,8 +109,8 @@ export default function HumanErrorPage() {
           className="relative grid grid-cols-1 md:grid-cols-3 mid:grid-cols-4 md:items-start"
           style={{ paddingLeft: 40, paddingRight: 40, paddingBottom: 160 }}
         >
-          {/* Write-up — first column */}
-          <div className="md:col-span-1" style={{ paddingLeft: 12, paddingRight: 8, minWidth: 0 }}>
+          {/* Write-up — first two columns at mid, first column at md */}
+          <div className="md:col-span-1 mid:col-span-2" style={{ paddingLeft: 12, paddingRight: 8, minWidth: 0 }}>
             <h1
               style={{
                 fontFamily: 'var(--font-dm-sans)',
@@ -163,8 +163,8 @@ export default function HumanErrorPage() {
             </div>
           </div>
 
-          {/* Script pages — black A4 box, center columns; draft selector below */}
-          <div className="md:col-start-2 md:col-span-2 mt-10 md:mt-0" style={{ paddingLeft: 16 }}>
+          {/* Script pages — columns 3–4 at mid, columns 2–3 at md */}
+          <div className="md:col-start-2 md:col-span-2 mid:col-start-3 mt-10 md:mt-0" style={{ paddingLeft: 16 }}>
             <ScriptViewer />
           </div>
         </div>
