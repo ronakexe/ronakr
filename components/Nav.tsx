@@ -162,7 +162,7 @@ export default function Nav() {
   )
 
   return (
-    <div className="fixed inset-0 pointer-events-none" style={{ zIndex: 10 }}>
+    <div className={`${active ? 'absolute' : 'fixed'} inset-0 pointer-events-none`} style={{ zIndex: 10 }}>
       {/* Desktop */}
       <nav
         className="hidden md:flex w-full items-center justify-between px-8 pointer-events-auto"
