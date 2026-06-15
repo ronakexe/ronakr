@@ -32,8 +32,8 @@ export default function OfficialScriptSection() {
       className="relative grid grid-cols-1 md:grid-cols-3 mid:grid-cols-4 md:items-start"
       style={{ paddingLeft: 40, paddingRight: 40, paddingBottom: 160 }}
     >
-      {/* Write-up + icons — cols 1–2 at mid, col 1 at md */}
-      <div className="md:col-span-1 mid:col-span-2" style={{ paddingLeft: 12, paddingRight: 8, minWidth: 0 }}>
+      {/* Write-up + icons — col 1 only (between lines 1–2) at all breakpoints */}
+      <div className="md:col-span-1" style={{ paddingLeft: 12, paddingRight: 8, minWidth: 0 }}>
         <h1
           style={{
             fontFamily: 'var(--font-dm-sans)',
@@ -110,8 +110,8 @@ export default function OfficialScriptSection() {
         </div>
       </div>
 
-      {/* Script box — cols 3–4 at mid, cols 2–3 at md */}
-      <div className="md:col-start-2 md:col-span-2 mid:col-start-3 mt-10 md:mt-0" style={{ paddingLeft: 16 }}>
+      {/* Script box — col 3 only at mid (center between lines 3–4), cols 2–3 at md */}
+      <div className="md:col-start-2 md:col-span-2 mid:col-start-3 mid:col-span-1 mt-10 md:mt-0" style={{ paddingLeft: 16 }}>
         <div
           ref={boxRef}
           style={{
