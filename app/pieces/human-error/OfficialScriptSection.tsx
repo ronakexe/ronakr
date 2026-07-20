@@ -10,10 +10,10 @@ import hed3 from '../piece-assets/human error/hed3 icon.png'
 import heod from '../piece-assets/human error/heod icon.png'
 
 const DRAFTS = [
-  { id: 'draft1',   label: 'Draft 1',  folder: 'human-error-draft-1', pages: 5, icon: hed1 },
-  { id: 'draft2',   label: 'Draft 2',  folder: 'human-error-draft-2', pages: 6, icon: hed2 },
-  { id: 'draft3',   label: 'Draft 3',  folder: 'human-error-draft-3', pages: 8, icon: hed3 },
-  { id: 'official', label: 'Official', folder: 'human-error-script',   pages: 8, icon: heod },
+  { id: 'draft1',   label: 'Draft 1',  folder: 'human-error-draft-1', pages: 5, icon: hed1, pdf: '/human-error-draft-1.pdf' },
+  { id: 'draft2',   label: 'Draft 2',  folder: 'human-error-draft-2', pages: 6, icon: hed2, pdf: '/human-error-draft-2.pdf' },
+  { id: 'draft3',   label: 'Draft 3',  folder: 'human-error-draft-3', pages: 8, icon: hed3, pdf: '/human-error-draft-3.pdf' },
+  { id: 'official', label: 'Official', folder: 'human-error-script',   pages: 8, icon: heod, pdf: '/human-error-official-script.pdf' },
 ] as const
 
 type DraftId = (typeof DRAFTS)[number]['id']
@@ -158,6 +158,21 @@ export default function OfficialScriptSection() {
                 />
               ))}
             </div>
+            <a
+              href={draft.pdf}
+              download
+              style={{
+                display: 'inline-block',
+                marginTop: 16,
+                fontFamily: 'var(--font-dm-sans)',
+                fontSize: 15,
+                fontWeight: 600,
+                color: '#000',
+                textDecoration: 'underline',
+              }}
+            >
+              Download {draft.label} script (PDF)
+            </a>
           </div>
         </div>
       </div>
