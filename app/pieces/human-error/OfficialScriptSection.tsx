@@ -73,27 +73,26 @@ export default function OfficialScriptSection() {
         {/* Write-up + icons — col 1 only (between lines 1–2) at all breakpoints */}
         <div className="md:col-span-1" style={{ paddingLeft: 12, paddingRight: 8, minWidth: 0 }}>
           <h1
+            className="text-[14px] uppercase"
             style={{
-              fontFamily: 'var(--font-dm-sans)',
-              fontWeight: 700,
-              lineHeight: 1.1,
-              color: '#000',
+              fontFamily: "'Redaction 20', var(--font-dm-sans), sans-serif",
+              fontStyle: 'italic',
+              letterSpacing: '0.14em',
+              opacity: 0.5,
               margin: 0,
-              whiteSpace: 'nowrap',
-              fontSize: 'clamp(32px, calc(3.74vw - 6.6px), 48px)',
             }}
           >
             Official Script
           </h1>
           <div
             className="text-[15px] md:text-[18px]"
-            style={{ fontFamily: 'var(--font-crimson-pro)', fontWeight: 400, lineHeight: 1.3, color: '#000', marginTop: 16 }}
+            style={{ fontFamily: 'var(--font-crimson-pro)', fontWeight: 400, lineHeight: 1.3, color: 'var(--text)', marginTop: 16 }}
           >
             <p style={{ margin: 0 }}>
               This was the script used on set for Human Error. It was the first script I had
               ever really written; Previous films had been either written by someone else, or
               we just winged it (like{' '}
-              <Link href="/pieces/double-trouble" style={{ color: '#d90f0f', textDecoration: 'underline' }}>
+              <Link href="/pieces/double-trouble" style={{ color: 'var(--text)', textDecoration: 'underline' }}>
                 Double Trouble
               </Link>
               ).
@@ -142,7 +141,6 @@ export default function OfficialScriptSection() {
               ref={boxRef}
               style={{
                 background: '#000',
-                border: '5px solid #fcf8f8',
                 width: '100%',
                 aspectRatio: '595 / 842',
                 overflowY: 'auto',
@@ -171,7 +169,6 @@ export default function OfficialScriptSection() {
             pointerEvents: 'none',
             overflow: 'hidden',
             background: '#fff',
-            border: '5px solid #fcf8f8',
             borderRadius: flying.phase === 'flying' ? 0 : 6,
             left:   flying.phase === 'flying' ? flying.to.left   : flying.from.left,
             top:    flying.phase === 'flying' ? flying.to.top    : flying.from.top,
