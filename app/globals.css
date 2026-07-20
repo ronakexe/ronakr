@@ -1,14 +1,178 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: 'Redaction 35';
+  src: url('/fonts/Redaction_35-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Redaction 35';
+  src: url('/fonts/Redaction_35-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Redaction 20';
+  src: url('/fonts/Redaction_20-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Redaction 20';
+  src: url('/fonts/Redaction_20-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Redaction 20';
+  src: url('/fonts/Redaction_20-Italic.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
 /* Custom breakpoint: piece pages drop from 4 columns to 3 below this width. */
 @theme {
   --breakpoint-mid: 62.5rem; /* 1000px — sorts between md (48rem) and lg (64rem) */
 }
 
+/* ── shadcn theme (preset b7oGj5qzdJ) ────────────────────────────────────────
+   Light values live on :root. The dark set is repeated twice: once behind the
+   system preference (skipped when the user has explicitly chosen light), once
+   for the manual data-theme="dark" override, which wins on specificity.       */
+
+:root {
+  color-scheme: light;
+
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.147 0.004 49.25);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.147 0.004 49.25);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.147 0.004 49.25);
+  --primary: oklch(0.505 0.213 27.518);
+  --primary-foreground: oklch(0.971 0.013 17.38);
+  --secondary: oklch(0.967 0.001 286.375);
+  --secondary-foreground: oklch(0.21 0.006 285.885);
+  --muted: oklch(0.97 0.001 106.424);
+  --muted-foreground: oklch(0.553 0.013 58.071);
+  --accent: oklch(0.505 0.213 27.518);
+  --accent-foreground: oklch(0.971 0.013 17.38);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.923 0.003 48.717);
+  --input: oklch(0.923 0.003 48.717);
+  --ring: oklch(0.709 0.01 56.259);
+  --chart-1: oklch(0.808 0.114 19.571);
+  --chart-2: oklch(0.637 0.237 25.331);
+  --chart-3: oklch(0.577 0.245 27.325);
+  --chart-4: oklch(0.505 0.213 27.518);
+  --chart-5: oklch(0.444 0.177 26.899);
+  --radius: 0.45rem;
+  --sidebar: oklch(0.985 0.001 106.423);
+  --sidebar-foreground: oklch(0.147 0.004 49.25);
+  --sidebar-primary: oklch(0.577 0.245 27.325);
+  --sidebar-primary-foreground: oklch(0.971 0.013 17.38);
+  --sidebar-accent: oklch(0.97 0.001 106.424);
+  --sidebar-accent-foreground: oklch(0.216 0.006 56.043);
+  --sidebar-border: oklch(0.923 0.003 48.717);
+  --sidebar-ring: oklch(0.709 0.01 56.259);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+
+    --background: oklch(0.147 0.004 49.25);
+    --foreground: oklch(0.985 0.001 106.423);
+    --card: oklch(0.216 0.006 56.043);
+    --card-foreground: oklch(0.985 0.001 106.423);
+    --popover: oklch(0.216 0.006 56.043);
+    --popover-foreground: oklch(0.985 0.001 106.423);
+    --primary: oklch(0.444 0.177 26.899);
+    --primary-foreground: oklch(0.971 0.013 17.38);
+    --secondary: oklch(0.274 0.006 286.033);
+    --secondary-foreground: oklch(0.985 0 0);
+    --muted: oklch(0.268 0.007 34.298);
+    --muted-foreground: oklch(0.709 0.01 56.259);
+    --accent: oklch(0.444 0.177 26.899);
+    --accent-foreground: oklch(0.971 0.013 17.38);
+    --destructive: oklch(0.704 0.191 22.216);
+    --border: oklch(1 0 0 / 10%);
+    --input: oklch(1 0 0 / 15%);
+    --ring: oklch(0.553 0.013 58.071);
+    --chart-1: oklch(0.808 0.114 19.571);
+    --chart-2: oklch(0.637 0.237 25.331);
+    --chart-3: oklch(0.577 0.245 27.325);
+    --chart-4: oklch(0.505 0.213 27.518);
+    --chart-5: oklch(0.444 0.177 26.899);
+    --sidebar: oklch(0.216 0.006 56.043);
+    --sidebar-foreground: oklch(0.985 0.001 106.423);
+    --sidebar-primary: oklch(0.637 0.237 25.331);
+    --sidebar-primary-foreground: oklch(0.971 0.013 17.38);
+    --sidebar-accent: oklch(0.268 0.007 34.298);
+    --sidebar-accent-foreground: oklch(0.985 0.001 106.423);
+    --sidebar-border: oklch(1 0 0 / 10%);
+    --sidebar-ring: oklch(0.553 0.013 58.071);
+  }
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --background: oklch(0.147 0.004 49.25);
+  --foreground: oklch(0.985 0.001 106.423);
+  --card: oklch(0.216 0.006 56.043);
+  --card-foreground: oklch(0.985 0.001 106.423);
+  --popover: oklch(0.216 0.006 56.043);
+  --popover-foreground: oklch(0.985 0.001 106.423);
+  --primary: oklch(0.444 0.177 26.899);
+  --primary-foreground: oklch(0.971 0.013 17.38);
+  --secondary: oklch(0.274 0.006 286.033);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.268 0.007 34.298);
+  --muted-foreground: oklch(0.709 0.01 56.259);
+  --accent: oklch(0.444 0.177 26.899);
+  --accent-foreground: oklch(0.971 0.013 17.38);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.553 0.013 58.071);
+  --chart-1: oklch(0.808 0.114 19.571);
+  --chart-2: oklch(0.637 0.237 25.331);
+  --chart-3: oklch(0.577 0.245 27.325);
+  --chart-4: oklch(0.505 0.213 27.518);
+  --chart-5: oklch(0.444 0.177 26.899);
+  --sidebar: oklch(0.216 0.006 56.043);
+  --sidebar-foreground: oklch(0.985 0.001 106.423);
+  --sidebar-primary: oklch(0.637 0.237 25.331);
+  --sidebar-primary-foreground: oklch(0.971 0.013 17.38);
+  --sidebar-accent: oklch(0.268 0.007 34.298);
+  --sidebar-accent-foreground: oklch(0.985 0.001 106.423);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.553 0.013 58.071);
+}
+
+/* ── Site aliases ────────────────────────────────────────────────────────────
+   The pages consume these three. Because they resolve through var(), a single
+   declaration here tracks whichever theme block is currently active.          */
+
 :root {
   --color-blue: #0000FF;
   --color-green: #109066;
   --color-red: #FF0000;
+
+  --bg: var(--background);
+  --name: var(--primary);
+  --text: var(--foreground);
 
   --font-ui: var(--font-dm-sans);
   --font-body: var(--font-crimson-pro);
@@ -16,10 +180,8 @@
 
 body {
   font-family: var(--font-dm-sans), sans-serif;
-  background-color: #F1EEE9;
-  background-image: url('/background_pattern_tile.svg');
-  background-repeat: repeat;
-  background-size: 60px 60px;
+  background-color: var(--bg);
+  color: var(--text);
 }
 
 p, .body-text {

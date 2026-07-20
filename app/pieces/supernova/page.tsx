@@ -1,48 +1,27 @@
-const LINE = '#5387FF'   // blue column lines
-const BG   = '#fcf8f8'   // page background (no pattern on piece pages)
+const BG = 'var(--bg)'   // page background (no pattern on piece pages)
 
 export default function SupernovaPage() {
   return (
     <main className="relative w-full" style={{ minHeight: '100vh', background: BG }}>
       <div className="relative mx-auto" style={{ maxWidth: 1512, minHeight: '100vh' }}>
-        {/* Blue column lines — 5 lines at the 4-column boundaries, desktop only.
-            Each line fades to transparent at the top and bottom of the page. */}
-        <div
-          aria-hidden
-          className="hidden md:block absolute pointer-events-none"
-          style={{ top: 0, bottom: 0, left: 40, right: 40 }}
+        <h1
+          className="text-[32px] md:text-[40px] font-bold leading-none"
+          style={{ fontFamily: "'Redaction 20', var(--font-dm-sans), sans-serif", letterSpacing: '-0.02em', margin: 0, padding: '56px 40px 0' }}
         >
-          {[0, 1, 2, 3, 4].map((i) => (
-            <div
-              key={i}
-              style={{
-                position: 'absolute',
-                top: 0,
-                bottom: 0,
-                left: `${i * 25}%`,
-                width: 9,
-                transform: i === 0 ? 'none' : i === 4 ? 'translateX(-100%)' : 'translateX(-50%)',
-                background: `linear-gradient(to bottom, transparent 0px, transparent 100px, ${LINE} 150px, ${LINE} calc(100% - 130px), transparent 100%)`,
-              }}
-            />
-          ))}
-        </div>
+          Supernova
+        </h1>
 
-        {/* Content — same 4-column track system so headings/paragraphs sit
-            inside the lines and the video spans multiple columns. */}
+        {/* Content — 4-column track system; the video spans multiple columns. */}
         <div
           className="relative grid grid-cols-1 md:grid-cols-4 md:items-center"
-          style={{ paddingTop: 120, paddingLeft: 40, paddingRight: 40, paddingBottom: 140 }}
+          style={{ paddingTop: 28, paddingLeft: 40, paddingRight: 40, paddingBottom: 96 }}
         >
-          {/* Video — spans the first three columns. The 5px BG-colored frame
-              keeps the column lines from touching the black border. */}
+          {/* Video — spans the first three columns */}
           <div className="md:col-span-3">
-            {/* inset (desktop only) so the video sits inside the columns rather than
-                touching the lines; on mobile it spans the full text width */}
-            <div className="mx-0 md:mx-[7%]" style={{ background: BG, padding: 5 }}>
+            {/* inset on desktop; full text width on mobile */}
+            <div className="mx-0" style={{ background: BG, padding: 5 }}>
               <div
                 style={{
-                  border: '2.5px solid #000',
                   position: 'relative',
                   width: '100%',
                   aspectRatio: '16 / 9',
@@ -62,25 +41,19 @@ export default function SupernovaPage() {
 
           {/* Synopsis — last column */}
           <div className="md:col-start-4 mt-12 md:mt-0" style={{ paddingLeft: 12, paddingRight: 8 }}>
-            <h1
-              className="text-[32px] md:text-[48px]"
-              style={{
-                fontFamily: 'var(--font-dm-sans)',
-                fontWeight: 700,
-                lineHeight: 1.1,
-                color: '#000',
-                margin: 0,
-              }}
+            <h2
+              className="text-[14px] uppercase"
+              style={{ fontFamily: "'Redaction 20', var(--font-dm-sans), sans-serif", fontStyle: 'italic', letterSpacing: '0.14em', opacity: 0.5, margin: 0 }}
             >
               Synopsis
-            </h1>
+            </h2>
             <p
               className="text-[15px] md:text-[18px]"
               style={{
                 fontFamily: 'var(--font-crimson-pro)',
                 fontWeight: 400,
-                lineHeight: 1.3,
-                color: '#000',
+                lineHeight: 1.5,
+                color: 'var(--text)',
                 marginTop: 12,
               }}
             >
