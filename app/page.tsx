@@ -18,7 +18,7 @@ export default function Home() {
       {/* Three columns — grid tracks span the full width and stay evenly
           spaced; only the content inside each column is capped narrower.
           Labels themselves live in SiteChrome, directly above this grid. */}
-      <div className="mt-10 grid grid-cols-1 gap-x-12 gap-y-10 md:mt-14 md:grid-cols-3">
+      <div className="mt-5 grid grid-cols-1 gap-x-12 gap-y-10 md:mt-7 md:grid-cols-3">
         {SECTIONS.map((section) => (
           <section key={section.label} className="md:max-w-[300px]">
             <h2 className="section-label mb-3 text-[13px] md:hidden">{section.label}</h2>
