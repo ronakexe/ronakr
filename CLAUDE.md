@@ -30,13 +30,14 @@ three aliases (`--bg`, `--text`, `--name`), which resolve through the active the
 
 ## Fonts
 
-### Redaction 35 — Display / Name
+### Redaction 50 — Display / Name
 Used for: "Ronak Ramnani" in the sidebar. Self-hosted from `public/fonts/`
-(`Redaction_35-Regular.woff2`, `Redaction_35-Bold.woff2`), declared via `@font-face`
-in `globals.css`. Redaction 20 is also available and is used for piece-page titles.
+(`Redaction_50-Regular.woff2`, `Redaction_50-Bold.woff2`, `Redaction_50-Italic.woff2`),
+declared via `@font-face` in `globals.css`. Redaction 20 and Redaction 35 are also
+available; Redaction 20 is used for piece-page titles.
 
 ```css
-font-family: 'Redaction 35', var(--font-dm-sans), sans-serif;
+font-family: 'Redaction 50', var(--font-dm-sans), sans-serif;
 ```
 
 ### DM Sans — UI Font
@@ -89,7 +90,7 @@ p, .body-text {
 ## Rules
 - Default font everywhere: DM Sans
 - Body/paragraph text only: EB Garamond
-- The name "Ronak Ramnani" only: Redaction 35
+- The name "Ronak Ramnani" only: Redaction 50
 - Do not use any other fonts
 - Do not use system fonts or fallbacks as primary
 

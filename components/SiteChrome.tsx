@@ -14,7 +14,7 @@ export default function SiteChrome() {
         <Link
           href="/"
           className="text-[32px] leading-none md:text-[44px]"
-          style={{ fontFamily: "'Redaction 35', serif", color: 'var(--name)' }}
+          style={{ fontFamily: "'Redaction 50', serif", color: 'var(--name)' }}
         >
           Ronak Ramnani
         </Link>
