@@ -21,7 +21,7 @@ export default function SiteChrome() {
         <CloverIcon width={44} height={42} className="shrink-0" />
       </div>
 
-      <nav className="mt-4 grid grid-cols-3 gap-x-12">
+      <nav className="mt-4 hidden grid-cols-3 gap-x-12 md:grid">
         {LABELS.map((label) => (
           <Link
             key={label}

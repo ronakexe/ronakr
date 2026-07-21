@@ -21,6 +21,7 @@ export default function Home() {
       <div className="mt-10 grid grid-cols-1 gap-x-12 gap-y-10 md:mt-14 md:grid-cols-3">
         {SECTIONS.map((section) => (
           <section key={section.label} className="md:max-w-[300px]">
+            <h2 className="section-label mb-3 text-[13px] md:hidden">{section.label}</h2>
             <ul className="pl-4">
               {section.items.map((item) => (
                 <li key={item.title} className="relative">
