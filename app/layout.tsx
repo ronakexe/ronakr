@@ -5,7 +5,7 @@ import Script from 'next/script'
 import PageShell from '@/components/PageShell'
 import './globals.css'
 
-const THEME_INIT = `(function(){try{var t=localStorage.getItem('theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();`
+const THEME_INIT = `(function(){try{var t=localStorage.getItem('theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}var resolved=t==='light'||t==='dark'?t:(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');var link=document.querySelector('link[rel="icon"]');if(link)link.href=resolved==='dark'?'/favicon-dark.svg':'/favicon-light.svg';}catch(e){}})();`
 
 const dmSans = DM_Sans({
   subsets: ['latin'],
@@ -26,6 +26,9 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     images: ['/og-image.png'],
+  },
+  icons: {
+    icon: '/favicon-light.svg',
   },
 }
 
