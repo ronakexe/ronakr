@@ -560,7 +560,7 @@ function Section({ n, title, desc, children }: { n: number; title: string; desc:
           {title}
         </h2>
       </div>
-      <p style={{ fontFamily: 'var(--font-crimson-pro)', fontSize: 18, color: '#444', margin: '0 0 26px', maxWidth: 620, lineHeight: 1.35 }}>
+      <p style={{ fontFamily: 'var(--font-garamond)', fontSize: 18, color: '#444', margin: '0 0 26px', maxWidth: 620, lineHeight: 1.35 }}>
         {desc}
       </p>
       {children}
@@ -580,7 +580,7 @@ export default function ScriptDisplaysPage() {
           <h1 style={{ fontFamily: 'var(--font-dm-sans)', fontSize: 'clamp(32px, 5vw, 48px)', fontWeight: 700, margin: '8px 0 0', lineHeight: 1.05 }}>
             {METHODS.length} Ways to Display the Script
           </h1>
-          <p style={{ fontFamily: 'var(--font-crimson-pro)', fontSize: 18, color: '#555', margin: '14px 0 0', maxWidth: 640, lineHeight: 1.4 }}>
+          <p style={{ fontFamily: 'var(--font-garamond)', fontSize: 18, color: '#555', margin: '14px 0 0', maxWidth: 640, lineHeight: 1.4 }}>
             The same 8 script pages, shown {METHODS.length} different ways — from the plainly intuitive to the unexpected. Try each one and see which fits the feel of the piece.
           </p>
         </header>

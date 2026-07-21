@@ -86,7 +86,7 @@ export default function OfficialScriptSection() {
           </h1>
           <div
             className="text-[15px] md:text-[18px]"
-            style={{ fontFamily: 'var(--font-crimson-pro)', fontWeight: 400, lineHeight: 1.3, color: 'var(--text)', marginTop: 16 }}
+            style={{ fontFamily: 'var(--font-garamond)', fontWeight: 400, lineHeight: 1.3, color: 'var(--text)', marginTop: 16 }}
           >
             <p style={{ margin: 0 }}>
               This was the script used on set for Human Error. It was the first script I had

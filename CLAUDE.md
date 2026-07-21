@@ -11,15 +11,14 @@ Personal portfolio for Ronak Ramnani built in Next.js.
 
 ## Colors
 
-Defined as CSS variables in `globals.css`:
+The site palette is defined as CSS variables in `globals.css`. Pages consume the
+three aliases (`--bg`, `--text`, `--name`), which resolve through the active theme.
 
-```css
-:root {
-  --color-blue: #0000FF;
-  --color-green: #109066;
-  --color-red: #FF0000;
-}
-```
+| Role | Light | Dark |
+|---|---|---|
+| Background (`--bg`) | `#F8EFEF` | `#1A0808` |
+| Text (`--text`) | `#330000` | `#F8EFEF` |
+| "Ronak Ramnani" (`--name`) | `#E81E1E` | `#E81E1E` |
 
 ## Logo
 - Clover SVG located at `ronak-ramnani/assets/clover.svg`
@@ -30,7 +29,15 @@ Defined as CSS variables in `globals.css`:
 # Typography
 
 ## Fonts
-Both fonts are loaded via `next/font/google` — no manual installation needed.
+
+### Redaction 35 — Display / Name
+Used for: "Ronak Ramnani" in the sidebar. Self-hosted from `public/fonts/`
+(`Redaction_35-Regular.woff2`, `Redaction_35-Bold.woff2`), declared via `@font-face`
+in `globals.css`. Redaction 20 is also available and is used for piece-page titles.
+
+```css
+font-family: 'Redaction 35', var(--font-dm-sans), sans-serif;
+```
 
 ### DM Sans — UI Font
 Used for: navigation, headings, labels, buttons, any non-body text
@@ -44,30 +51,30 @@ const dmSans = DM_Sans({
 })
 ```
 
-### Crimson Pro — Body Font
+### EB Garamond — Body Font
 Used for: paragraph text, descriptions, long-form content
 
 ```js
-import { Crimson_Pro } from 'next/font/google'
+import { EB_Garamond } from 'next/font/google'
 
-const crimsonPro = Crimson_Pro({
+const ebGaramond = EB_Garamond({
   subsets: ['latin'],
-  variable: '--font-crimson-pro',
+  variable: '--font-garamond',
 })
 ```
 
 ## Root Layout Setup
-Apply both fonts as CSS variables in `app/layout.tsx`:
+Apply both Google fonts as CSS variables in `app/layout.tsx`:
 
 ```js
-<html lang="en" className={`${dmSans.variable} ${crimsonPro.variable}`}>
+<html lang="en" className={`${dmSans.variable} ${ebGaramond.variable}`}>
 ```
 
 ## CSS Usage
 ```css
 :root {
   --font-ui: var(--font-dm-sans);
-  --font-body: var(--font-crimson-pro);
+  --font-body: var(--font-garamond);
 }
 
 body {
@@ -75,15 +82,20 @@ body {
 }
 
 p, .body-text {
-  font-family: var(--font-crimson-pro); /* Crimson Pro for body */
+  font-family: var(--font-garamond); /* EB Garamond for body */
 }
 ```
 
 ## Rules
 - Default font everywhere: DM Sans
-- Body/paragraph text only: Crimson Pro
+- Body/paragraph text only: EB Garamond
+- The name "Ronak Ramnani" only: Redaction 35
 - Do not use any other fonts
 - Do not use system fonts or fallbacks as primary
+
+## Section labels
+Initiatives / Pieces / Finds always render **bold and uppercase**, via the
+`.section-label` class in `globals.css`.
 
 ---
 
@@ -97,7 +109,7 @@ Use these sizes consistently across all pages. Tailwind breakpoint syntax: `text
 | Nav items | 21px | 21px | DM Sans | 400 |
 | H1 — page/section title | 32px | 48px | DM Sans | 700 |
 | H2 — subsection title | 24px | 36px | DM Sans | 600 |
-| Body | 15px | 18px | Crimson Pro | 400 |
+| Body | 15px | 18px | EB Garamond | 400 |
 | Card label | 18px | 18px | DM Sans | 600 |
 
 ```tsx
@@ -108,7 +120,7 @@ Use these sizes consistently across all pages. Tailwind breakpoint syntax: `text
 <h2 className="text-[24px] md:text-[36px]" style={{ fontFamily: 'var(--font-dm-sans)', fontWeight: 600 }}>
 
 // Body paragraph
-<p className="text-[15px] md:text-[18px]" style={{ fontFamily: 'var(--font-crimson-pro)', fontWeight: 400 }}>
+<p className="text-[15px] md:text-[18px]" style={{ fontFamily: 'var(--font-garamond)', fontWeight: 400 }}>
 
 // Card label
 <h2 style={{ fontFamily: 'var(--font-dm-sans)', fontSize: '18px', fontWeight: 600 }}>

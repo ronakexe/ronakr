@@ -50,7 +50,7 @@ export default function SupernovaPage() {
             <p
               className="text-[15px] md:text-[18px]"
               style={{
-                fontFamily: 'var(--font-crimson-pro)',
+                fontFamily: 'var(--font-garamond)',
                 fontWeight: 400,
                 lineHeight: 1.5,
                 color: 'var(--text)',

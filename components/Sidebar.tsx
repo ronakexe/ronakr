@@ -4,11 +4,13 @@ import { useState } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { pieces, finds, Piece } from '@/app/pieces/pieces'
+import { pieces, finds, initiatives, Piece } from '@/app/pieces/pieces'
 import ThemeToggle from '@/components/ThemeToggle'
 
-type Tab = 'pieces' | 'finds'
+type Tab = 'initiatives' | 'pieces' | 'finds'
 type View = 'list' | 'grid'
+
+const TABS: Tab[] = ['initiatives', 'pieces', 'finds']
 
 // Dividers between pieces track the text color; the empty-thumbnail box uses
 // the theme's dedicated border token so it reads as a placeholder, not a rule.
@@ -17,10 +19,16 @@ const BOX = 'var(--border)'
 
 export default function Sidebar() {
   const pathname = usePathname()
-  const [tab, setTab] = useState<Tab>(pathname.startsWith('/finds') ? 'finds' : 'pieces')
+  const [tab, setTab] = useState<Tab>(
+    pathname.startsWith('/finds')
+      ? 'finds'
+      : pathname.startsWith('/initiatives')
+        ? 'initiatives'
+        : 'pieces',
+  )
   const [view, setView] = useState<View>('list')
 
-  const items = tab === 'pieces' ? pieces : finds
+  const items = tab === 'pieces' ? pieces : tab === 'finds' ? finds : initiatives
 
   return (
     <aside className="w-full shrink-0 px-7 py-8 md:w-[360px] md:px-10 md:py-10">
@@ -39,16 +47,17 @@ export default function Sidebar() {
       <div className="mt-7 flex items-center justify-between gap-4">
         {/* Segmented picker */}
         <div className="flex p-0.5" style={{ background: 'var(--muted)', borderRadius: 'var(--radius)' }}>
-          {(['pieces', 'finds'] as Tab[]).map((t) => (
+          {TABS.map((t) => (
             <button
               key={t}
               onClick={() => setTab(t)}
-              className="px-4 py-1.5 text-[13px] font-medium capitalize transition-colors"
+              className="section-label px-2.5 py-1.5 text-[11px] whitespace-nowrap transition-colors"
               style={{
                 background: tab === t ? 'var(--background)' : 'transparent',
-                color: tab === t ? 'var(--foreground)' : 'var(--muted-foreground)',
+                color: tab === t ? 'var(--name)' : 'var(--muted-foreground)',
                 boxShadow: tab === t ? '0 1px 2px rgba(0,0,0,0.08)' : 'none',
                 borderRadius: 'calc(var(--radius) - 2px)',
+                letterSpacing: '0.06em',
               }}
             >
               {t}
