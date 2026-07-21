@@ -33,7 +33,7 @@ export const finds: Piece[] = [
 ]
 
 export const initiatives: Piece[] = [
-  { title: 'Super Daisy', image: null, date: 'May 2026' },
-  { title: 'Youth Stemline', image: null, date: 'Jun 2025' },
-  { title: 'SoberSense', image: null, date: 'Nov 2024' },
+  { title: 'Super Daisy', image: null, date: 'May 2026-now' },
+  { title: 'Youth Stemline', image: null, date: 'Jun 2025-now' },
+  { title: 'SoberSense', image: null, date: 'Nov 2024-may 2026' },
 ]
