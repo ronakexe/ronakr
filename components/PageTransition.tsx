@@ -14,13 +14,17 @@ type Direction = 'forward' | 'back'
 // Navigating away from home slides the list off to the left while the entry
 // slides in from the right; navigating back to home reverses it. Desktop is
 // untouched — PageShell's own padding-top transition already handles that.
+//
+// Driven by a CSS @keyframes animation (declared in globals.css) rather than
+// a React state flip: the "from" position is baked into the keyframe itself,
+// so the browser never has a chance to paint the new content already
+// settled in place before the slide starts.
 export default function PageTransition({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
   const [isMobile, setIsMobile] = useState(false)
   const [current, setCurrent] = useState<Slot>({ pathname, node: children })
   const [outgoing, setOutgoing] = useState<Slot | null>(null)
   const [direction, setDirection] = useState<Direction>('forward')
-  const [settled, setSettled] = useState(true)
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   useLayoutEffect(() => {
@@ -40,14 +44,11 @@ export default function PageTransition({ children }: { children: React.ReactNode
     setDirection(pathname === '/' ? 'back' : 'forward')
     setOutgoing(current)
     setCurrent({ pathname, node: children })
-    setSettled(false)
 
     if (timeoutRef.current) clearTimeout(timeoutRef.current)
-    const raf = requestAnimationFrame(() => setSettled(true))
     timeoutRef.current = setTimeout(() => setOutgoing(null), DURATION)
 
     return () => {
-      cancelAnimationFrame(raf)
       if (timeoutRef.current) clearTimeout(timeoutRef.current)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -58,17 +59,15 @@ export default function PageTransition({ children }: { children: React.ReactNode
   }
 
   const items = direction === 'forward' ? [outgoing, current] : [current, outgoing]
-  const startX = direction === 'forward' ? '0%' : '-50%'
-  const restX = direction === 'forward' ? '-50%' : '0%'
 
   return (
     <div style={{ overflowX: 'hidden' }}>
       <div
+        key={`${outgoing.pathname}->${current.pathname}`}
         style={{
           display: 'flex',
           width: '200%',
-          transform: `translateX(${settled ? restX : startX})`,
-          transition: `transform ${DURATION}ms ${EASING}`,
+          animation: `slide-track-${direction} ${DURATION}ms ${EASING} forwards`,
         }}
       >
         {items.map((item) => (

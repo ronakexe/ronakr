@@ -197,6 +197,16 @@ p, .body-text {
   letter-spacing: 0.04em;
 }
 
+/* Mobile home <-> entry slide transition — see PageTransition.tsx. */
+@keyframes slide-track-forward {
+  from { transform: translateX(0%); }
+  to { transform: translateX(-50%); }
+}
+@keyframes slide-track-back {
+  from { transform: translateX(-50%); }
+  to { transform: translateX(0%); }
+}
+
 .nav-label {
   transition: top 200ms ease;
 }
