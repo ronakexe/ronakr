@@ -1,6 +1,0 @@
-{
-  "version": 3,
-  "sources": [],
-  "sections": [
-    {"offset": {"line": 18, "column": 0}, "map": {"version":3,"sources":["file:///Users/ronakr/SCAT/code/ronak-ramanni/app/page.tsx"],"sourcesContent":["import { SidebarProvider, SidebarInset, SidebarTrigger } from \"@/components/ui/sidebar\"\nimport { AppSidebar } from \"@/components/app-sidebar\"\n\nexport default function Page() {\n  <SidebarProvider>\n  <AppSidebar />\n  <SidebarInset>\n    <header className=\"flex h-16 shrink-0 items-center gap-2 border-b px-4\">\n      <SidebarTrigger className=\"-ml-1\" />\n      <div className=\"flex flex-1 items-center gap-2\">\n        <h1 className=\"text-lg font-semibold\">Your Page Title</h1>\n      </div>\n    </header>\n    <main className=\"flex flex-1 flex-col gap-4 p-4\">\n      {/* Your page content goes here */}\n      <div>Your content here</div>\n    </main>\n  </SidebarInset>\n</SidebarProvider>\n}"],"names":[],"mappings":";;;;;;;;;;;;;;;;;;AAGe,SAAS;kBACtB,8OAAC;;0BACD,8OAAC;;;;;0BACD,8OAAC;;kCACC,8OAAC;wBAAO,WAAU;;0CAChB,8OAAC;gCAAe,WAAU;;;;;;0CAC1B,8OAAC;gCAAI,WAAU;0CACb,cAAA,8OAAC;oCAAG,WAAU;8CAAwB;;;;;;;;;;;;;;;;;kCAG1C,8OAAC;wBAAK,WAAU;kCAEd,cAAA,8OAAC;sCAAI;;;;;;;;;;;;;;;;;;;;;;;AAIX"}}]
-}
