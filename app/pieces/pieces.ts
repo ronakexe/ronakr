@@ -23,9 +23,24 @@ export const pieces: Piece[] = [
 
 export const finds: Piece[] = [
   { title: 'NYC Subway', image: null, date: 'x' },
-  { title: 'Mario Keyboard', image: null, date: 'x' },
-  { title: 'Uffizi Galleries', image: null, date: 'x' },
-  { title: 'Lacoste store', image: null, date: 'x' },
+  {
+    title: 'Mario Keyboard',
+    image: 'https://escupwsgyrre2c6k.public.blob.vercel-storage.com/Mario%20Keyboard/IMG_0780.jpeg',
+    href: '/finds/mario-keyboard',
+    date: 'x',
+  },
+  {
+    title: 'Uffizi Galleries',
+    image: 'https://escupwsgyrre2c6k.public.blob.vercel-storage.com/Uffizi%20Galleries/IMG_1722.jpeg',
+    href: '/finds/uffizi-galleries',
+    date: 'x',
+  },
+  {
+    title: 'Lacoste store',
+    image: 'https://escupwsgyrre2c6k.public.blob.vercel-storage.com/Lacoste/IMG_1772.jpeg',
+    href: '/finds/lacoste',
+    date: 'x',
+  },
   {
     title: 'The Bread Club',
     image:
