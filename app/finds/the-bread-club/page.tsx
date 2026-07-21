@@ -36,6 +36,18 @@ const IMAGES = [
     `https://escupwsgyrre2c6k.public.blob.vercel-storage.com/The%20Bread%20Club/${file}`
 )
 
+// Route through Next's built-in image optimizer so the browser gets a
+// resized JPEG instead of the original multi-MB photo straight off Blob.
+// Plain <img> (not next/image) so masonry keeps each photo's true aspect
+// ratio without needing known width/height ahead of time.
+function optimizedSrc(url: string, width: number) {
+  return `/_next/image?url=${encodeURIComponent(url)}&w=${width}&q=75`
+}
+
+// Must match values Next.js is configured to serve (see next.config.ts
+// images.deviceSizes) — arbitrary widths get rejected by the optimizer.
+const WIDTHS = [384, 750, 1200]
+
 export default function TheBreadClubPage() {
   return (
     <main className="relative w-full" style={{ minHeight: '100vh', background: BG }}>
@@ -62,9 +74,12 @@ export default function TheBreadClubPage() {
             // eslint-disable-next-line @next/next/no-img-element
             <img
               key={src}
-              src={src}
+              src={optimizedSrc(src, 750)}
+              srcSet={WIDTHS.map((w) => `${optimizedSrc(src, w)} ${w}w`).join(', ')}
+              sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, 25vw"
               alt=""
               loading="lazy"
+              decoding="async"
               className="mb-4 w-full break-inside-avoid"
               style={{ borderRadius: 4, display: 'block' }}
             />
