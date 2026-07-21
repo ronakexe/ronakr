@@ -19,6 +19,14 @@ type Direction = 'forward' | 'back'
 // a React state flip: the "from" position is baked into the keyframe itself,
 // so the browser never has a chance to paint the new content already
 // settled in place before the slide starts.
+//
+// The incoming page stays in normal document flow (just translated); the
+// outgoing page is absolutely positioned over it. That way PageShell's
+// height measurement (used to center the home list) always reflects the
+// incoming page alone, not the two pages stacked together — otherwise the
+// measured block would be taller than the settled page during the slide,
+// and padding-top would visibly snap once the outgoing page unmounted,
+// reading as a second, separate slide.
 export default function PageTransition({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
   const [isMobile, setIsMobile] = useState(false)
@@ -58,23 +66,25 @@ export default function PageTransition({ children }: { children: React.ReactNode
     return <>{current.node}</>
   }
 
-  const items = direction === 'forward' ? [outgoing, current] : [current, outgoing]
-
   return (
-    <div style={{ overflowX: 'hidden' }}>
+    <div style={{ position: 'relative', overflowX: 'hidden' }}>
       <div
-        key={`${outgoing.pathname}->${current.pathname}`}
+        key={current.pathname}
         style={{
-          display: 'flex',
-          width: '200%',
-          animation: `slide-track-${direction} ${DURATION}ms ${EASING} forwards`,
+          animation: `slide-in-${direction} ${DURATION}ms ${EASING} forwards`,
         }}
       >
-        {items.map((item) => (
-          <div key={item.pathname} style={{ width: '50%', flexShrink: 0 }}>
-            {item.node}
-          </div>
-        ))}
+        {current.node}
+      </div>
+      <div
+        key={outgoing.pathname}
+        style={{
+          position: 'absolute',
+          inset: 0,
+          animation: `slide-out-${direction} ${DURATION}ms ${EASING} forwards`,
+        }}
+      >
+        {outgoing.node}
       </div>
     </div>
   )
