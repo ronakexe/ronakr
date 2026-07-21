@@ -3,6 +3,7 @@
 import { useLayoutEffect, useRef, useState } from 'react'
 import { usePathname } from 'next/navigation'
 import SiteChrome from '@/components/SiteChrome'
+import PageTransition from '@/components/PageTransition'
 
 const COMPACT_PADDING_MOBILE = 32
 const COMPACT_PADDING_DESKTOP = 40
@@ -49,7 +50,7 @@ export default function PageShell({ children }: { children: React.ReactNode }) {
     >
       <div ref={blockRef}>
         <SiteChrome />
-        {children}
+        <PageTransition>{children}</PageTransition>
       </div>
     </div>
   )
