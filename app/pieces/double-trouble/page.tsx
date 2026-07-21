@@ -10,7 +10,7 @@ export default function DoubleTroublePage() {
       <main className="relative w-full" style={{ minHeight: '100vh', background: BG }}>
         <div className="relative mx-auto" style={{ maxWidth: 1512, minHeight: '100vh' }}>
           <h1
-            className="text-[32px] md:text-[40px] font-bold leading-none"
+            className="text-[32px] md:text-[40px] leading-none"
             style={{ fontFamily: "'Redaction 20', var(--font-dm-sans), sans-serif", letterSpacing: '-0.02em', margin: 0, padding: '56px 40px 0' }}
           >
             Double Trouble
