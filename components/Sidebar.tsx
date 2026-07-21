@@ -36,7 +36,7 @@ export default function Sidebar() {
         href="/"
         className="block whitespace-nowrap text-[36px] leading-[1.05] md:text-[44px]"
         style={{
-          fontFamily: "'Redaction 35', var(--font-dm-sans), sans-serif",
+          fontFamily: "'Redaction 50', var(--font-dm-sans), sans-serif",
           letterSpacing: '-0.025em',
           color: 'var(--name)',
         }}
