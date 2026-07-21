@@ -6,6 +6,13 @@ import { pieces, finds, initiatives, Piece } from '@/app/pieces/pieces'
 // entry text never shifts — sized to roughly half the 31.5px/34.5px row
 // height, width following each image's native aspect ratio.
 
+// Route remote (blob-hosted) thumbnails through Next's image optimizer so the
+// ~17px icon isn't fetched as a multi-MB original — same trick as MasonryGrid.
+function optimizedSrc(url: string, width: number) {
+  return `/_next/image?url=${encodeURIComponent(url)}&w=${width}&q=75`
+}
+const THUMB_WIDTHS = [32, 64, 96]
+
 const SECTIONS: { label: string; items: Piece[] }[] = [
   { label: 'initiatives', items: initiatives },
   { label: 'pieces', items: pieces },
@@ -28,7 +35,9 @@ export default function Home() {
                   {item.image && typeof item.image === 'string' && (
                     // eslint-disable-next-line @next/next/no-img-element
                     <img
-                      src={item.image}
+                      src={optimizedSrc(item.image, 64)}
+                      srcSet={THUMB_WIDTHS.map((w) => `${optimizedSrc(item.image as string, w)} ${w}w`).join(', ')}
+                      sizes="32px"
                       alt={item.title}
                       className="absolute right-full top-1/2 mr-1.5 h-[16.75px] w-auto -translate-y-1/2 md:h-[18.25px]"
                       style={{ borderRadius: 1 }}
