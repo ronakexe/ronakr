@@ -1,91 +1,140 @@
 'use client'
 
-import { useLayoutEffect, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef } from 'react'
 import { usePathname } from 'next/navigation'
 
 const DURATION = 420
 const EASING = 'cubic-bezier(0.4, 0, 0.2, 1)'
-const MD_BREAKPOINT = '(max-width: 767px)'
+const MOBILE_QUERY = '(max-width: 767px)'
 
-type Slot = { pathname: string; node: React.ReactNode }
-type Direction = 'forward' | 'back'
+type MediaRect = { width: number; height: number }
+type Snapshot = { html: string; height: number; scrollY: number; mediaRects: MediaRect[] }
 
-// Mobile-only slide transition between the home list and an entry page.
-// Navigating away from home slides the list off to the left while the entry
-// slides in from the right; navigating back to home reverses it. Desktop is
-// untouched — PageShell's own padding-top transition already handles that.
+// Mobile-only slide between the home list and an entry page. Navigating away
+// from home slides the list off to the left while the entry slides in from the
+// right; navigating back reverses it. Desktop is untouched — PageShell's
+// padding-top transition handles that.
 //
-// Driven by a CSS @keyframes animation (declared in globals.css) rather than
-// a React state flip: the "from" position is baked into the keyframe itself,
-// so the browser never has a chance to paint the new content already
-// settled in place before the slide starts.
+// The outgoing page is a CLONED DOM SNAPSHOT, not React state holding the
+// previous `children`. That distinction is the whole point of this component:
+// in the App Router, `children` is a live reference into the router's segment
+// tree, not a snapshot of rendered output. Stashing it in state and rendering
+// it back gives you the CURRENT route, because React re-renders the element
+// against the router's new state. The result was both layers rendering the
+// incoming page — the new page appeared instantly in the "outgoing" slot, then
+// an identical copy slid in over it, which read as the page loading twice.
 //
-// The incoming page stays in normal document flow (just translated); the
-// outgoing page is absolutely positioned over it. That way PageShell's
-// height measurement (used to center the home list) always reflects the
-// incoming page alone, not the two pages stacked together — otherwise the
-// measured block would be taller than the settled page during the slide,
-// and padding-top would visibly snap once the outgoing page unmounted,
-// reading as a second, separate slide.
+// A cloned node has no such tie to the router. It is inert markup that keeps
+// showing the page we left, so the only thing that animates in is the real,
+// already-rendered incoming page.
 export default function PageTransition({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
-  const [isMobile, setIsMobile] = useState(false)
-  const [current, setCurrent] = useState<Slot>({ pathname, node: children })
-  const [outgoing, setOutgoing] = useState<Slot | null>(null)
-  const [direction, setDirection] = useState<Direction>('forward')
-  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const hostRef = useRef<HTMLDivElement>(null)
+  const pageRef = useRef<HTMLDivElement>(null)
+  const snapshot = useRef<Snapshot | null>(null)
+  const lastPath = useRef(pathname)
+  const cancelRef = useRef<(() => void) | null>(null)
+
+  // Snapshot the settled page after every commit — this is what the NEXT
+  // navigation slides out. Captured here rather than at navigation time
+  // because by the time a route-change layout effect runs, React has already
+  // swapped the DOM to the incoming page and the old markup is gone. Height,
+  // scroll position, and each media element's rendered size are captured now
+  // too, while this is still the real, connected page — a clone parsed from
+  // an HTML string is unlaid-out until it's inserted into the document, so
+  // measuring it at build time gets 0x0 for everything.
+  useEffect(() => {
+    const page = pageRef.current
+    if (!page) return
+    const mediaRects = [...page.querySelectorAll('iframe, video')].map((el) => {
+      const r = el.getBoundingClientRect()
+      return { width: r.width, height: r.height }
+    })
+    snapshot.current = { html: page.innerHTML, height: page.offsetHeight, scrollY: window.scrollY, mediaRects }
+  })
 
   useLayoutEffect(() => {
-    const mq = window.matchMedia(MD_BREAKPOINT)
-    const update = () => setIsMobile(mq.matches)
-    update()
-    mq.addEventListener('change', update)
-    return () => mq.removeEventListener('change', update)
-  }, [])
+    if (lastPath.current === pathname) return
+    lastPath.current = pathname
 
-  useLayoutEffect(() => {
-    if (pathname === current.pathname) {
-      setCurrent({ pathname, node: children })
-      return
+    const host = hostRef.current
+    const page = pageRef.current
+    const snap = snapshot.current
+    if (!host || !page || !snap) return
+    if (!window.matchMedia(MOBILE_QUERY).matches) return
+
+    // A prior transition still in flight (fast back-to-back navigation) —
+    // drop it before starting the next one.
+    cancelRef.current?.()
+
+    const back = pathname === '/'
+
+    const ghost = document.createElement('div')
+    ghost.innerHTML = snap.html
+    // Media in a clone would re-fetch and re-instantiate (a YouTube embed
+    // remounts as a blank player) for the 420ms it spends leaving. Several
+    // piece pages open on a YouTube embed, so swapping it for an empty box
+    // would leave a hole where the video thumbnail should be for the whole
+    // slide — swap in the video's own thumbnail image instead, sized to
+    // match, and only fall back to a blank box for embeds we can't resolve.
+    ghost.querySelectorAll('iframe, video').forEach((node, i) => {
+      const rect = snap.mediaRects[i] ?? { width: 0, height: 0 }
+      const videoId = node.getAttribute('src')?.match(/youtube(?:-nocookie)?\.com\/embed\/([\w-]+)/)?.[1]
+      const replacement = document.createElement(videoId ? 'img' : 'div')
+      replacement.style.cssText = `width:${rect.width}px;height:${rect.height}px;object-fit:cover;display:block`
+      if (videoId) (replacement as HTMLImageElement).src = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`
+      node.replaceWith(replacement)
+    })
+    ghost.setAttribute('aria-hidden', 'true')
+    ghost.style.cssText = [
+      'position:absolute',
+      'left:0',
+      'right:0',
+      `top:${-snap.scrollY}px`, // shift to where the reader actually was, not the clone's own top
+      `height:${snap.height}px`, // sized from the real page, not the host box — host now measures the incoming page
+      'pointer-events:none',
+    ].join(';')
+
+    // Scoped to the animation only: overflow-x containment so a mid-slide
+    // frame can't push the document wider (host spans full viewport width),
+    // and only x — a y clip here would crop the ghost to the host's own
+    // height, which now reflects the INCOMING page, not the departing one.
+    host.style.position = 'relative'
+    host.style.overflowX = 'hidden'
+    host.appendChild(ghost)
+
+    const opts = { duration: DURATION, easing: EASING, fill: 'both' as const }
+    const outgoing = ghost.animate(
+      [{ transform: 'translateX(0%)' }, { transform: `translateX(${back ? '100%' : '-100%'})` }],
+      opts,
+    )
+    const incoming = page.animate(
+      [{ transform: `translateX(${back ? '-100%' : '100%'})` }, { transform: 'translateX(0%)' }],
+      opts,
+    )
+
+    let settled = false
+    const settle = () => {
+      if (settled) return
+      settled = true
+      ghost.remove()
+      host.style.position = ''
+      host.style.overflowX = ''
+      cancelRef.current = null
     }
+    incoming.finished.then(settle, settle)
 
-    setDirection(pathname === '/' ? 'back' : 'forward')
-    setOutgoing(current)
-    setCurrent({ pathname, node: children })
-
-    if (timeoutRef.current) clearTimeout(timeoutRef.current)
-    timeoutRef.current = setTimeout(() => setOutgoing(null), DURATION)
-
-    return () => {
-      if (timeoutRef.current) clearTimeout(timeoutRef.current)
+    cancelRef.current = () => {
+      outgoing.cancel()
+      incoming.cancel()
+      settle()
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    return () => cancelRef.current?.()
   }, [pathname])
 
-  if (!isMobile || !outgoing) {
-    return <>{current.node}</>
-  }
-
   return (
-    <div style={{ position: 'relative', overflowX: 'hidden' }}>
-      <div
-        key={current.pathname}
-        style={{
-          animation: `slide-in-${direction} ${DURATION}ms ${EASING} forwards`,
-        }}
-      >
-        {current.node}
-      </div>
-      <div
-        key={outgoing.pathname}
-        style={{
-          position: 'absolute',
-          inset: 0,
-          animation: `slide-out-${direction} ${DURATION}ms ${EASING} forwards`,
-        }}
-      >
-        {outgoing.node}
-      </div>
+    <div ref={hostRef}>
+      <div ref={pageRef}>{children}</div>
     </div>
   )
 }
