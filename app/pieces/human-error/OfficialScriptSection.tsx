@@ -72,21 +72,9 @@ export default function OfficialScriptSection() {
       >
         {/* Write-up + icons — col 1 only (between lines 1–2) at all breakpoints */}
         <div className="md:col-span-1" style={{ paddingLeft: 12, paddingRight: 8, minWidth: 0 }}>
-          <h1
-            className="text-[14px] uppercase"
-            style={{
-              fontFamily: "'Redaction 20', var(--font-dm-sans), sans-serif",
-              fontStyle: 'italic',
-              letterSpacing: '0.14em',
-              opacity: 0.5,
-              margin: 0,
-            }}
-          >
-            Official Script
-          </h1>
           <div
             className="text-[15px] md:text-[18px]"
-            style={{ fontFamily: 'var(--font-garamond)', fontWeight: 400, lineHeight: 1.3, color: 'var(--text)', marginTop: 16 }}
+            style={{ fontFamily: 'var(--font-garamond)', fontWeight: 400, lineHeight: 1.3, color: 'var(--text)' }}
           >
             <p style={{ margin: 0 }}>
               This was the script used on set for Human Error. It was the first script I had

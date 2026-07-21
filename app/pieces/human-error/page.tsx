@@ -42,12 +42,6 @@ export default function HumanErrorPage() {
 
           {/* Synopsis — last column */}
           <div className="md:col-start-3 mid:col-start-4 mt-12 md:mt-0" style={{ paddingLeft: 12, paddingRight: 8 }}>
-            <h2
-              className="text-[14px] uppercase"
-              style={{ fontFamily: "'Redaction 20', var(--font-dm-sans), sans-serif", fontStyle: 'italic', letterSpacing: '0.14em', opacity: 0.5, margin: 0 }}
-            >
-              Synopsis
-            </h2>
             <p
               className="text-[15px] md:text-[18px]"
               style={{
@@ -55,7 +49,6 @@ export default function HumanErrorPage() {
                 fontWeight: 400,
                 lineHeight: 1.5,
                 color: 'var(--text)',
-                marginTop: 12,
               }}
             >
               Human Error is about an angel who is trying to impress God by interviewing

@@ -41,12 +41,6 @@ export default function SupernovaPage() {
 
           {/* Synopsis — last column */}
           <div className="md:col-start-4 mt-12 md:mt-0" style={{ paddingLeft: 12, paddingRight: 8 }}>
-            <h2
-              className="text-[14px] uppercase"
-              style={{ fontFamily: "'Redaction 20', var(--font-dm-sans), sans-serif", fontStyle: 'italic', letterSpacing: '0.14em', opacity: 0.5, margin: 0 }}
-            >
-              Synopsis
-            </h2>
             <p
               className="text-[15px] md:text-[18px]"
               style={{
@@ -54,7 +48,6 @@ export default function SupernovaPage() {
                 fontWeight: 400,
                 lineHeight: 1.5,
                 color: 'var(--text)',
-                marginTop: 12,
               }}
             >
               Nova is a teenage girl who hosts a party in an attempt to achieve the approval

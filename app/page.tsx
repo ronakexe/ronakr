@@ -1,6 +1,11 @@
+import Image from 'next/image'
 import Link from 'next/link'
 import CloverIcon from '@/components/CloverIcon'
 import { pieces, finds, initiatives, Piece } from '@/app/pieces/pieces'
+
+// Thumbnails hang in the ul's left indent (absolute, right-full) so the
+// entry text never shifts — sized to roughly half the 31.5px/34.5px row
+// height, width following each image's native aspect ratio.
 
 const SECTIONS: { label: string; items: Piece[] }[] = [
   { label: 'initiatives', items: initiatives },
@@ -34,7 +39,15 @@ export default function Home() {
             <h2 className="section-label text-[15px] md:text-[16px]">{section.label}</h2>
             <ul className="mt-4 pl-4 md:mt-5">
               {section.items.map((item) => (
-                <li key={item.title}>
+                <li key={item.title} className="relative">
+                  {item.image && (
+                    <Image
+                      src={item.image}
+                      alt={item.title}
+                      className="absolute right-full top-1/2 mr-1.5 h-[16.75px] w-auto -translate-y-1/2 md:h-[18.25px]"
+                      style={{ borderRadius: 1 }}
+                    />
+                  )}
                   <Entry item={item} />
                 </li>
               ))}
