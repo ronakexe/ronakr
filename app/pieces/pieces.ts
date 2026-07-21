@@ -7,7 +7,7 @@ import supernova from './piece-assets/supernova/supernova-icon.png'
 
 export type Piece = {
   title: string
-  image: StaticImageData | null
+  image: StaticImageData | string | null
   href?: string
   date: string
 }
@@ -26,7 +26,13 @@ export const finds: Piece[] = [
   { title: 'Mario Keyboard', image: null, date: 'x' },
   { title: 'Uffizi Galleries', image: null, date: 'x' },
   { title: 'Lacoste store', image: null, date: 'x' },
-  { title: 'The Bread Club', image: null, date: 'x' },
+  {
+    title: 'The Bread Club',
+    image:
+      'https://escupwsgyrre2c6k.public.blob.vercel-storage.com/The%20Bread%20Club/IMG_3250.jpeg',
+    href: '/finds/the-bread-club',
+    date: 'x',
+  },
   { title: 'Profile Pictures', image: null, date: 'x' },
   { title: 'Kith', image: null, date: 'x' },
   { title: 'Etc.', image: null, date: 'x' },

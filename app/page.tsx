@@ -25,7 +25,16 @@ export default function Home() {
             <ul className="pl-4">
               {section.items.map((item) => (
                 <li key={item.title} className="relative">
-                  {item.image && (
+                  {item.image && typeof item.image === 'string' && (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={item.image}
+                      alt={item.title}
+                      className="absolute right-full top-1/2 mr-1.5 h-[16.75px] w-auto -translate-y-1/2 md:h-[18.25px]"
+                      style={{ borderRadius: 1 }}
+                    />
+                  )}
+                  {item.image && typeof item.image !== 'string' && (
                     <Image
                       src={item.image}
                       alt={item.title}
