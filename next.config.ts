@@ -13,6 +13,15 @@ if (typeof localStorage !== 'undefined' && typeof localStorage.getItem !== 'func
   }
 }
 
-const nextConfig: NextConfig = {}
+const nextConfig: NextConfig = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '*.public.blob.vercel-storage.com',
+      },
+    ],
+  },
+}
 
 export default nextConfig
