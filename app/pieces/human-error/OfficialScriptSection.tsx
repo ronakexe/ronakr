@@ -134,9 +134,9 @@ export default function OfficialScriptSection() {
           </div>
         </div>
 
-        {/* Script box — 3-col span (cols 2–4) at mid so center = between lines 3 and 4 */}
+        {/* Script box — 3-col span (cols 2–4) at mid, pushed flush to the right edge */}
         <div className="md:col-start-2 md:col-span-2 mid:col-span-3 mt-10 md:mt-0">
-          <div className="mid:w-2/3 mid:mx-auto">
+          <div className="mid:w-2/3 mid:ml-auto">
             <div
               ref={boxRef}
               style={{
