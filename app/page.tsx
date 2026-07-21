@@ -1,6 +1,5 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import CloverIcon from '@/components/CloverIcon'
 import { pieces, finds, initiatives, Piece } from '@/app/pieces/pieces'
 
 // Thumbnails hang in the ul's left indent (absolute, right-full) so the
@@ -15,29 +14,14 @@ const SECTIONS: { label: string; items: Piece[] }[] = [
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col justify-center px-8 py-16 md:px-16 md:py-20">
-      {/* Name left, clover right */}
-      <div className="flex items-center justify-between gap-8">
-        <h1
-          className="text-[44px] leading-none md:text-[76px]"
-          style={{
-            fontFamily: "'Redaction 35', serif",
-            color: 'var(--name)',
-            fontWeight: 400,
-          }}
-        >
-          Ronak Ramnani
-        </h1>
-        <CloverIcon width={68} height={65} className="shrink-0" />
-      </div>
-
+    <main className="px-8 pb-16 md:px-16 md:pb-20">
       {/* Three columns — grid tracks span the full width and stay evenly
-          spaced; only the content inside each column is capped narrower. */}
+          spaced; only the content inside each column is capped narrower.
+          Labels themselves live in SiteChrome, directly above this grid. */}
       <div className="mt-10 grid grid-cols-1 gap-x-12 gap-y-10 md:mt-14 md:grid-cols-3">
         {SECTIONS.map((section) => (
           <section key={section.label} className="md:max-w-[300px]">
-            <h2 className="section-label text-[15px] md:text-[16px]">{section.label}</h2>
-            <ul className="mt-4 pl-4 md:mt-5">
+            <ul className="pl-4">
               {section.items.map((item) => (
                 <li key={item.title} className="relative">
                   {item.image && (
@@ -66,7 +50,7 @@ function Entry({ item }: { item: Piece }) {
       style={{ fontFamily: 'var(--font-garamond), serif' }}
     >
       <span>{item.title}</span>
-      <span>{item.date}</span>
+      <span className="italic">{item.date}</span>
     </div>
   )
 

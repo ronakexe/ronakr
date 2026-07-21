@@ -1,19 +1,15 @@
-'use client'
-
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
 import CloverIcon from '@/components/CloverIcon'
 
 const LABELS = ['initiatives', 'pieces', 'finds']
 
-// The homepage renders its own full-bleed hero, so the compact header only
-// applies to inner pages (wireframe 2).
-export default function Header() {
-  const pathname = usePathname()
-  if (pathname === '/') return null
-
+// Rendered once in the root layout and never unmounted — PageShell's
+// padding-top (not this component's own) moves the whole block between a
+// vertically-centered (home) and top-docked (everywhere else) position via
+// a plain CSS transition, so it stays put across navigation.
+export default function SiteChrome() {
   return (
-    <header className="px-8 pt-8 md:px-16 md:pt-10">
+    <header className="px-8 md:px-16">
       <div className="flex items-center justify-between gap-8">
         <Link
           href="/"

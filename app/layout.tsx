@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { DM_Sans, EB_Garamond } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import Script from 'next/script'
-import Header from '@/components/Header'
+import PageShell from '@/components/PageShell'
 import './globals.css'
 
 const THEME_INIT = `(function(){try{var t=localStorage.getItem('theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();`
@@ -40,8 +40,7 @@ export default function RootLayout({
         <Script id="theme-init" strategy="beforeInteractive">
           {THEME_INIT}
         </Script>
-        <Header />
-        {children}
+        <PageShell>{children}</PageShell>
         <Analytics />
       </body>
     </html>
