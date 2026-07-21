@@ -68,7 +68,7 @@ export default function TheBreadClubPage() {
             natural aspect ratio so column heights fall unevenly. */}
         <div
           className="columns-2 sm:columns-3 md:columns-4"
-          style={{ padding: '28px 40px 96px', columnGap: 16 }}
+          style={{ padding: '28px 40px 96px', columnGap: 32 }}
         >
           {IMAGES.map((src) => (
             // eslint-disable-next-line @next/next/no-img-element
@@ -80,7 +80,7 @@ export default function TheBreadClubPage() {
               alt=""
               loading="lazy"
               decoding="async"
-              className="mb-4 w-full break-inside-avoid"
+              className="mb-8 w-full break-inside-avoid"
               style={{ borderRadius: 4, display: 'block' }}
             />
           ))}
