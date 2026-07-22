@@ -1,5 +1,7 @@
 'use client'
 
+import React from 'react'
+
 const BG = 'var(--bg)'
 
 // Route through Next's built-in image optimizer so the browser gets a
@@ -14,7 +16,20 @@ function optimizedSrc(url: string, width: number) {
 // images.deviceSizes) — arbitrary widths get rejected by the optimizer.
 const WIDTHS = [384, 750, 1200]
 
-export default function MasonryGrid({ title, images }: { title: string; images: string[] }) {
+// Per-src override for images that need a bottom crop — keyed by the
+// original (un-optimized) src URL. aspectRatio should reflect the cropped
+// (visible) width/height so masonry packs columns using the cropped size.
+type CropOverride = { aspectRatio: string }
+
+export default function MasonryGrid({
+  title,
+  images,
+  crops,
+}: {
+  title: string
+  images: string[]
+  crops?: Record<string, CropOverride>
+}) {
   return (
     <main className="relative w-full" style={{ minHeight: '100vh', background: BG }}>
       <div className="relative mx-auto" style={{ maxWidth: 1512, minHeight: '100vh' }}>
@@ -33,34 +48,49 @@ export default function MasonryGrid({ title, images }: { title: string; images: 
         {/* Pinterest-style masonry grid — CSS columns, images keep their
             natural aspect ratio so column heights fall unevenly. */}
         <div
-          className="columns-2 sm:columns-3 md:columns-4"
-          style={{ padding: '28px 40px 96px', columnGap: 48 }}
+          className="columns-2 gap-x-9 sm:columns-3 sm:gap-x-12 md:columns-4"
+          style={{ padding: '28px 40px 96px' }}
         >
-          {images.map((src) => (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              key={src}
-              src={optimizedSrc(src, 750)}
-              srcSet={WIDTHS.map((w) => `${optimizedSrc(src, w)} ${w}w`).join(', ')}
-              sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, 25vw"
-              alt=""
-              loading="lazy"
-              decoding="async"
-              ref={(el) => {
-                if (el?.complete) el.style.opacity = '1'
-              }}
-              onLoad={(e) => {
-                e.currentTarget.style.opacity = '1'
-              }}
-              className="mb-12 w-full break-inside-avoid"
-              style={{
-                borderRadius: 2,
-                display: 'block',
-                opacity: 0,
-                transition: 'opacity 0.4s ease',
-              }}
-            />
-          ))}
+          {images.map((src) => {
+            const crop = crops?.[src]
+            const img = (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={optimizedSrc(src, 750)}
+                srcSet={WIDTHS.map((w) => `${optimizedSrc(src, w)} ${w}w`).join(', ')}
+                sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, 25vw"
+                alt=""
+                loading="lazy"
+                decoding="async"
+                ref={(el) => {
+                  if (el?.complete) el.style.opacity = '1'
+                }}
+                onLoad={(e) => {
+                  e.currentTarget.style.opacity = '1'
+                }}
+                className={crop ? 'h-full w-full' : 'mb-9 w-full break-inside-avoid sm:mb-12'}
+                style={{
+                  borderRadius: 2,
+                  display: 'block',
+                  opacity: 0,
+                  transition: 'opacity 0.4s ease',
+                  ...(crop ? { objectFit: 'cover', objectPosition: 'top' } : {}),
+                }}
+              />
+            )
+
+            return crop ? (
+              <div
+                key={src}
+                className="mb-9 w-full break-inside-avoid overflow-hidden sm:mb-12"
+                style={{ aspectRatio: crop.aspectRatio, borderRadius: 2 }}
+              >
+                {img}
+              </div>
+            ) : (
+              <React.Fragment key={src}>{img}</React.Fragment>
+            )
+          })}
         </div>
       </div>
     </main>
