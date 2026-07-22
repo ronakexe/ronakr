@@ -1,7 +1,5 @@
 'use client'
 
-import React from 'react'
-
 const BG = 'var(--bg)'
 
 // Route through Next's built-in image optimizer so the browser gets a
@@ -16,19 +14,23 @@ function optimizedSrc(url: string, width: number) {
 // images.deviceSizes) — arbitrary widths get rejected by the optimizer.
 const WIDTHS = [384, 750, 1200]
 
-// Per-src override for images that need a bottom crop — keyed by the
-// original (un-optimized) src URL. aspectRatio should reflect the cropped
-// (visible) width/height so masonry packs columns using the cropped size.
-type CropOverride = { aspectRatio: string }
+// Each image's visible width/height, keyed by its original (un-optimized)
+// src URL. Sets the masonry cell's aspect-ratio before the photo itself has
+// loaded, so every cell is already the right size on first paint — images
+// simply fade in in place as they arrive instead of snapping to size and
+// shoving the rest of the column down. To show an image cropped (see The
+// Bread Club's IMG_3250), pass its cropped/visible dimensions rather than
+// the file's own — object-fit: cover crops the difference off the bottom.
+type Dimensions = Record<string, { width: number; height: number }>
 
 export default function MasonryGrid({
   title,
   images,
-  crops,
+  dimensions,
 }: {
   title: string
   images: string[]
-  crops?: Record<string, CropOverride>
+  dimensions: Dimensions
 }) {
   return (
     <main className="relative w-full" style={{ minHeight: '100vh', background: BG }}>
@@ -45,50 +47,44 @@ export default function MasonryGrid({
           {title}
         </h1>
 
-        {/* Pinterest-style masonry grid — CSS columns, images keep their
-            natural aspect ratio so column heights fall unevenly. */}
+        {/* Pinterest-style masonry grid — CSS columns, each cell pre-sized to
+            its image's aspect ratio so column heights are known up front. */}
         <div
           className="columns-2 gap-x-9 sm:columns-3 sm:gap-x-12 md:columns-4"
           style={{ padding: '28px 40px 96px' }}
         >
           {images.map((src) => {
-            const crop = crops?.[src]
-            const img = (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                src={optimizedSrc(src, 750)}
-                srcSet={WIDTHS.map((w) => `${optimizedSrc(src, w)} ${w}w`).join(', ')}
-                sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, 25vw"
-                alt=""
-                loading="lazy"
-                decoding="async"
-                ref={(el) => {
-                  if (el?.complete) el.style.opacity = '1'
-                }}
-                onLoad={(e) => {
-                  e.currentTarget.style.opacity = '1'
-                }}
-                className={crop ? 'h-full w-full' : 'mb-9 w-full break-inside-avoid sm:mb-12'}
-                style={{
-                  borderRadius: 2,
-                  display: 'block',
-                  opacity: 0,
-                  transition: 'opacity 0.4s ease',
-                  ...(crop ? { objectFit: 'cover', objectPosition: 'top' } : {}),
-                }}
-              />
-            )
-
-            return crop ? (
+            const { width, height } = dimensions[src]
+            return (
               <div
                 key={src}
                 className="mb-9 w-full break-inside-avoid overflow-hidden sm:mb-12"
-                style={{ aspectRatio: crop.aspectRatio, borderRadius: 2 }}
+                style={{ aspectRatio: `${width} / ${height}`, borderRadius: 2 }}
               >
-                {img}
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={optimizedSrc(src, 750)}
+                  srcSet={WIDTHS.map((w) => `${optimizedSrc(src, w)} ${w}w`).join(', ')}
+                  sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, 25vw"
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                  ref={(el) => {
+                    if (el?.complete) el.style.opacity = '1'
+                  }}
+                  onLoad={(e) => {
+                    e.currentTarget.style.opacity = '1'
+                  }}
+                  className="h-full w-full"
+                  style={{
+                    display: 'block',
+                    objectFit: 'cover',
+                    objectPosition: 'top',
+                    opacity: 0,
+                    transition: 'opacity 0.4s ease',
+                  }}
+                />
               </div>
-            ) : (
-              <React.Fragment key={src}>{img}</React.Fragment>
             )
           })}
         </div>
