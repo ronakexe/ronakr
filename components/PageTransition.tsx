@@ -5,15 +5,35 @@ import { usePathname } from 'next/navigation'
 
 const DURATION = 420
 const EASING = 'cubic-bezier(0.4, 0, 0.2, 1)'
+// The desktop drop-off reads more like something falling out of view, so it
+// eases in (starts slow, accelerates) rather than using the mobile slide's
+// decelerate-then-accelerate curve.
+const EASE_IN = 'cubic-bezier(0.4, 0, 1, 1)'
 const MOBILE_QUERY = '(max-width: 767px)'
 
 type MediaRect = { width: number; height: number }
 type Snapshot = { html: string; height: number; scrollY: number; mediaRects: MediaRect[] }
 
-// Mobile-only slide between the home list and an entry page. Navigating away
-// from home slides the list off to the left while the entry slides in from the
-// right; navigating back reverses it. Desktop is untouched — PageShell's
-// padding-top transition handles that.
+// An "entry" is an individual piece/finds page (/finds/lacoste,
+// /pieces/human-error) as opposed to the home list or a bare section index.
+function isEntryPath(path: string) {
+  return path.split('/').filter(Boolean).length >= 2
+}
+
+// Two device-specific transitions, sharing one snapshot/ghost mechanism:
+//
+// Mobile: horizontal slide between the home list and an entry page, both
+// ways. Navigating away from home slides the list off to the left while the
+// entry slides in from the right; navigating back reverses it.
+//
+// Desktop: only when leaving an entry, the departing page slides straight
+// down and off the bottom of the screen. SiteChrome's own small downward
+// shift back to its centered home position is handled separately by
+// PageShell's padding-top transition — the two compose, so the header moves
+// a little while the content underneath it slides away completely. The
+// incoming page needs no animation of its own: it's already sitting in
+// place beneath the departing ghost and is simply revealed as the ghost
+// clears out of the way.
 //
 // The outgoing page is a CLONED DOM SNAPSHOT, not React state holding the
 // previous `children`. That distinction is the whole point of this component:
@@ -55,13 +75,17 @@ export default function PageTransition({ children }: { children: React.ReactNode
 
   useLayoutEffect(() => {
     if (lastPath.current === pathname) return
+    const from = lastPath.current
     lastPath.current = pathname
 
     const host = hostRef.current
     const page = pageRef.current
     const snap = snapshot.current
     if (!host || !page || !snap) return
-    if (!window.matchMedia(MOBILE_QUERY).matches) return
+
+    const mobile = window.matchMedia(MOBILE_QUERY).matches
+    const leavingEntry = isEntryPath(from)
+    if (!mobile && !leavingEntry) return
 
     // A prior transition still in flight (fast back-to-back navigation) —
     // drop it before starting the next one.
@@ -95,23 +119,34 @@ export default function PageTransition({ children }: { children: React.ReactNode
       'pointer-events:none',
     ].join(';')
 
-    // Scoped to the animation only: overflow-x containment so a mid-slide
-    // frame can't push the document wider (host spans full viewport width),
-    // and only x — a y clip here would crop the ghost to the host's own
-    // height, which now reflects the INCOMING page, not the departing one.
     host.style.position = 'relative'
-    host.style.overflowX = 'hidden'
     host.appendChild(ghost)
 
     const opts = { duration: DURATION, easing: EASING, fill: 'both' as const }
-    const outgoing = ghost.animate(
-      [{ transform: 'translateX(0%)' }, { transform: `translateX(${back ? '100%' : '-100%'})` }],
-      opts,
-    )
-    const incoming = page.animate(
-      [{ transform: `translateX(${back ? '-100%' : '100%'})` }, { transform: 'translateX(0%)' }],
-      opts,
-    )
+    let outgoing: Animation
+    let incoming: Animation | null = null
+
+    if (mobile) {
+      // Scoped to the animation only: overflow-x containment so a mid-slide
+      // frame can't push the document wider (host spans full viewport
+      // width), and only x — a y clip here would crop the ghost to the
+      // host's own height, which now reflects the INCOMING page, not the
+      // departing one.
+      host.style.overflowX = 'hidden'
+      outgoing = ghost.animate(
+        [{ transform: 'translateX(0%)' }, { transform: `translateX(${back ? '100%' : '-100%'})` }],
+        opts,
+      )
+      incoming = page.animate(
+        [{ transform: `translateX(${back ? '-100%' : '100%'})` }, { transform: 'translateX(0%)' }],
+        opts,
+      )
+    } else {
+      outgoing = ghost.animate(
+        [{ transform: 'translateY(0%)' }, { transform: 'translateY(100%)' }],
+        { ...opts, easing: EASE_IN },
+      )
+    }
 
     let settled = false
     const settle = () => {
@@ -122,11 +157,11 @@ export default function PageTransition({ children }: { children: React.ReactNode
       host.style.overflowX = ''
       cancelRef.current = null
     }
-    incoming.finished.then(settle, settle)
+    ;(incoming ?? outgoing).finished.then(settle, settle)
 
     cancelRef.current = () => {
       outgoing.cancel()
-      incoming.cancel()
+      incoming?.cancel()
       settle()
     }
     return () => cancelRef.current?.()

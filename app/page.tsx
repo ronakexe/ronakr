@@ -31,26 +31,8 @@ export default function Home() {
             <h2 className="section-label mb-3 text-[13px] md:hidden">{section.label}</h2>
             <ul className="pl-4">
               {section.items.map((item) => (
-                <li key={item.title} className="relative">
-                  {item.image && typeof item.image === 'string' && (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
-                      src={optimizedSrc(item.image, 64)}
-                      srcSet={THUMB_WIDTHS.map((w) => `${optimizedSrc(item.image as string, w)} ${w}w`).join(', ')}
-                      sizes="32px"
-                      alt={item.title}
-                      className="absolute right-full top-1/2 mr-1.5 h-[16.75px] w-auto -translate-y-1/2 md:h-[18.25px]"
-                      style={{ borderRadius: 1 }}
-                    />
-                  )}
-                  {item.image && typeof item.image !== 'string' && (
-                    <Image
-                      src={item.image}
-                      alt={item.title}
-                      className="absolute right-full top-1/2 mr-1.5 h-[16.75px] w-auto -translate-y-1/2 md:h-[18.25px]"
-                      style={{ borderRadius: 1 }}
-                    />
-                  )}
+                <li key={item.title} className="group relative">
+                  <Thumbnail item={item} isFind={section.label === 'finds'} />
                   <Entry item={item} />
                 </li>
               ))}
@@ -59,6 +41,82 @@ export default function Home() {
         ))}
       </div>
     </main>
+  )
+}
+
+// Shared position/size for every hover layer — a fixed row-height icon that
+// pivots from its own bottom-right corner, so scaling it up on hover grows
+// it toward the upper-left without that corner ever shifting.
+const THUMB_BASE =
+  'absolute right-full top-1/2 mr-1.5 h-[16.75px] w-auto -translate-y-1/2 origin-bottom-right transition-all duration-300 ease-out md:h-[18.25px]'
+
+// Fully-written class strings, not built by interpolating a variable —
+// Tailwind's build-time scanner only picks up utility names that appear
+// verbatim in the source, so each hover variant needs its own literal.
+const HOVER_PIECE = 'group-hover:z-30 group-hover:scale-[3] group-hover:rotate-[-8deg]'
+const HOVER_FIND_PRIMARY = 'group-hover:z-30 group-hover:scale-[2.5] group-hover:rotate-[-8deg]'
+const HOVER_FIND_PREVIEW_1 =
+  'opacity-0 group-hover:z-20 group-hover:scale-[2.5] group-hover:rotate-[5deg] group-hover:opacity-100'
+const HOVER_FIND_PREVIEW_2 =
+  'opacity-0 group-hover:z-10 group-hover:scale-[2.5] group-hover:rotate-[16deg] group-hover:opacity-100'
+
+function cropStyle(crop?: { width: number; height: number }) {
+  return crop
+    ? { aspectRatio: `${crop.width} / ${crop.height}`, objectFit: 'cover' as const, objectPosition: 'top' as const }
+    : {}
+}
+
+// Finds entries fan their thumbnail out alongside the gallery's next two
+// photos on hover (each pivoting from the same bottom-right corner, so the
+// three just spread open like a dealt hand); pieces just grow in place.
+function Thumbnail({ item, isFind }: { item: Piece; isFind: boolean }) {
+  if (!item.image) return null
+
+  const [preview1, preview2] = isFind ? (item.previewImages ?? []) : []
+
+  return (
+    <>
+      {typeof item.image === 'string' ? (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={optimizedSrc(item.image, 64)}
+          srcSet={THUMB_WIDTHS.map((w) => `${optimizedSrc(item.image as string, w)} ${w}w`).join(', ')}
+          sizes="32px"
+          alt={item.title}
+          className={`${THUMB_BASE} ${isFind ? HOVER_FIND_PRIMARY : HOVER_PIECE}`}
+          style={{ borderRadius: 1, ...cropStyle(item.imageCrop) }}
+        />
+      ) : (
+        <Image
+          src={item.image}
+          alt={item.title}
+          className={`${THUMB_BASE} ${isFind ? HOVER_FIND_PRIMARY : HOVER_PIECE}`}
+          style={{ borderRadius: 1 }}
+        />
+      )}
+      {preview1 && (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={optimizedSrc(preview1, 64)}
+          srcSet={THUMB_WIDTHS.map((w) => `${optimizedSrc(preview1, w)} ${w}w`).join(', ')}
+          sizes="32px"
+          alt=""
+          className={`${THUMB_BASE} ${HOVER_FIND_PREVIEW_1}`}
+          style={{ borderRadius: 1 }}
+        />
+      )}
+      {preview2 && (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={optimizedSrc(preview2, 64)}
+          srcSet={THUMB_WIDTHS.map((w) => `${optimizedSrc(preview2, w)} ${w}w`).join(', ')}
+          sizes="32px"
+          alt=""
+          className={`${THUMB_BASE} ${HOVER_FIND_PREVIEW_2}`}
+          style={{ borderRadius: 1 }}
+        />
+      )}
+    </>
   )
 }
 
