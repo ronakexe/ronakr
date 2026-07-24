@@ -18,8 +18,12 @@ const ebGaramond = EB_Garamond({
 })
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://ronakramnani.com'),
   title: 'Ronak Ramnani',
   description: 'Personal portfolio of Ronak Ramnani',
+  alternates: {
+    canonical: '/',
+  },
   openGraph: {
     images: [{ url: '/og-image.png', width: 1200, height: 630 }],
   },
