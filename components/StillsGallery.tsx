@@ -52,7 +52,7 @@ export default function StillsGallery({ images }: { images: string[] }) {
   }, [openIndex, close, goTo])
 
   return (
-    <div className="stills-bg" style={{ paddingTop: 40, paddingLeft: 40, paddingRight: 40, paddingBottom: 96 }}>
+    <section className="stills-bg" style={{ paddingTop: 64, paddingLeft: 40, paddingRight: 40, paddingBottom: 64 }}>
       <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 sm:gap-3 md:grid-cols-4">
         {images.map((src, i) => (
           <button
@@ -109,6 +109,6 @@ export default function StillsGallery({ images }: { images: string[] }) {
           </div>
         </div>
       )}
-    </div>
+    </section>
   )
 }

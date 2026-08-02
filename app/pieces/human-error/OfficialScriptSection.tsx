@@ -66,9 +66,9 @@ export default function OfficialScriptSection() {
 
   return (
     <>
-      <div
+      <section
         className="relative grid grid-cols-1 md:grid-cols-3 mid:grid-cols-4 md:items-start"
-        style={{ paddingLeft: 40, paddingRight: 40, paddingBottom: 160 }}
+        style={{ paddingTop: 64, paddingLeft: 40, paddingRight: 40, paddingBottom: 64 }}
       >
         {/* Write-up + icons — col 1 only (between lines 1–2) at all breakpoints */}
         <div className="md:col-span-1" style={{ paddingLeft: 12, paddingRight: 8, minWidth: 0 }}>
@@ -161,7 +161,7 @@ export default function OfficialScriptSection() {
             </a>
           </div>
         </div>
-      </div>
+      </section>
 
       {/* Flying icon overlay — teleports from icon position to script box position */}
       {mounted && flying && createPortal(

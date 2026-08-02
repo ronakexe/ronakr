@@ -32,9 +32,9 @@ export default function HumanErrorPage() {
         </h1>
 
         {/* Content */}
-        <div
+        <section
           className="relative grid grid-cols-1 md:grid-cols-3 mid:grid-cols-4 md:items-center"
-          style={{ paddingTop: 28, paddingLeft: 40, paddingRight: 40, paddingBottom: 96 }}
+          style={{ paddingTop: 64, paddingLeft: 40, paddingRight: 40, paddingBottom: 64 }}
         >
           {/* Video — spans all but the last column */}
           <div className="md:col-span-2 mid:col-span-3">
@@ -75,7 +75,7 @@ export default function HumanErrorPage() {
               forcing her to confront the one being she&apos;s been trying to impress.
             </p>
           </div>
-        </div>
+        </section>
 
         {/* Stills — frame viewer with thumbnail strip */}
         <StillsGallery images={STILLS} />
