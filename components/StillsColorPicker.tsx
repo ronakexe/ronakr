@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation'
 
 type Theme = 'light' | 'dark'
 
-const DEFAULT_COLOR = '#150807'
+const DEFAULT_COLOR = '#FCF7F7'
 
 export default function StillsColorPicker() {
   const pathname = usePathname()
@@ -34,12 +34,12 @@ export default function StillsColorPicker() {
     }
   }, [])
 
-  // Only ever touches the stills section in dark mode — light mode always
+  // Only ever touches the stills section in light mode — dark mode always
   // falls back to the CSS-driven --stills-bg value.
   useEffect(() => {
     const targets = document.querySelectorAll<HTMLElement>('.stills-bg')
     targets.forEach((el) => {
-      el.style.backgroundColor = theme === 'dark' ? color : ''
+      el.style.backgroundColor = theme === 'light' ? color : ''
     })
   }, [pathname, color, theme])
 
@@ -66,7 +66,7 @@ export default function StillsColorPicker() {
     window.removeEventListener('pointerup', onPointerUp)
   }
 
-  if (theme !== 'dark') return null
+  if (theme !== 'light') return null
 
   return (
     <div
