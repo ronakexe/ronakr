@@ -4,10 +4,10 @@ import { useCallback, useEffect, useState } from 'react'
 import Image from 'next/image'
 
 const NAV_BTN =
-  'flex h-11 w-11 cursor-pointer items-center justify-center text-[20px] text-white hover:text-[var(--name)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--name)]'
+  'flex h-11 w-11 cursor-pointer items-center justify-center text-[20px] text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--name)]'
 
 const CARET_BTN =
-  'flex h-11 w-11 cursor-pointer items-center justify-center text-white hover:text-[var(--name)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--name)]'
+  'flex h-11 w-11 cursor-pointer items-center justify-center text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--name)]'
 
 function Caret({ direction }: { direction: 'left' | 'right' }) {
   return (
