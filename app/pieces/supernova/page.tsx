@@ -1,4 +1,17 @@
+import StillsGallery from '@/components/StillsGallery'
+
 const BG = 'var(--bg)'   // page background (no pattern on piece pages)
+
+const STILLS_BASE = 'https://escupwsgyrre2c6k.public.blob.vercel-storage.com/Supernova'
+const STILLS_FILES = [
+  'still_1_2.48.1.jpg',
+  'still_2_1.352.2.jpg',
+  'still_5_1.324.1.jpg',
+  'still_9_1.160.1_2.0.jpg',
+  'still_tara_awk_1.178.1_DONE.jpg',
+  'still_tara_davis_1.354.2.jpg',
+]
+const STILLS = STILLS_FILES.map((file) => `${STILLS_BASE}/${file}`)
 
 export default function SupernovaPage() {
   return (
@@ -58,6 +71,9 @@ export default function SupernovaPage() {
             </p>
           </div>
         </div>
+
+        {/* Stills — frame viewer with thumbnail strip */}
+        <StillsGallery images={STILLS} />
       </div>
     </main>
   )

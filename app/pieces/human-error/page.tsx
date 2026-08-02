@@ -1,6 +1,24 @@
 import OfficialScriptSection from './OfficialScriptSection'
+import StillsGallery from '@/components/StillsGallery'
 
 const BG = 'var(--bg)'
+
+const STILLS_BASE = 'https://escupwsgyrre2c6k.public.blob.vercel-storage.com/Human%20Error'
+const STILLS_FILES = [
+  '%20.jpg',
+  'main_01_00_11_12.jpg',
+  'main_01_00_40_14.jpg',
+  'main_01_01_23_00.jpg',
+  'main_01_03_12_20.jpg',
+  'main_01_03_36_15.jpg',
+  'main_01_03_47_21.jpg',
+  'main_01_04_05_16.jpg',
+  'main_01_04_18_12.jpg',
+  'main_01_05_02_16.jpg',
+  'main_01_05_03_14.jpg',
+  'main_01_05_28_17.jpg',
+]
+const STILLS = STILLS_FILES.map((file) => `${STILLS_BASE}/${file}`)
 
 export default function HumanErrorPage() {
   return (
@@ -58,6 +76,9 @@ export default function HumanErrorPage() {
             </p>
           </div>
         </div>
+
+        {/* Stills — frame viewer with thumbnail strip */}
+        <StillsGallery images={STILLS} />
 
         {/* Official Script — client component owns draft state, icons, and script box */}
         <OfficialScriptSection />
