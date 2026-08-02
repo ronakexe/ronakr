@@ -115,6 +115,7 @@
   :root:not([data-theme="light"]) {
     color-scheme: dark;
 
+    --stills-bg: #0C0504;
     --background: #1A0808;
     --foreground: #F8EFEF;
     --card: #2A1010;
@@ -152,6 +153,7 @@
 :root[data-theme="dark"] {
   color-scheme: dark;
 
+  --stills-bg: #0C0504;
   --background: #1A0808;
   --foreground: #F8EFEF;
   --card: #2A1010;
@@ -197,6 +199,7 @@
   --bg: var(--background);
   --name: var(--primary);
   --text: var(--foreground);
+  --stills-bg: #FCF7F7;
 
   --font-ui: var(--font-dm-sans);
   --font-body: var(--font-garamond);
@@ -211,6 +214,10 @@ body {
 
 p, .body-text {
   font-family: var(--font-garamond), serif;
+}
+
+.stills-bg {
+  background-color: var(--stills-bg);
 }
 
 /* Section headings — Initiatives / Pieces / Finds. */
