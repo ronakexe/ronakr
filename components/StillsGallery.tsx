@@ -80,7 +80,7 @@ export default function StillsGallery({ images }: { images: string[] }) {
           aria-modal="true"
           aria-label="Stills viewer"
           className="fixed inset-0 z-50 flex items-center justify-center"
-          style={{ background: 'rgba(0,0,0,0.7)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)' }}
+          style={{ background: 'rgba(0,0,0,0.7)', backdropFilter: 'blur(10px)', WebkitBackdropFilter: 'blur(10px)' }}
           onClick={close}
         >
           <button type="button" onClick={close} aria-label="Close" className={`absolute right-4 top-4 ${NAV_BTN}`}>
