@@ -40,7 +40,7 @@ export default function StillsGallery({ images }: { images: string[] }) {
             type="button"
             onClick={() => setOpenIndex(i)}
             aria-label={`Open frame ${i + 1}`}
-            className="relative w-full cursor-pointer border-0 p-0 transition-opacity hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--name)]"
+            className="relative w-full cursor-pointer border-0 p-0 transition-opacity hover:opacity-90"
             style={{ aspectRatio: '16 / 9', background: '#000' }}
           >
             <Image
@@ -87,13 +87,6 @@ export default function StillsGallery({ images }: { images: string[] }) {
           <div className="relative" style={{ width: '90vw', height: '85vh' }} onClick={(e) => e.stopPropagation()}>
             <Image src={images[openIndex]} alt="" fill sizes="90vw" style={{ objectFit: 'contain' }} priority />
           </div>
-
-          <span
-            className="absolute bottom-6 left-1/2 -translate-x-1/2 text-[13px] tracking-[0.04em] text-white"
-            style={{ fontFamily: 'var(--font-dm-sans)', fontVariantNumeric: 'tabular-nums' }}
-          >
-            {String(openIndex + 1).padStart(2, '0')} / {count}
-          </span>
         </div>
       )}
     </div>
