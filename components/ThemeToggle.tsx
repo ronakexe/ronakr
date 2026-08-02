@@ -27,17 +27,25 @@ export default function ThemeToggle() {
     setTheme(next)
     localStorage.setItem('theme', next)
     document.documentElement.setAttribute('data-theme', next)
+    const favicon = document.querySelector('link[rel="icon"]') as HTMLLinkElement | null
+    if (favicon) favicon.href = next === 'dark' ? '/favicon-dark.svg' : '/favicon-light.svg'
   }
 
+  // Desktop only: a fixed hot-zone in the page's top-right margin (the same
+  // empty gutter the clover icon already sits beside, so it never overlaps
+  // it) reveals the toggle on hover — invisible until the mouse comes near.
+  if (theme === null) return null
+
   return (
-    <button
-      onClick={toggle}
-      aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
-      className="transition-opacity"
-      style={{ opacity: theme === null ? 0 : 1 }}
-    >
-      {theme === 'dark' ? <SunIcon /> : <MoonIcon />}
-    </button>
+    <div className="group fixed right-0 top-0 z-50 hidden h-24 w-16 items-start justify-center pt-4 md:flex">
+      <button
+        onClick={toggle}
+        aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+        className="flex h-9 w-9 cursor-pointer items-center justify-center text-[var(--text)] opacity-0 transition-opacity duration-300 group-hover:opacity-100 focus-visible:opacity-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--name)]"
+      >
+        {theme === 'dark' ? <SunIcon /> : <MoonIcon />}
+      </button>
+    </div>
   )
 }
 
