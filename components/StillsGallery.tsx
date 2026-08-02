@@ -6,6 +6,23 @@ import Image from 'next/image'
 const NAV_BTN =
   'flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border-[1.5px] border-white/70 text-[20px] text-white hover:border-[var(--name)] hover:text-[var(--name)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--name)]'
 
+function Caret({ direction }: { direction: 'left' | 'right' }) {
+  return (
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinejoin="round"
+      style={{ transform: `rotate(${direction === 'left' ? 90 : -90}deg)` }}
+    >
+      <path d="M4 6h16L12 16Z" />
+    </svg>
+  )
+}
+
 export default function StillsGallery({ images }: { images: string[] }) {
   const [openIndex, setOpenIndex] = useState<number | null>(null)
   const count = images.length
@@ -73,7 +90,7 @@ export default function StillsGallery({ images }: { images: string[] }) {
             aria-label="Previous frame"
             className={`absolute left-4 top-1/2 -translate-y-1/2 ${NAV_BTN}`}
           >
-            ‹
+            <Caret direction="left" />
           </button>
           <button
             type="button"
@@ -81,7 +98,7 @@ export default function StillsGallery({ images }: { images: string[] }) {
             aria-label="Next frame"
             className={`absolute right-4 top-1/2 -translate-y-1/2 ${NAV_BTN}`}
           >
-            ›
+            <Caret direction="right" />
           </button>
 
           <div className="relative" style={{ width: '90vw', height: '85vh' }} onClick={(e) => e.stopPropagation()}>
