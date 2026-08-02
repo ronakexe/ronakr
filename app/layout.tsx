@@ -4,6 +4,7 @@ import { Analytics } from '@vercel/analytics/next'
 import Script from 'next/script'
 import PageShell from '@/components/PageShell'
 import ThemeToggle from '@/components/ThemeToggle'
+import StillsColorPicker from '@/components/StillsColorPicker'
 import './globals.css'
 
 const THEME_INIT = `(function(){try{var t=localStorage.getItem('theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}var resolved=t==='light'||t==='dark'?t:(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');var link=document.querySelector('link[rel="icon"]');if(link)link.href=resolved==='dark'?'/favicon-dark.svg':'/favicon-light.svg';}catch(e){}})();`
@@ -50,6 +51,7 @@ export default function RootLayout({
         </Script>
         <PageShell>{children}</PageShell>
         <ThemeToggle />
+        <StillsColorPicker />
         <Analytics />
       </body>
     </html>
