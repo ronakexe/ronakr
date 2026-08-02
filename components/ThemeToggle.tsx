@@ -1,10 +1,12 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { usePathname } from 'next/navigation'
 
 type Theme = 'light' | 'dark'
 
 export default function ThemeToggle() {
+  const pathname = usePathname()
   const [theme, setTheme] = useState<Theme | null>(null)
 
   useEffect(() => {
@@ -31,10 +33,11 @@ export default function ThemeToggle() {
     if (favicon) favicon.href = next === 'dark' ? '/favicon-dark.svg' : '/favicon-light.svg'
   }
 
-  // Desktop only: a fixed hot-zone in the page's top-right margin (the same
-  // empty gutter the clover icon already sits beside, so it never overlaps
-  // it) reveals the toggle on hover — invisible until the mouse comes near.
-  if (theme === null) return null
+  // Home page only, desktop only: a fixed hot-zone in the page's top-right
+  // margin (the same empty gutter the clover icon already sits beside, so it
+  // never overlaps it) reveals the toggle on hover — invisible until the
+  // mouse comes near.
+  if (theme === null || pathname !== '/') return null
 
   return (
     <div className="group fixed right-0 top-0 z-50 hidden h-24 w-16 items-start justify-center pt-4 md:flex">
