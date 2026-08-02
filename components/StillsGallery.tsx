@@ -6,11 +6,14 @@ import Image from 'next/image'
 const NAV_BTN =
   'flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border-[1.5px] border-white/70 text-[20px] text-white hover:border-[var(--name)] hover:text-[var(--name)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--name)]'
 
+const CARET_BTN =
+  'flex h-11 w-11 cursor-pointer items-center justify-center text-white hover:text-[var(--name)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--name)]'
+
 function Caret({ direction }: { direction: 'left' | 'right' }) {
   return (
     <svg
-      width="16"
-      height="16"
+      width="22"
+      height="22"
       viewBox="0 0 24 24"
       fill="currentColor"
       stroke="currentColor"
@@ -88,7 +91,7 @@ export default function StillsGallery({ images }: { images: string[] }) {
             type="button"
             onClick={(e) => { e.stopPropagation(); goTo(openIndex - 1) }}
             aria-label="Previous frame"
-            className={`absolute left-4 top-1/2 -translate-y-1/2 ${NAV_BTN}`}
+            className={`absolute left-4 top-1/2 -translate-y-1/2 ${CARET_BTN}`}
           >
             <Caret direction="left" />
           </button>
@@ -96,7 +99,7 @@ export default function StillsGallery({ images }: { images: string[] }) {
             type="button"
             onClick={(e) => { e.stopPropagation(); goTo(openIndex + 1) }}
             aria-label="Next frame"
-            className={`absolute right-4 top-1/2 -translate-y-1/2 ${NAV_BTN}`}
+            className={`absolute right-4 top-1/2 -translate-y-1/2 ${CARET_BTN}`}
           >
             <Caret direction="right" />
           </button>
