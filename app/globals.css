@@ -199,7 +199,7 @@
   --bg: var(--background);
   --name: var(--primary);
   --text: var(--foreground);
-  --stills-bg: #EEE1DD;
+  --stills-bg: #F3E3DF;
 
   --font-ui: var(--font-dm-sans);
   --font-body: var(--font-garamond);
