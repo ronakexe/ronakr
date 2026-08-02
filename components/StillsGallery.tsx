@@ -28,33 +28,42 @@ export default function StillsGallery({ images }: { images: string[] }) {
           sizes="(max-width: 768px) 100vw, 1432px"
           style={{ objectFit: 'cover' }}
         />
+      </div>
 
+      <div className="flex items-center justify-center gap-4" style={{ marginTop: 16 }}>
         <button
           type="button"
           onClick={() => goTo(index - 1)}
           aria-label="Previous frame"
-          className="absolute left-3 top-1/2 flex h-10 w-10 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border-0 bg-black/45 text-[18px] text-white hover:bg-black/65 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--name)]"
+          className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border-[1.5px] border-[var(--text)] bg-[var(--bg)] text-[18px] text-[var(--text)] hover:border-[var(--name)] hover:text-[var(--name)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--name)]"
         >
           ‹
         </button>
+
+        <span
+          className="text-[13px] tracking-[0.04em]"
+          style={{
+            fontFamily: 'var(--font-dm-sans)',
+            fontVariantNumeric: 'tabular-nums',
+            color: 'var(--muted-foreground)',
+            minWidth: 56,
+            textAlign: 'center',
+          }}
+        >
+          {String(index + 1).padStart(2, '0')} / {count}
+        </span>
+
         <button
           type="button"
           onClick={() => goTo(index + 1)}
           aria-label="Next frame"
-          className="absolute right-3 top-1/2 flex h-10 w-10 -translate-y-1/2 cursor-pointer items-center justify-center rounded-full border-0 bg-black/45 text-[18px] text-white hover:bg-black/65 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--name)]"
+          className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border-[1.5px] border-[var(--text)] bg-[var(--bg)] text-[18px] text-[var(--text)] hover:border-[var(--name)] hover:text-[var(--name)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--name)]"
         >
           ›
         </button>
-
-        <span
-          className="absolute right-3 bottom-3 text-[12px] tracking-[0.04em] text-white"
-          style={{ fontFamily: 'var(--font-dm-sans)', fontVariantNumeric: 'tabular-nums', textShadow: '0 1px 3px rgba(0,0,0,0.6)' }}
-        >
-          {String(index + 1).padStart(2, '0')} / {count}
-        </span>
       </div>
 
-      <div className="mt-3 flex flex-wrap gap-2">
+      <div className="mt-4 flex flex-wrap justify-center gap-2">
         {images.map((src, i) => (
           <button
             key={src}
@@ -62,10 +71,8 @@ export default function StillsGallery({ images }: { images: string[] }) {
             onClick={() => goTo(i)}
             aria-label={`Go to frame ${i + 1}`}
             className={
-              'relative w-[72px] flex-none cursor-pointer p-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--name)] ' +
-              (i === index
-                ? 'border-2 border-[var(--name)] opacity-100'
-                : 'border border-[var(--border)] opacity-55 hover:opacity-90')
+              'relative w-[72px] flex-none cursor-pointer border border-[var(--border)] p-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--name)] ' +
+              (i === index ? 'opacity-100' : 'opacity-55 hover:opacity-90')
             }
             style={{ aspectRatio: '16 / 9', background: '#000' }}
           >
