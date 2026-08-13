@@ -102,24 +102,6 @@ export default function OfficialScriptSection() {
             </p>
           </div>
 
-          {/* Draft version icons — below write-up, active draft hidden */}
-          <div style={{ display: 'flex', gap: 12, marginTop: 32 }}>
-            {DRAFTS.filter(d => d.id !== active).map(d => (
-              <button
-                key={d.id}
-                onClick={(e) => select(d.id, e)}
-                disabled={!!flying}
-                style={{
-                  background: 'none',
-                  border: 'none',
-                  cursor: flying ? 'default' : 'pointer',
-                  padding: '4px',
-                }}
-              >
-                <Image src={d.icon} alt={d.label} width={72} height={72} style={{ display: 'block' }} />
-              </button>
-            ))}
-          </div>
         </div>
 
         {/* Script box — 3-col span (cols 2–4) at mid, pushed flush to the right edge */}
@@ -144,21 +126,6 @@ export default function OfficialScriptSection() {
                 />
               ))}
             </div>
-            <a
-              href={draft.pdf}
-              download
-              style={{
-                display: 'inline-block',
-                marginTop: 16,
-                fontFamily: 'var(--font-dm-sans)',
-                fontSize: 15,
-                fontWeight: 600,
-                color: '#000',
-                textDecoration: 'underline',
-              }}
-            >
-              Download {draft.label} script (PDF)
-            </a>
           </div>
         </div>
       </section>
