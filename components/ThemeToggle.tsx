@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { usePathname } from 'next/navigation'
+import Script from 'next/script'
 
 type Theme = 'light' | 'dark'
 
@@ -33,24 +34,55 @@ export default function ThemeToggle() {
     if (favicon) favicon.href = next === 'dark' ? '/favicon-dark.svg' : '/favicon-light.svg'
   }
 
-  // Home page only, desktop only: a fixed hot-zone in the page's top-right
-  // margin (the same empty gutter the clover icon already sits beside, so it
-  // never overlaps it) reveals the toggle on hover — invisible until the
-  // mouse comes near.
-  if (theme === null || pathname !== '/') return null
+  // Home page only.
+  if (pathname !== '/') return null
 
   return (
-    <div className="group fixed right-0 top-0 z-50 hidden h-24 w-16 items-start justify-center pt-4 md:flex">
-      <button
-        onClick={toggle}
-        aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
-        className="flex h-9 w-9 cursor-pointer items-center justify-center text-[var(--text)] opacity-0 transition-opacity duration-300 group-hover:opacity-100 focus-visible:opacity-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--name)]"
-      >
-        {theme === 'dark' ? <SunIcon /> : <MoonIcon />}
-      </button>
-    </div>
+    <>
+      {/* Mobile: an in-flow bar above the name/clover row, not a fixed
+          overlay — its height is real document height so the page can be
+          scrolled up into it. beforeInteractive renders this Script at its
+          JSX position (verified via the existing theme-init script above
+          PageShell) and runs it as the browser parses that far, so the bar
+          above it is already laid out — a plain React-rendered <script>
+          won't reliably fire since hydration doesn't execute scripts it
+          didn't parse natively. MOBILE_BAR_HEIGHT must match h-12 below. */}
+      <div className="flex h-12 items-center justify-center md:hidden">
+        {theme !== null && (
+          <button
+            onClick={toggle}
+            aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+            className="flex h-9 w-9 cursor-pointer items-center justify-center text-[var(--text)]"
+          >
+            {theme === 'dark' ? <SunIcon /> : <MoonIcon />}
+          </button>
+        )}
+      </div>
+      <Script id="mobile-toggle-scroll" strategy="beforeInteractive">
+        {`(function(){try{if(window.innerWidth<768){window.scrollTo(0,${MOBILE_BAR_HEIGHT});}}catch(e){}})();`}
+      </Script>
+
+      {/* Desktop: a fixed hot-zone in the page's top-right margin (the same
+          empty gutter the clover icon already sits beside, so it never
+          overlaps it) reveals the toggle on hover — invisible until the
+          mouse comes near. */}
+      {theme !== null && (
+        <div className="group fixed right-0 top-0 z-50 hidden h-24 w-16 items-start justify-center pt-4 md:flex">
+          <button
+            onClick={toggle}
+            aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+            className="flex h-9 w-9 cursor-pointer items-center justify-center text-[var(--text)] opacity-0 transition-opacity duration-300 group-hover:opacity-100 focus-visible:opacity-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--name)]"
+          >
+            {theme === 'dark' ? <SunIcon /> : <MoonIcon />}
+          </button>
+        </div>
+      )}
+    </>
   )
 }
+
+// px — kept in sync with the mobile bar's h-12 class above.
+const MOBILE_BAR_HEIGHT = 48
 
 function SunIcon() {
   return (

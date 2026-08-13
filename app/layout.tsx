@@ -48,8 +48,8 @@ export default function RootLayout({
         <Script id="theme-init" strategy="beforeInteractive">
           {THEME_INIT}
         </Script>
-        <PageShell>{children}</PageShell>
         <ThemeToggle />
+        <PageShell>{children}</PageShell>
         <Analytics />
       </body>
     </html>
