@@ -27,7 +27,7 @@ export default function YouthStemlinePage() {
 
         <h2
           className="text-[24px] md:text-[36px]"
-          style={{ fontFamily: 'var(--font-dm-sans)', fontWeight: 600, color: 'var(--text)', margin: 0, padding: '48px 40px 0' }}
+          style={{ fontFamily: 'var(--font-garamond)', fontWeight: 700, color: 'var(--text)', margin: 0, padding: '48px 40px 0' }}
         >
           About the project
         </h2>
