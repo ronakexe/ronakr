@@ -72,8 +72,8 @@
      gap between columns is too narrow for a hover-scaled thumbnail (3x,
      pivoting from its bottom-right corner) to clear into the neighboring
      column, so it visually collides with that column's text. Measured the
-     overlap disappears around 1262px; 80rem adds a small safety margin. */
-  --breakpoint-home: 80rem; /* 1280px */
+     overlap disappears around 1262px. */
+  --breakpoint-home: 79rem; /* 1264px */
 }
 
 /* ── shadcn theme (preset b7oGj5qzdJ) ────────────────────────────────────────
