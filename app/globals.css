@@ -68,12 +68,11 @@
 @theme {
   --breakpoint-mid: 62.5rem; /* 1000px — sorts between md (48rem) and lg (64rem) */
 
-  /* Home page's 3-col initiatives/pieces/finds grid: below this width the
-     gap between columns is too narrow for a hover-scaled thumbnail (3x,
-     pivoting from its bottom-right corner) to clear into the neighboring
-     column, so it visually collides with that column's text. Measured the
-     overlap disappears around 1262px. */
-  --breakpoint-home: 79rem; /* 1264px */
+  /* Home page's 3-col initiatives/pieces/finds grid. Below ~1262px a
+     hover-scaled thumbnail (3x, pivoting from its bottom-right corner)
+     overlaps into the initiatives column's text — see git history if
+     that gap needs restoring. */
+  --breakpoint-home: 65rem; /* 1040px */
 }
 
 /* ── shadcn theme (preset b7oGj5qzdJ) ────────────────────────────────────────
