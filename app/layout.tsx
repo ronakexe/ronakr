@@ -16,7 +16,13 @@ const THEME_INIT = `(function(){try{var t=localStorage.getItem('theme');if(t==='
 // script — before the browser paints the mis-scrolled frame at all — and
 // ThemeToggle's layout effect removes it once the scroll is fixed. The
 // timeout is a safety net so the page can't stay blank if JS fails to load.
-const SCROLL_HIDE_INIT = `(function(){try{if(window.location.pathname==='/'&&window.innerWidth<768){document.documentElement.setAttribute('data-mobile-toggle-pending','');setTimeout(function(){document.documentElement.removeAttribute('data-mobile-toggle-pending')},1500);}}catch(e){}})();`
+//
+// scrollRestoration is forced to 'manual' unconditionally (not just on
+// mobile/home) because on a reload the browser's default 'auto' restores
+// whatever scroll position the page was at before the reload — racing our
+// own scrollTo and, depending on timing, winning and putting the reader
+// back wherever they last scrolled instead of past the toggle bar.
+const SCROLL_HIDE_INIT = `(function(){try{if('scrollRestoration' in window.history){window.history.scrollRestoration='manual';}if(window.location.pathname==='/'&&window.innerWidth<768){document.documentElement.setAttribute('data-mobile-toggle-pending','');setTimeout(function(){document.documentElement.removeAttribute('data-mobile-toggle-pending')},1500);}}catch(e){}})();`
 
 const dmSans = DM_Sans({
   subsets: ['latin'],
