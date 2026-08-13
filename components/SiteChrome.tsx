@@ -24,7 +24,7 @@ export default function SiteChrome() {
   const active = activeSection(pathname)
 
   return (
-    <header className="px-8 home:px-16">
+    <header className="px-8 home:px-14">
       <div className="flex items-center justify-between gap-8">
         <Link
           href="/"

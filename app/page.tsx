@@ -21,7 +21,7 @@ const SECTIONS: { label: string; items: Piece[] }[] = [
 
 export default function Home() {
   return (
-    <main className="px-8 pb-16 home:px-16 home:pb-20">
+    <main className="px-8 pb-16 home:px-14 home:pb-20">
       {/* Three columns — grid tracks span the full width and stay evenly
           spaced; only the content inside each column is capped narrower.
           Labels themselves live in SiteChrome, directly above this grid.

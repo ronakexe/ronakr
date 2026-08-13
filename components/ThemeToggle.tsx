@@ -60,7 +60,7 @@ export default function ThemeToggle() {
           in app/layout.tsx) until the useLayoutEffect above fixes the
           scroll position, so this bar never flashes into view before the
           reader scrolls up to it. MOBILE_BAR_HEIGHT must match h-12 below. */}
-      <div className="flex h-12 items-center justify-center md:hidden">
+      <div className="flex h-12 items-center justify-end px-8 md:hidden">
         {theme !== null && (
           <button
             onClick={toggle}
