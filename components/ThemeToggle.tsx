@@ -24,20 +24,21 @@ export default function ThemeToggle() {
     return () => media.removeEventListener('change', sync)
   }, [])
 
-  // Runs once on mount, synchronously before the browser paints the
-  // hydrated frame. SCROLL_HIDE_INIT (app/layout.tsx) already hid the page
-  // the instant it set this attribute, so this is the first chance — and
-  // the only one that matters — to fix the scroll position before anything
-  // becomes visible. Deliberately `[]`: this component stays mounted across
-  // client-side navigation, and re-running on a later trip back to '/'
-  // would yank the reader's scroll position mid-session.
+  // Re-arms every time pathname lands on '/', not just the true first load:
+  // navigating back to home from a subpage should also hide the toggle bar,
+  // same as opening the site fresh. Runs synchronously before the browser
+  // paints, so on the very first load this is the first chance to fix the
+  // scroll position before anything becomes visible (SCROLL_HIDE_INIT in
+  // app/layout.tsx already hid the page the instant it set the pending
+  // attribute); on a later client-side navigation there's no separate paint
+  // to race — the mobile bar mounting and this scroll correction land in the
+  // same commit — so it's just as flash-free without needing that attribute.
   useLayoutEffect(() => {
     if (pathname === '/' && window.innerWidth < 768) {
       window.scrollTo(0, MOBILE_BAR_HEIGHT)
     }
     document.documentElement.removeAttribute('data-mobile-toggle-pending')
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [pathname])
 
   function toggle() {
     const next: Theme = theme === 'dark' ? 'light' : 'dark'
