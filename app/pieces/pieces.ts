@@ -90,6 +90,7 @@ export const initiatives: Piece[] = [
     title: 'Youth Stemline',
     image: youthStemlineIconDark,
     imageDark: youthStemlineIcon,
+    href: '/initiatives/youth-stemline',
     date: 'Jun 2025 - now',
   },
   { title: 'SoberSense', image: null, date: 'Nov 2024 - May 2026' },
