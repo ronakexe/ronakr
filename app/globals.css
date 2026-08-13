@@ -75,6 +75,13 @@
   --breakpoint-home: 65rem; /* 1040px */
 }
 
+/* See SCROLL_HIDE_INIT in app/layout.tsx and ThemeToggle.tsx — hides the
+   page between the mis-scrolled first paint and the corrected scroll
+   position, so the mobile theme-toggle bar never flashes into view. */
+html[data-mobile-toggle-pending] body {
+  visibility: hidden;
+}
+
 /* ── shadcn theme (preset b7oGj5qzdJ) ────────────────────────────────────────
    Light values live on :root. The dark set is repeated twice: once behind the
    system preference (skipped when the user has explicitly chosen light), once

@@ -8,6 +8,16 @@ import './globals.css'
 
 const THEME_INIT = `(function(){try{var t=localStorage.getItem('theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}var resolved=t==='light'||t==='dark'?t:(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');var link=document.querySelector('link[rel="icon"]');if(link)link.href=resolved==='dark'?'/favicon-dark.svg':'/favicon-light.svg';}catch(e){}})();`
 
+// Mobile home page loads scrolled past the theme-toggle bar, so the reader
+// lands on the name/clover like before and only finds the toggle by
+// scrolling up (see ThemeToggle.tsx). Waiting for React to mount and correct
+// the scroll position would flash the bar first, so this hides the page
+// (via a CSS rule keyed on this attribute) the instant parsing reaches this
+// script — before the browser paints the mis-scrolled frame at all — and
+// ThemeToggle's layout effect removes it once the scroll is fixed. The
+// timeout is a safety net so the page can't stay blank if JS fails to load.
+const SCROLL_HIDE_INIT = `(function(){try{if(window.location.pathname==='/'&&window.innerWidth<768){document.documentElement.setAttribute('data-mobile-toggle-pending','');setTimeout(function(){document.documentElement.removeAttribute('data-mobile-toggle-pending')},1500);}}catch(e){}})();`
+
 const dmSans = DM_Sans({
   subsets: ['latin'],
   variable: '--font-dm-sans',
@@ -47,6 +57,9 @@ export default function RootLayout({
       <body>
         <Script id="theme-init" strategy="beforeInteractive">
           {THEME_INIT}
+        </Script>
+        <Script id="scroll-hide-init" strategy="beforeInteractive">
+          {SCROLL_HIDE_INIT}
         </Script>
         <ThemeToggle />
         <PageShell>{children}</PageShell>

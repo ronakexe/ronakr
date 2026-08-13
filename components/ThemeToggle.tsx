@@ -1,8 +1,7 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useLayoutEffect, useState } from 'react'
 import { usePathname } from 'next/navigation'
-import Script from 'next/script'
 
 type Theme = 'light' | 'dark'
 
@@ -25,6 +24,21 @@ export default function ThemeToggle() {
     return () => media.removeEventListener('change', sync)
   }, [])
 
+  // Runs once on mount, synchronously before the browser paints the
+  // hydrated frame. SCROLL_HIDE_INIT (app/layout.tsx) already hid the page
+  // the instant it set this attribute, so this is the first chance — and
+  // the only one that matters — to fix the scroll position before anything
+  // becomes visible. Deliberately `[]`: this component stays mounted across
+  // client-side navigation, and re-running on a later trip back to '/'
+  // would yank the reader's scroll position mid-session.
+  useLayoutEffect(() => {
+    if (pathname === '/' && window.innerWidth < 768) {
+      window.scrollTo(0, MOBILE_BAR_HEIGHT)
+    }
+    document.documentElement.removeAttribute('data-mobile-toggle-pending')
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   function toggle() {
     const next: Theme = theme === 'dark' ? 'light' : 'dark'
     setTheme(next)
@@ -41,12 +55,10 @@ export default function ThemeToggle() {
     <>
       {/* Mobile: an in-flow bar above the name/clover row, not a fixed
           overlay — its height is real document height so the page can be
-          scrolled up into it. beforeInteractive renders this Script at its
-          JSX position (verified via the existing theme-init script above
-          PageShell) and runs it as the browser parses that far, so the bar
-          above it is already laid out — a plain React-rendered <script>
-          won't reliably fire since hydration doesn't execute scripts it
-          didn't parse natively. MOBILE_BAR_HEIGHT must match h-12 below. */}
+          scrolled up into it. The page loads hidden (see SCROLL_HIDE_INIT
+          in app/layout.tsx) until the useLayoutEffect above fixes the
+          scroll position, so this bar never flashes into view before the
+          reader scrolls up to it. MOBILE_BAR_HEIGHT must match h-12 below. */}
       <div className="flex h-12 items-center justify-center md:hidden">
         {theme !== null && (
           <button
@@ -58,9 +70,6 @@ export default function ThemeToggle() {
           </button>
         )}
       </div>
-      <Script id="mobile-toggle-scroll" strategy="beforeInteractive">
-        {`(function(){try{if(window.innerWidth<768){window.scrollTo(0,${MOBILE_BAR_HEIGHT});}}catch(e){}})();`}
-      </Script>
 
       {/* Desktop: a fixed hot-zone in the page's top-right margin (the same
           empty gutter the clover icon already sits beside, so it never
