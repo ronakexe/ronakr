@@ -53,6 +53,22 @@ export default function YouthStemlinePage() {
             class, working on Supernova and didn&apos;t expect it to become a major part of
             my life. So I decided to help out.
           </p>
+
+          <p
+            className="text-[15px] md:text-[18px]"
+            style={{
+              fontFamily: 'var(--font-garamond)',
+              fontWeight: 400,
+              lineHeight: 1.5,
+              color: 'var(--text)',
+              margin: 0,
+              padding: '16px 40px 0',
+            }}
+          >
+            There were plenty of no-code website builders to use and I ended up choosing
+            WordPress (.com, not .org). The platform was really unintuitive and took us
+            some time to figure out.
+          </p>
         </div>
       </div>
     </main>
