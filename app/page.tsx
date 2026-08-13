@@ -21,14 +21,16 @@ const SECTIONS: { label: string; items: Piece[] }[] = [
 
 export default function Home() {
   return (
-    <main className="px-8 pb-16 md:px-16 md:pb-20">
+    <main className="px-8 pb-16 home:px-16 home:pb-20">
       {/* Three columns — grid tracks span the full width and stay evenly
           spaced; only the content inside each column is capped narrower.
-          Labels themselves live in SiteChrome, directly above this grid. */}
-      <div className="mt-5 grid grid-cols-1 gap-x-12 gap-y-10 md:mt-7 md:grid-cols-3">
+          Labels themselves live in SiteChrome, directly above this grid.
+          Switches at the custom `home` breakpoint, not `md` — below it a
+          hover-scaled thumbnail collides with the neighboring column. */}
+      <div className="mt-5 grid grid-cols-1 gap-x-12 gap-y-10 home:mt-7 home:grid-cols-3">
         {SECTIONS.map((section) => (
-          <section key={section.label} className="md:max-w-[300px]">
-            <h2 className="section-label mb-3 text-[13px] md:hidden">{section.label}</h2>
+          <section key={section.label} className="home:max-w-[300px]">
+            <h2 className="section-label mb-3 text-[13px] home:hidden">{section.label}</h2>
             <ul className="pl-4">
               {section.items.map((item) => (
                 <li key={item.title} className="group relative">

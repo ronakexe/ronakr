@@ -67,6 +67,13 @@
 /* Custom breakpoint: piece pages drop from 4 columns to 3 below this width. */
 @theme {
   --breakpoint-mid: 62.5rem; /* 1000px — sorts between md (48rem) and lg (64rem) */
+
+  /* Home page's 3-col initiatives/pieces/finds grid: below this width the
+     gap between columns is too narrow for a hover-scaled thumbnail (3x,
+     pivoting from its bottom-right corner) to clear into the neighboring
+     column, so it visually collides with that column's text. Measured the
+     overlap disappears around 1262px; 80rem adds a small safety margin. */
+  --breakpoint-home: 80rem; /* 1280px */
 }
 
 /* ── shadcn theme (preset b7oGj5qzdJ) ────────────────────────────────────────
