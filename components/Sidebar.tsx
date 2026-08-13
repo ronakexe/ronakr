@@ -118,6 +118,30 @@ function Thumb({ item, w, h }: { item: Piece; w: number | string; h: number }) {
       />
     )
   }
+  const style = { width: w, height: h, objectFit: 'cover' as const, borderRadius: 2 }
+  const imgWidth = typeof w === 'number' ? w : 240
+  if (item.imageDark) {
+    return (
+      <span className="relative shrink-0" style={{ width: w, height: h }}>
+        <Image
+          src={item.image}
+          alt={item.title}
+          width={imgWidth}
+          height={h}
+          className="theme-img-light absolute inset-0"
+          style={style}
+        />
+        <Image
+          src={item.imageDark}
+          alt={item.title}
+          width={imgWidth}
+          height={h}
+          className="theme-img-dark absolute inset-0"
+          style={style}
+        />
+      </span>
+    )
+  }
   return (
     <Image
       src={item.image}
@@ -125,7 +149,7 @@ function Thumb({ item, w, h }: { item: Piece; w: number | string; h: number }) {
       width={typeof w === 'number' ? w : 240}
       height={h}
       className="shrink-0"
-      style={{ width: w, height: h, objectFit: 'cover', borderRadius: 2 }}
+      style={style}
     />
   )
 }

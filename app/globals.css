@@ -233,6 +233,20 @@ p, .body-text {
   background-color: var(--stills-bg);
 }
 
+/* Swaps a light-theme vs dark-theme image variant, mirroring the theme
+   resolution above: system preference by default, data-theme attribute wins
+   when the user has toggled manually. */
+.theme-img-light { display: block; }
+.theme-img-dark { display: none; }
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .theme-img-light { display: none; }
+  :root:not([data-theme="light"]) .theme-img-dark { display: block; }
+}
+
+:root[data-theme="dark"] .theme-img-light { display: none; }
+:root[data-theme="dark"] .theme-img-dark { display: block; }
+
 /* Section headings — Initiatives / Pieces / Finds. */
 .section-label {
   font-family: var(--font-garamond), serif;

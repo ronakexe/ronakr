@@ -88,6 +88,21 @@ function Thumbnail({ item, isFind }: { item: Piece; isFind: boolean }) {
           className={`${THUMB_BASE} ${isFind ? HOVER_FIND_PRIMARY : HOVER_PIECE}`}
           style={{ borderRadius: 1, ...cropStyle(item.imageCrop) }}
         />
+      ) : item.imageDark ? (
+        <>
+          <Image
+            src={item.image}
+            alt={item.title}
+            className={`theme-img-light ${THUMB_BASE} ${isFind ? HOVER_FIND_PRIMARY : HOVER_PIECE}`}
+            style={{ borderRadius: 1 }}
+          />
+          <Image
+            src={item.imageDark}
+            alt={item.title}
+            className={`theme-img-dark ${THUMB_BASE} ${isFind ? HOVER_FIND_PRIMARY : HOVER_PIECE}`}
+            style={{ borderRadius: 1 }}
+          />
+        </>
       ) : (
         <Image
           src={item.image}

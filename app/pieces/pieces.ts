@@ -4,6 +4,8 @@ import failedComic from './piece-assets/failed comic/failed-comic-icon.png'
 import humanError from './piece-assets/human error/human-error-icon.png'
 import jimmySidewalk from './piece-assets/jimmy sidewalk/sidewalk-jimmy-icon.png'
 import supernova from './piece-assets/supernova/supernova-icon.png'
+import youthStemlineIcon from '../initiatives/youth stemline/icon.svg'
+import youthStemlineIconDark from '../initiatives/youth stemline/icon-dark.svg'
 
 export type Piece = {
   title: string
@@ -17,6 +19,9 @@ export type Piece = {
   // The next two photos in this find's gallery — fanned out alongside the
   // thumbnail on hover, home page only.
   previewImages?: string[]
+  // Dark-theme variant of `image`, shown instead when the site is in dark
+  // mode (see .theme-img-light/.theme-img-dark in globals.css).
+  imageDark?: StaticImageData | string | null
 }
 
 export const pieces: Piece[] = [
@@ -81,6 +86,11 @@ export const finds: Piece[] = [
 
 export const initiatives: Piece[] = [
   { title: 'Super Daisy', image: null, date: 'May 2026 - now' },
-  { title: 'Youth Stemline', image: null, date: 'Jun 2025 - now' },
+  {
+    title: 'Youth Stemline',
+    image: youthStemlineIconDark,
+    imageDark: youthStemlineIcon,
+    date: 'Jun 2025 - now',
+  },
   { title: 'SoberSense', image: null, date: 'Nov 2024 - May 2026' },
 ]
