@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Flashcards</title>
+<meta name="description" content="Spanish flashcards — numbers, months, and more." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=EB+Garamond:wght@400;600&display=swap" rel="stylesheet" />
+<style>
+  @font-face {
+    font-family: 'Redaction 50';
+    src: url('fonts/Redaction_50-Regular.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  @font-face {
+    font-family: 'Redaction 20';
+    src: url('fonts/Redaction_20-Regular.woff2') format('woff2');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  :root {
+    color-scheme: light;
+    --bg: #F8EFEF;
+    --text: #330000;
+    --name: #E81E1E;
+    --card: #FDF7F7;
+    --muted: #EDDFDF;
+    --muted-foreground: #8A5C5C;
+    --border: #E0CDCD;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      color-scheme: dark;
+      --bg: #1A0808;
+      --text: #F8EFEF;
+      --name: #E81E1E;
+      --card: #2A1010;
+      --muted: #2E1414;
+      --muted-foreground: #B08A8A;
+      --border: rgba(248, 239, 239, 0.14);
+    }
+  }
+
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --bg: #1A0808;
+    --text: #F8EFEF;
+    --name: #E81E1E;
+    --card: #2A1010;
+    --muted: #2E1414;
+    --muted-foreground: #B08A8A;
+    --border: rgba(248, 239, 239, 0.14);
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    min-height: 100%;
+  }
+
+  body {
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    padding: 32px 24px 64px;
+    transition: background-color 200ms ease, color 200ms ease;
+  }
+
+  header {
+    width: 100%;
+    max-width: 640px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 48px;
+  }
+
+  .brand {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    color: var(--text);
+    text-decoration: none;
+  }
+
+  .brand svg {
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    align-self: center;
+  }
+
+  .brand-name {
+    font-family: 'Redaction 50', 'DM Sans', sans-serif;
+    font-size: 22px;
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  .brand-sep {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--muted-foreground);
+  }
+
+  #theme-toggle {
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: var(--text);
+    padding: 0;
+  }
+
+  #theme-toggle svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  main {
+    width: 100%;
+    max-width: 640px;
+  }
+
+  .deck-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 40px 28px;
+  }
+
+  .deck {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: var(--text);
+  }
+
+  .stack {
+    position: relative;
+    width: 140px;
+    height: 96px;
+    margin-bottom: 16px;
+  }
+
+  .stack-layer {
+    position: absolute;
+    inset: 0;
+    border-radius: 16px;
+    border: 1.5px solid var(--border);
+    background: var(--card);
+    transition: transform 150ms ease;
+  }
+
+  .layer-back {
+    transform: translate(7px, -7px) rotate(4deg);
+  }
+
+  .layer-mid {
+    transform: translate(3px, -3px) rotate(-2deg);
+  }
+
+  .layer-front {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(51, 0, 0, 0.06);
+  }
+
+  .deck:hover .layer-back {
+    transform: translate(10px, -10px) rotate(6deg);
+  }
+
+  .deck:hover .layer-mid {
+    transform: translate(5px, -5px) rotate(-3deg);
+  }
+
+  .stack-preview {
+    font-family: 'Redaction 20', 'DM Sans', sans-serif;
+    font-size: 30px;
+  }
+
+  .deck-label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--muted-foreground);
+  }
+</style>
+</head>
+<body>
+<header>
+  <a class="brand" href="https://ronakramnani.com">
+    <svg viewBox="0 0 51 49" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M42.1696 28.7023C40.5926 26.6443 37.4283 24.8896 37.4283 24.8896C37.4283 24.8896 47.3675 20.0567 47.8471 16.8171C48.2911 13.8182 48.602 11.5199 48.4673 10.6411C48.3022 9.56281 47.871 7.29973 46.4862 6.15294C45.8398 5.6176 44.3763 4.61092 41.9173 3.82333C39.3455 2.99958 37.8226 2.552 37.1665 2.5257C35.1233 2.44381 32.2676 2.78361 29.9905 5.56393C29.1375 6.60552 26.2278 13.0342 26.2278 13.0342C26.2278 13.0342 25.2128 11.2996 24.1314 8.75155C23.5692 7.42671 23.699 6.95172 22.1176 5.5016C20.5362 4.05147 16.7046 2.31607 12.9435 2.51578C9.95724 2.67434 6.39854 4.08877 5.72783 5.08819C4.58016 6.79833 3.87898 8.51649 3.28013 10.3505C2.68844 12.1626 2.30619 13.9997 2.60048 15.4454C3.02867 17.5489 3.28022 18.6596 4.54461 20.1112C6.91421 22.8317 12.0942 23.9625 12.0942 23.9625C12.0942 23.9625 9.91694 25.5212 8.64991 26.0765C7.63011 26.5236 6.59019 27.0356 5.83516 27.8802C4.64626 29.2103 4.05843 30.5011 3.52561 32.2298C2.79728 34.5927 2.64239 36.461 2.61141 37.3867C2.57364 38.5153 2.93844 39.638 3.41835 40.6906C4.35689 42.7489 5.37666 43.4144 7.13138 44.3958C8.36483 45.0857 10.0831 45.3771 11.6361 45.6972C12.7 45.9166 13.4451 45.8034 14.3795 45.5652C15.9917 45.1541 17.7285 44.5371 19.0143 43.5805C22.799 40.7647 23.9042 37.338 23.9042 37.338C23.9042 37.338 24.8717 41.9453 28.4198 45.0918C29.0281 45.6313 29.6103 45.8975 30.5149 46.1255C31.803 46.4501 32.5938 46.7878 34.5602 46.0948C36.241 45.5025 41.2131 45.225 43.973 41.2285C46.1965 38.0088 45.6304 35.3265 45.2515 33.3415C45.0498 32.2849 43.6496 30.6337 42.1696 28.7023Z" stroke="var(--name)" stroke-width="5" stroke-linejoin="round"/>
+    </svg>
+    <span class="brand-name">Ronak Ramnani</span>
+    <span class="brand-sep">/ Flashcards</span>
+  </a>
+  <button id="theme-toggle" aria-label="Toggle theme">
+    <svg id="theme-icon-dark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    <svg id="theme-icon-light" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:none"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+  </button>
+</header>
+
+<main>
+  <div class="deck-grid">
+    <a class="deck" href="/numbers/">
+      <div class="stack">
+        <div class="stack-layer layer-back"></div>
+        <div class="stack-layer layer-mid"></div>
+        <div class="stack-layer layer-front">
+          <span class="stack-preview">56</span>
+        </div>
+      </div>
+      <span class="deck-label">Numbers</span>
+    </a>
+    <a class="deck" href="/months/">
+      <div class="stack">
+        <div class="stack-layer layer-back"></div>
+        <div class="stack-layer layer-mid"></div>
+        <div class="stack-layer layer-front">
+          <span class="stack-preview">Enero</span>
+        </div>
+      </div>
+      <span class="deck-label">Months</span>
+    </a>
+  </div>
+</main>
+
+<script>
+(function(){
+  try {
+    var t = localStorage.getItem('theme');
+    if (t === 'light' || t === 'dark') {
+      document.documentElement.setAttribute('data-theme', t);
+    }
+  } catch (e) {}
+})();
+
+function currentTheme(){
+  var attr = document.documentElement.getAttribute('data-theme');
+  if (attr === 'light' || attr === 'dark') return attr;
+  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+}
+
+function syncThemeIcon(){
+  var dark = currentTheme() === 'dark';
+  document.getElementById('theme-icon-dark').style.display = dark ? '' : 'none';
+  document.getElementById('theme-icon-light').style.display = dark ? 'none' : '';
+}
+
+document.getElementById('theme-toggle').addEventListener('click', function(){
+  var next = currentTheme() === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', next);
+  try { localStorage.setItem('theme', next); } catch (e) {}
+  syncThemeIcon();
+});
+
+syncThemeIcon();
+</script>
+</body>
+</html>
