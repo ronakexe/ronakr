@@ -16,7 +16,7 @@ three aliases (`--bg`, `--text`, `--name`), which resolve through the active the
 
 | Role | Light | Dark |
 |---|---|---|
-| Background (`--bg`) | `#F8EFEF` | `#1A0808` |
+| Background (`--bg`) | `#F8EFEF` | `#1F0A0A` |
 | Text (`--text`) | `#330000` | `#F8EFEF` |
 | "Ronak Ramnani" (`--name`) | `#E81E1E` | `#E81E1E` |
 
