@@ -7,42 +7,42 @@ export default function YouthStemlinePage() {
         {/* Text column — capped at 1.5x the pieces-page synopsis width (338px * 1.5 = 507px, plus 40px side padding) */}
         <div className="md:max-w-[587px]">
           <h1
-            className="text-[32px] md:text-[40px] leading-none"
-            style={{ fontFamily: "'Redaction 20', var(--font-dm-sans), sans-serif", letterSpacing: '-0.02em', margin: 0, padding: '56px 40px 0' }}
+            className="text-[32px] md:text-[40px] leading-none px-5 md:px-10"
+            style={{ fontFamily: "'Redaction 20', var(--font-dm-sans), sans-serif", letterSpacing: '-0.02em', margin: 0, paddingTop: '56px' }}
           >
             Youth Stemline
           </h1>
 
           <p
-            className="text-[15px] md:text-[18px]"
+            className="text-[15px] md:text-[18px] px-5 md:px-10"
             style={{
               fontFamily: 'var(--font-garamond)',
               fontWeight: 400,
               lineHeight: 1.5,
               color: 'var(--text)',
               margin: 0,
-              padding: '16px 40px 0',
+              paddingTop: '16px',
             }}
           >
             A youth-led STEM publication hosting workshops across the Dallas area.
           </p>
 
           <h2
-            className="text-[15px] md:text-[18px]"
-            style={{ fontFamily: 'var(--font-garamond)', fontWeight: 700, color: 'var(--text)', margin: 0, padding: '48px 40px 0' }}
+            className="text-[15px] md:text-[18px] px-5 md:px-10"
+            style={{ fontFamily: 'var(--font-garamond)', fontWeight: 700, color: 'var(--text)', margin: 0, paddingTop: '48px' }}
           >
             About the project
           </h2>
 
           <p
-            className="text-[15px] md:text-[18px]"
+            className="text-[15px] md:text-[18px] px-5 md:px-10"
             style={{
               fontFamily: 'var(--font-garamond)',
               fontWeight: 400,
               lineHeight: 1.5,
               color: 'var(--text)',
               margin: 0,
-              padding: '16px 40px 0',
+              paddingTop: '16px',
             }}
           >
             As an online publication, we&apos;ve created a community of 40+ student writers
@@ -54,14 +54,14 @@ export default function YouthStemlinePage() {
           </p>
 
           <p
-            className="text-[15px] md:text-[18px]"
+            className="text-[15px] md:text-[18px] px-5 md:px-10"
             style={{
               fontFamily: 'var(--font-garamond)',
               fontWeight: 400,
               lineHeight: 1.5,
               color: 'var(--text)',
               margin: 0,
-              padding: '16px 40px 0',
+              paddingTop: '16px',
             }}
           >
             TomorrowMakers is a series for elementary and middle schoolers where we explore
@@ -78,14 +78,14 @@ export default function YouthStemlinePage() {
           </p>
 
           <p
-            className="text-[15px] md:text-[18px]"
+            className="text-[15px] md:text-[18px] px-5 md:px-10"
             style={{
               fontFamily: 'var(--font-garamond)',
               fontWeight: 400,
               lineHeight: 1.5,
               color: 'var(--text)',
               margin: 0,
-              padding: '16px 40px 0',
+              paddingTop: '16px',
             }}
           >
             Together, we hope to use these initiatives to build curiosity in kids by making
