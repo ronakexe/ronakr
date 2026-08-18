@@ -46,11 +46,11 @@ export default function YouthStemlinePage() {
             }}
           >
             As an online publication, we&apos;ve created a community of 40+ student writers
-            who are sharing their passion for STEM with the world. The organization provides
-            an outlet for students to express their interests without a high pressure
-            structure or any deadlines. Moreover, for readers, we make STEM information
-            accessible and engaging for teens. That same mission extends beyond the website
-            and into our hands-on workshops.
+            sharing their passion for STEM with the world. The organization provides an outlet
+            for students to express their interests without a high pressure structure or any
+            deadlines. Moreover, for readers, we make STEM information accessible and engaging
+            for teens. That same mission extends beyond the website and into our hands-on
+            workshops.
           </p>
 
           <p
@@ -64,17 +64,13 @@ export default function YouthStemlinePage() {
               paddingTop: '16px',
             }}
           >
-            TomorrowMakers is a series for elementary and middle schoolers where we explore
-            topics such as engineering, weather, space, and AI in an interactive environment.
-            Sessions are built around project-based learning and group discussions to extend
-            learning beyond the classroom. At our core, we still believe that reading and
-            writing are indispensable, especially in a world where AI can automate those
-            processes, so we make sure to include a Youth Stemline article in each course. To
-            support their learning and track growth, we pair our articles with a worksheet and
-            test their learning before and after the reading. So far, we&apos;ve brought
-            TomorrowMakers to the Dallas Police Association and Preston Royal Branch Library,
-            with future sessions planned at University Park Public Library and Farmers Branch
-            Manske Library.
+            TomorrowMakers is a program for kids where we explore STEM topics in an
+            interactive environment, built around project-based learning and group discussions.
+            At our core, we believe reading and writing are indispensable, so each lesson
+            includes a Youth Stemline article, paired with a worksheet to test learning before
+            and after. We&apos;ve run sessions with the Dallas Police Association and Preston
+            Royal Branch Library, with more planned at University Park Public Library and
+            Farmers Branch Manske Library.
           </p>
 
           <p
