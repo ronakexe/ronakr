@@ -110,7 +110,7 @@ Use these sizes consistently across all pages. Tailwind breakpoint syntax: `text
 | Nav items | 21px | 21px | DM Sans | 400 |
 | H1 — page/section title | 32px | 48px | DM Sans | 700 |
 | H2 — subsection title | 24px | 36px | DM Sans | 600 |
-| Body | 15px | 18px | EB Garamond | 400 |
+| Body | 18px | 18px | EB Garamond | 400 |
 | Card label | 18px | 18px | DM Sans | 600 |
 
 ```tsx
@@ -121,7 +121,7 @@ Use these sizes consistently across all pages. Tailwind breakpoint syntax: `text
 <h2 className="text-[24px] md:text-[36px]" style={{ fontFamily: 'var(--font-dm-sans)', fontWeight: 600 }}>
 
 // Body paragraph
-<p className="text-[15px] md:text-[18px]" style={{ fontFamily: 'var(--font-garamond)', fontWeight: 400 }}>
+<p className="text-[18px]" style={{ fontFamily: 'var(--font-garamond)', fontWeight: 400 }}>
 
 // Card label
 <h2 style={{ fontFamily: 'var(--font-dm-sans)', fontSize: '18px', fontWeight: 600 }}>

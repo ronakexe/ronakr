@@ -61,7 +61,7 @@ export default function HumanErrorPage() {
           {/* Synopsis — last column */}
           <div className="md:col-start-3 mid:col-start-4 mt-12 md:mt-0" style={{ paddingLeft: 12, paddingRight: 8 }}>
             <p
-              className="text-[15px] md:text-[18px]"
+              className="text-[18px]"
               style={{
                 fontFamily: 'var(--font-garamond)',
                 fontWeight: 400,

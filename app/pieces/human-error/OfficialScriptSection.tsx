@@ -73,7 +73,7 @@ export default function OfficialScriptSection() {
         {/* Write-up + icons — col 1 only (between lines 1–2) at all breakpoints */}
         <div className="md:col-span-1" style={{ paddingLeft: 12, paddingRight: 8, minWidth: 0 }}>
           <div
-            className="text-[15px] md:text-[18px]"
+            className="text-[18px]"
             style={{ fontFamily: 'var(--font-garamond)', fontWeight: 400, lineHeight: 1.3, color: 'var(--text)' }}
           >
             <p style={{ margin: 0 }}>

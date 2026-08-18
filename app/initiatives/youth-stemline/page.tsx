@@ -14,7 +14,7 @@ export default function YouthStemlinePage() {
           </h1>
 
           <p
-            className="text-[15px] md:text-[18px] px-5 md:px-10"
+            className="text-[18px] px-5 md:px-10"
             style={{
               fontFamily: 'var(--font-garamond)',
               fontWeight: 400,
@@ -28,14 +28,14 @@ export default function YouthStemlinePage() {
           </p>
 
           <h2
-            className="text-[15px] md:text-[18px] px-5 md:px-10"
+            className="text-[18px] px-5 md:px-10"
             style={{ fontFamily: 'var(--font-garamond)', fontWeight: 700, color: 'var(--text)', margin: 0, paddingTop: '48px' }}
           >
             About the project
           </h2>
 
           <p
-            className="text-[15px] md:text-[18px] px-5 md:px-10"
+            className="text-[18px] px-5 md:px-10"
             style={{
               fontFamily: 'var(--font-garamond)',
               fontWeight: 400,
@@ -54,7 +54,7 @@ export default function YouthStemlinePage() {
           </p>
 
           <p
-            className="text-[15px] md:text-[18px] px-5 md:px-10"
+            className="text-[18px] px-5 md:px-10"
             style={{
               fontFamily: 'var(--font-garamond)',
               fontWeight: 400,
@@ -78,7 +78,7 @@ export default function YouthStemlinePage() {
           </p>
 
           <p
-            className="text-[15px] md:text-[18px] px-5 md:px-10"
+            className="text-[18px] px-5 md:px-10"
             style={{
               fontFamily: 'var(--font-garamond)',
               fontWeight: 400,
