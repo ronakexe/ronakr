@@ -45,29 +45,12 @@ export default function YouthStemlinePage() {
               padding: '16px 40px 0',
             }}
           >
-            Youth Stemline started when Aravli wanted a place to write about STEM topics
-            without any deadlines or competitions. She had been writing for a club, but it
-            was primarily politics-focused and wasn&apos;t exactly organized. She contacted
-            me in June of 2025 asking to help design and make the website to actually host
-            the articles. At the time I was at my school&apos;s summer video production
-            class, working on Supernova and didn&apos;t expect it to become a major part of
-            my life. So I decided to help out.
-          </p>
-
-          <p
-            className="text-[15px] md:text-[18px]"
-            style={{
-              fontFamily: 'var(--font-garamond)',
-              fontWeight: 400,
-              lineHeight: 1.5,
-              color: 'var(--text)',
-              margin: 0,
-              padding: '16px 40px 0',
-            }}
-          >
-            There were plenty of no-code website builders to use and I ended up choosing
-            WordPress (.com, not .org). The platform was really unintuitive and took us
-            some time to figure out.
+            As an online publication, we&apos;ve created a community of 40+ student writers
+            who are sharing their passion for STEM with the world. The organization provides
+            an outlet for students to express their interests without a high pressure
+            structure or any deadlines. Moreover, for readers, we make STEM information
+            accessible and engaging for teens. That same mission extends beyond the website
+            and into TomorrowMakers, our hands-on workshop for students 4 to 12.
           </p>
         </div>
       </div>
