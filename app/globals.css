@@ -215,7 +215,7 @@ html[data-mobile-toggle-pending] body {
   --stills-bg: #F3E3DF;
 
   /* Text-selection wash — see ::selection below. */
-  --highlight: rgba(255, 255, 255, 0.35);
+  --highlight: rgba(255, 255, 255, 0.28);
 
   --font-ui: var(--font-dm-sans);
   --font-body: var(--font-garamond);
