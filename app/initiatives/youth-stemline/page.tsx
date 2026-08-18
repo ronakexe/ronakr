@@ -61,7 +61,7 @@ export default function YouthStemlinePage() {
               lineHeight: 1.5,
               color: 'var(--text)',
               margin: 0,
-              paddingTop: '16px',
+              paddingTop: '12px',
             }}
           >
             TomorrowMakers is a program for kids where we explore STEM topics in an
@@ -81,7 +81,7 @@ export default function YouthStemlinePage() {
               lineHeight: 1.5,
               color: 'var(--text)',
               margin: 0,
-              paddingTop: '16px',
+              paddingTop: '12px',
             }}
           >
             Together, we hope to use these initiatives to build curiosity in kids by making
