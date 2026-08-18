@@ -80,7 +80,7 @@ export default function OfficialScriptSection() {
               This was the script used on set for Human Error. It was the first script I had
               ever really written; Previous films had been either written by someone else, or
               we just winged it (like{' '}
-              <Link href="/pieces/double-trouble" style={{ color: 'var(--text)', textDecoration: 'underline' }}>
+              <Link href="/pieces/double-trouble">
                 Double Trouble
               </Link>
               ).

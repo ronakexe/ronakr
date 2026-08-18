@@ -68,8 +68,15 @@ export default function YouthStemlinePage() {
             interactive environment, built around project-based learning and group discussions.
             At our core, we believe reading and writing are indispensable, so each lesson
             includes a Youth Stemline article, paired with a worksheet to test learning before
-            and after. We&apos;ve run sessions with the Dallas Police Association and Preston
-            Royal Branch Library, with more planned at University Park Public Library and
+            and after. We&apos;ve run sessions with the Dallas Police Association and{' '}
+            <a
+              href="https://dallaslibrary.librarymarket.com/event/stem-fun-534355"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Preston Royal Branch Library
+            </a>
+            , with more planned at University Park Public Library and
             Farmers Branch Manske Library.
           </p>
 

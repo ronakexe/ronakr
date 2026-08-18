@@ -229,6 +229,24 @@ p, .body-text {
   font-family: var(--font-garamond), serif;
 }
 
+/* Text-selection highlight — a faded white wash in both themes; the text
+   itself keeps the active theme's foreground so it stays readable. */
+::selection {
+  background-color: rgba(255, 255, 255, 0.45);
+  color: var(--text);
+}
+
+::-moz-selection {
+  background-color: rgba(255, 255, 255, 0.45);
+  color: var(--text);
+}
+
+/* Links inside body copy take the name red; nav links keep inheriting. */
+p a, .body-text a {
+  color: var(--name);
+  text-decoration: underline;
+}
+
 .stills-bg {
   background-color: var(--stills-bg);
 }
