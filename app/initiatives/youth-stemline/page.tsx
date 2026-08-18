@@ -50,7 +50,46 @@ export default function YouthStemlinePage() {
             an outlet for students to express their interests without a high pressure
             structure or any deadlines. Moreover, for readers, we make STEM information
             accessible and engaging for teens. That same mission extends beyond the website
-            and into TomorrowMakers, our hands-on workshop for students 4 to 12.
+            and into our hands-on workshops.
+          </p>
+
+          <p
+            className="text-[15px] md:text-[18px]"
+            style={{
+              fontFamily: 'var(--font-garamond)',
+              fontWeight: 400,
+              lineHeight: 1.5,
+              color: 'var(--text)',
+              margin: 0,
+              padding: '16px 40px 0',
+            }}
+          >
+            TomorrowMakers is a series for elementary and middle schoolers where we explore
+            topics such as engineering, weather, space, and AI in an interactive environment.
+            Sessions are built around project-based learning and group discussions to extend
+            learning beyond the classroom. At our core, we still believe that reading and
+            writing are indispensable, especially in a world where AI can automate those
+            processes, so we make sure to include a Youth Stemline article in each course. To
+            support their learning and track growth, we pair our articles with a worksheet and
+            test their learning before and after the reading. So far, we&apos;ve brought
+            TomorrowMakers to the Dallas Police Association and Preston Royal Branch Library,
+            with future sessions planned at University Park Public Library and Farmers Branch
+            Manske Library.
+          </p>
+
+          <p
+            className="text-[15px] md:text-[18px]"
+            style={{
+              fontFamily: 'var(--font-garamond)',
+              fontWeight: 400,
+              lineHeight: 1.5,
+              color: 'var(--text)',
+              margin: 0,
+              padding: '16px 40px 0',
+            }}
+          >
+            Together, we hope to use these initiatives to build curiosity in kids by making
+            STEM pressure free and accessible.
           </p>
         </div>
       </div>
