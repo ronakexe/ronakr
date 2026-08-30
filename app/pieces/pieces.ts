@@ -4,6 +4,7 @@ import failedComic from './piece-assets/failed comic/failed-comic-icon.png'
 import humanError from './piece-assets/human error/human-error-icon.png'
 import jimmySidewalk from './piece-assets/jimmy sidewalk/sidewalk-jimmy-icon.png'
 import supernova from './piece-assets/supernova/supernova-icon.png'
+import googleCloud from './piece-assets/google cloud/google-cloud-icon.svg'
 import youthStemlineIcon from '../initiatives/youth stemline/icon.svg'
 import youthStemlineIconDark from '../initiatives/youth stemline/icon-dark.svg'
 
@@ -22,10 +23,21 @@ export type Piece = {
   // Dark-theme variant of `image`, shown instead when the site is in dark
   // mode (see .theme-img-light/.theme-img-dark in globals.css).
   imageDark?: StaticImageData | string | null
+  // Overrides the shared home-page thumbnail height (px). Used for tall,
+  // portrait icons, which otherwise read as small next to the landscape
+  // stills — those fill the row's width, a portrait page doesn't.
+  thumbHeightPx?: number
 }
 
 export const pieces: Piece[] = [
   { title: 'Mime Time', image: null, date: 'Coming Soon' },
+  {
+    title: 'Google Cloud in 2026',
+    image: googleCloud,
+    href: '/pieces/google-cloud-in-2026',
+    date: 'Aug 2026',
+    thumbHeightPx: 26,
+  },
   { title: 'Human Error', image: humanError, href: '/pieces/human-error', date: 'Dec 2025' },
   { title: 'Supernova', image: supernova, href: '/pieces/supernova', date: 'Jul 2025' },
   { title: 'Sidewalk Jimmy', image: jimmySidewalk, href: '/pieces/sidewalk-jimmy', date: 'Feb 2025' },

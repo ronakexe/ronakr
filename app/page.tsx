@@ -108,7 +108,7 @@ function Thumbnail({ item, isFind }: { item: Piece; isFind: boolean }) {
           src={item.image}
           alt={item.title}
           className={`${THUMB_BASE} ${isFind ? HOVER_FIND_PRIMARY : HOVER_PIECE}`}
-          style={{ borderRadius: 1 }}
+          style={{ borderRadius: 1, ...(item.thumbHeightPx ? { height: item.thumbHeightPx } : {}) }}
         />
       )}
       {preview1 && (
