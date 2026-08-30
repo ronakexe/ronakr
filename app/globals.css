@@ -216,6 +216,8 @@ html[data-mobile-toggle-pending] body {
 
   /* Text-selection wash — see ::selection below. */
   --highlight: rgba(255, 255, 255, 0.28);
+  /* Selection wash over the red body links — a faded version of --name. */
+  --highlight-link: rgba(232, 30, 30, 0.25);
 
   --font-ui: var(--font-dm-sans);
   --font-body: var(--font-garamond);
@@ -242,6 +244,11 @@ p, .body-text {
 p a, .body-text a {
   color: var(--name);
   text-decoration: underline;
+}
+
+/* Selecting a red link washes it in faded red rather than the white default. */
+p a::selection, .body-text a::selection {
+  background-color: var(--highlight-link);
 }
 
 .stills-bg {

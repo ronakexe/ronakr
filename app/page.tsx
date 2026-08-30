@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { pieces, finds, initiatives, Piece } from '@/app/pieces/pieces'
+import { pieces, initiatives, Piece } from '@/app/pieces/pieces'
 
 // Thumbnails hang in the ul's left indent (absolute, right-full) so the
 // entry text never shifts — sized to roughly half the 31.5px/34.5px row
@@ -16,7 +16,6 @@ const THUMB_WIDTHS = [32, 64, 96]
 const SECTIONS: { label: string; items: Piece[] }[] = [
   { label: 'initiatives', items: initiatives },
   { label: 'pieces', items: pieces },
-  { label: 'finds', items: finds },
 ]
 
 export default function Home() {
@@ -27,7 +26,7 @@ export default function Home() {
           Labels themselves live in SiteChrome, directly above this grid.
           Switches at the custom `home` breakpoint, not `md` — below it a
           hover-scaled thumbnail collides with the neighboring column. */}
-      <div className="mt-5 grid grid-cols-1 gap-x-12 gap-y-10 home:mt-7 home:grid-cols-3">
+      <div className="mt-5 grid grid-cols-1 gap-x-12 gap-y-10 home:mt-7 home:grid-cols-2">
         {SECTIONS.map((section) => (
           <section key={section.label} className="home:max-w-[300px]">
             <h2 className="section-label mb-3 text-[13px] home:hidden">{section.label}</h2>

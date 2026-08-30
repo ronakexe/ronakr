@@ -4,14 +4,13 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import CloverIcon from '@/components/CloverIcon'
 
-const LABELS = ['initiatives', 'pieces', 'finds'] as const
+const LABELS = ['initiatives', 'pieces'] as const
 
 // Which section label a route belongs to — null on the home page, where
-// all three still show since the index lists every section at once.
+// both still show since the index lists every section at once.
 function activeSection(pathname: string) {
   if (pathname.startsWith('/initiatives')) return 'initiatives'
   if (pathname.startsWith('/pieces')) return 'pieces'
-  if (pathname.startsWith('/finds')) return 'finds'
   return null
 }
 
@@ -38,7 +37,7 @@ export default function SiteChrome() {
 
       {/* Switches at the custom `home` breakpoint alongside the grid on the
           home page — see app/page.tsx for why it isn't `md`. */}
-      <nav className="mt-4 hidden grid-cols-3 gap-x-12 home:grid">
+      <nav className="mt-4 hidden grid-cols-2 gap-x-12 home:grid">
         {LABELS.map((label) =>
           active !== null && active !== label ? (
             // Empty grid cell keeps the remaining label's column aligned
