@@ -53,7 +53,7 @@ export default function GoogleCloudIn2026Page() {
           <div style={{ maxWidth: 760, margin: '0 auto' }}>
             {/* Lede — sits above the summary proper. */}
             <div>
-              <p className="text-[18px]" style={pStyle}>
+              <p className="text-[18px]" style={{ ...pStyle, fontStyle: 'italic' }}>
                 This executive summary was written on the research I completed with Stanford GSB
                 professor Raj Joshi. It boils down my research and analysis of Google Cloud&rsquo;s
                 evolution from 2024-2026 into a concise overview.
