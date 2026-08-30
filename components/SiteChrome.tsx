@@ -23,7 +23,7 @@ export default function SiteChrome() {
   const active = activeSection(pathname)
 
   return (
-    <header className="px-8 home:px-14">
+    <header className="px-5 md:px-8 home:px-14">
       <div className="flex items-center justify-between gap-8">
         <Link
           href="/"
@@ -37,7 +37,7 @@ export default function SiteChrome() {
 
       {/* Switches at the custom `home` breakpoint alongside the grid on the
           home page — see app/page.tsx for why it isn't `md`. */}
-      <nav className="mt-4 hidden grid-cols-2 gap-x-12 home:grid">
+      <nav className="mt-4 hidden grid-cols-3 gap-x-12 home:grid">
         {LABELS.map((label) =>
           active !== null && active !== label ? (
             // Empty grid cell keeps the remaining label's column aligned

@@ -39,18 +39,17 @@ export default function GoogleCloudIn2026Page() {
     <main className="relative w-full" style={{ minHeight: '100vh', background: BG }}>
       <div className="relative mx-auto" style={{ maxWidth: 1512, minHeight: '100vh' }}>
         <h1
-          className="text-[32px] md:text-[40px] leading-none"
+          className="text-[32px] md:text-[40px] leading-none px-5 pt-14 md:px-10"
           style={{
             fontFamily: "'Redaction 20', var(--font-dm-sans), sans-serif",
             letterSpacing: '-0.02em',
             margin: 0,
-            padding: '56px 40px 0',
           }}
         >
           Google Cloud in 2026
         </h1>
 
-        <section style={{ padding: '48px 40px 96px' }}>
+        <section className="px-5 pt-12 pb-24 md:px-10">
           <div style={{ maxWidth: 760, margin: '0 auto' }}>
             {/* Lede — sits above the summary proper. */}
             <div>

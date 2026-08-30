@@ -20,13 +20,14 @@ const SECTIONS: { label: string; items: Piece[] }[] = [
 
 export default function Home() {
   return (
-    <main className="px-8 pb-16 home:px-14 home:pb-20">
-      {/* Three columns — grid tracks span the full width and stay evenly
-          spaced; only the content inside each column is capped narrower.
+    <main className="px-5 pb-16 md:px-8 home:px-14 home:pb-20">
+      {/* Three grid tracks, two filled — the third stays empty so Initiatives
+          and Pieces keep the placement they had when Finds existed. Tracks
+          span the full width and stay evenly spaced; only the content inside each column is capped narrower.
           Labels themselves live in SiteChrome, directly above this grid.
           Switches at the custom `home` breakpoint, not `md` — below it a
           hover-scaled thumbnail collides with the neighboring column. */}
-      <div className="mt-5 grid grid-cols-1 gap-x-12 gap-y-10 home:mt-7 home:grid-cols-2">
+      <div className="mt-5 grid grid-cols-1 gap-x-12 gap-y-10 home:mt-7 home:grid-cols-3">
         {SECTIONS.map((section) => (
           <section key={section.label} className="home:max-w-[300px]">
             <h2 className="section-label mb-3 text-[13px] home:hidden">{section.label}</h2>
