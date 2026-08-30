@@ -67,11 +67,11 @@ export default function OfficialScriptSection() {
   return (
     <>
       <section
-        className="relative grid grid-cols-1 md:grid-cols-3 mid:grid-cols-4 md:items-start"
-        style={{ paddingTop: 64, paddingLeft: 40, paddingRight: 40, paddingBottom: 64 }}
+        className="relative grid grid-cols-1 md:grid-cols-3 mid:grid-cols-4 md:items-start px-5 md:px-10"
+        style={{ paddingTop: 64, paddingBottom: 64 }}
       >
         {/* Write-up + icons — col 1 only (between lines 1–2) at all breakpoints */}
-        <div className="md:col-span-1" style={{ paddingLeft: 12, paddingRight: 8, minWidth: 0 }}>
+        <div className="md:col-span-1 md:pl-3 md:pr-2" style={{ minWidth: 0 }}>
           <div
             className="text-[18px]"
             style={{ fontFamily: 'var(--font-garamond)', fontWeight: 400, lineHeight: 1.3, color: 'var(--text)' }}

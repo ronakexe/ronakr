@@ -18,16 +18,16 @@ export default function SupernovaPage() {
     <main className="relative w-full" style={{ minHeight: '100vh', background: BG }}>
       <div className="relative mx-auto" style={{ maxWidth: 1512, minHeight: '100vh' }}>
         <h1
-          className="text-[32px] md:text-[40px] leading-none"
-          style={{ fontFamily: "'Redaction 20', var(--font-dm-sans), sans-serif", letterSpacing: '-0.02em', margin: 0, padding: '56px 40px 0' }}
+          className="text-[32px] md:text-[40px] leading-none px-5 pt-14 md:px-10"
+          style={{ fontFamily: "'Redaction 20', var(--font-dm-sans), sans-serif", letterSpacing: '-0.02em', margin: 0 }}
         >
           Supernova
         </h1>
 
         {/* Content — 4-column track system; the video spans multiple columns. */}
         <section
-          className="relative grid grid-cols-1 md:grid-cols-4 md:items-center"
-          style={{ paddingTop: 64, paddingLeft: 40, paddingRight: 40, paddingBottom: 64 }}
+          className="relative grid grid-cols-1 md:grid-cols-4 md:items-center px-5 md:px-10"
+          style={{ paddingTop: 64, paddingBottom: 64 }}
         >
           {/* Video — spans the first three columns */}
           <div className="md:col-span-3">
@@ -53,7 +53,7 @@ export default function SupernovaPage() {
           </div>
 
           {/* Synopsis — last column */}
-          <div className="md:col-start-4 mt-12 md:mt-0" style={{ paddingLeft: 12, paddingRight: 8 }}>
+          <div className="md:col-start-4 mt-12 md:mt-0 md:pl-3 md:pr-2">
             <p
               className="text-[18px]"
               style={{
