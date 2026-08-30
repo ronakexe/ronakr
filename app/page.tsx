@@ -20,7 +20,7 @@ const SECTIONS: { label: string; items: Piece[] }[] = [
 
 export default function Home() {
   return (
-    <main className="px-5 pb-16 md:px-8 home:px-14 home:pb-20">
+    <main className="px-8 pb-16 home:px-14 home:pb-20">
       {/* Three grid tracks, two filled — the third stays empty so Initiatives
           and Pieces keep the placement they had when Finds existed. Tracks
           span the full width and stay evenly spaced; only the content inside each column is capped narrower.

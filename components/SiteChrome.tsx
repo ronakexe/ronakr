@@ -21,9 +21,12 @@ function activeSection(pathname: string) {
 export default function SiteChrome() {
   const pathname = usePathname()
   const active = activeSection(pathname)
+  // The home page keeps its wider mobile gutter; entry pages sit tighter so
+  // the header lines up with their body text.
+  const sidePadding = pathname === '/' ? 'px-8' : 'px-5 md:px-8'
 
   return (
-    <header className="px-5 md:px-8 home:px-14">
+    <header className={`${sidePadding} home:px-14`}>
       <div className="flex items-center justify-between gap-8">
         <Link
           href="/"
