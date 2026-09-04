@@ -4,10 +4,10 @@ import { useCallback, useEffect, useState } from 'react'
 import Image from 'next/image'
 
 const NAV_BTN =
-  'flex h-11 w-11 cursor-pointer items-center justify-center text-[20px] text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--name)]'
+  'z-10 flex h-11 w-11 cursor-pointer items-center justify-center text-[20px] text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--name)]'
 
 const CARET_BTN =
-  'flex h-11 w-11 cursor-pointer items-center justify-center text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--name)]'
+  'z-10 flex h-11 w-11 cursor-pointer items-center justify-center text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--name)]'
 
 function Caret({ direction }: { direction: 'left' | 'right' }) {
   return (
@@ -79,8 +79,7 @@ export default function StillsGallery({ images }: { images: string[] }) {
           role="dialog"
           aria-modal="true"
           aria-label="Stills viewer"
-          className="fixed inset-0 z-50 flex items-center justify-center"
-          style={{ background: 'rgba(0,0,0,0.7)', backdropFilter: 'blur(10px)', WebkitBackdropFilter: 'blur(10px)' }}
+          className="stills-lightbox fixed inset-0 z-50 flex items-center justify-center"
           onClick={close}
         >
           <button type="button" onClick={close} aria-label="Close" className={`absolute right-4 top-4 ${NAV_BTN}`}>
@@ -104,7 +103,7 @@ export default function StillsGallery({ images }: { images: string[] }) {
             <Caret direction="right" />
           </button>
 
-          <div className="relative" style={{ width: '90vw', height: '85vh' }} onClick={(e) => e.stopPropagation()}>
+          <div key={images[openIndex]} className="stills-lightbox-image relative" style={{ width: '90vw', height: '85vh' }} onClick={(e) => e.stopPropagation()}>
             <Image src={images[openIndex]} alt="" fill sizes="90vw" style={{ objectFit: 'contain' }} priority />
           </div>
         </div>

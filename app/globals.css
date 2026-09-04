@@ -255,6 +255,48 @@ p a::selection, .body-text a::selection {
   background-color: var(--stills-bg);
 }
 
+@keyframes stills-lightbox-backdrop-in {
+  from {
+    background-color: rgba(0, 0, 0, 0);
+    backdrop-filter: blur(0);
+    -webkit-backdrop-filter: blur(0);
+  }
+  to {
+    background-color: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+}
+
+@keyframes stills-lightbox-image-in {
+  from {
+    opacity: 0;
+    transform: scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.stills-lightbox {
+  background-color: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  animation: stills-lightbox-backdrop-in 180ms ease-out both;
+}
+
+.stills-lightbox-image {
+  animation: stills-lightbox-image-in 260ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stills-lightbox,
+  .stills-lightbox-image {
+    animation: none;
+  }
+}
+
 /* Swaps a light-theme vs dark-theme image variant, mirroring the theme
    resolution above: system preference by default, data-theme attribute wins
    when the user has toggled manually. */
