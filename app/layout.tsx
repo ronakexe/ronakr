@@ -6,7 +6,10 @@ import PageShell from '@/components/PageShell'
 import ThemeToggle from '@/components/ThemeToggle'
 import './globals.css'
 
-const THEME_INIT = `(function(){try{var t=localStorage.getItem('theme');if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}var resolved=t==='light'||t==='dark'?t:(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');var link=document.querySelector('link[rel="icon"]');if(link)link.href=resolved==='dark'?'/favicon-dark.svg':'/favicon-light.svg';}catch(e){}})();`
+// A manual toggle choice is only honoured while the system theme is what it
+// was when the choice was made ('theme-system'); if the system theme has
+// changed since, the override is dropped and the site follows the system.
+const THEME_INIT = `(function(){try{var sys=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';var t=localStorage.getItem('theme');if(t&&localStorage.getItem('theme-system')!==sys){localStorage.removeItem('theme');localStorage.removeItem('theme-system');t=null;}if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}var resolved=t==='light'||t==='dark'?t:(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');var link=document.querySelector('link[rel="icon"]');if(link)link.href=resolved==='dark'?'/favicon-dark.svg':'/favicon-light.svg';}catch(e){}})();`
 
 // Mobile home page loads scrolled past the theme-toggle bar, so the reader
 // lands on the name/clover like before and only finds the toggle by

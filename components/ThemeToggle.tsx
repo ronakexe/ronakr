@@ -19,9 +19,19 @@ export default function ThemeToggle() {
         setTheme(media.matches ? 'dark' : 'light')
       }
     }
+    // A real change of the system/browser theme means the reader wants to
+    // follow it again, so drop any manual override the toggle saved earlier.
+    function onSystemChange() {
+      localStorage.removeItem('theme')
+      localStorage.removeItem('theme-system')
+      document.documentElement.removeAttribute('data-theme')
+      const favicon = document.querySelector('link[rel="icon"]') as HTMLLinkElement | null
+      if (favicon) favicon.href = media.matches ? '/favicon-dark.svg' : '/favicon-light.svg'
+      sync()
+    }
     sync()
-    media.addEventListener('change', sync)
-    return () => media.removeEventListener('change', sync)
+    media.addEventListener('change', onSystemChange)
+    return () => media.removeEventListener('change', onSystemChange)
   }, [])
 
   // Re-arms every time pathname lands on '/', not just the true first load:
@@ -44,6 +54,10 @@ export default function ThemeToggle() {
     const next: Theme = theme === 'dark' ? 'light' : 'dark'
     setTheme(next)
     localStorage.setItem('theme', next)
+    localStorage.setItem(
+      'theme-system',
+      window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light',
+    )
     document.documentElement.setAttribute('data-theme', next)
     const favicon = document.querySelector('link[rel="icon"]') as HTMLLinkElement | null
     if (favicon) favicon.href = next === 'dark' ? '/favicon-dark.svg' : '/favicon-light.svg'
