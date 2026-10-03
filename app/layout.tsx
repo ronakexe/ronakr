@@ -3,29 +3,11 @@ import { DM_Sans, EB_Garamond } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import Script from 'next/script'
 import PageShell from '@/components/PageShell'
-import ThemeToggle from '@/components/ThemeToggle'
 import './globals.css'
 
-// A manual toggle choice is only honoured while the system theme is what it
-// was when the choice was made ('theme-system'); if the system theme has
-// changed since, the override is dropped and the site follows the system.
-const THEME_INIT = `(function(){try{var sys=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';var t=localStorage.getItem('theme');if(t&&localStorage.getItem('theme-system')!==sys){localStorage.removeItem('theme');localStorage.removeItem('theme-system');t=null;}if(t==='light'||t==='dark'){document.documentElement.setAttribute('data-theme',t);}var resolved=t==='light'||t==='dark'?t:(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');var link=document.querySelector('link[rel="icon"]');if(link)link.href=resolved==='dark'?'/favicon-dark.svg':'/favicon-light.svg';}catch(e){}})();`
-
-// Mobile home page loads scrolled past the theme-toggle bar, so the reader
-// lands on the name/clover like before and only finds the toggle by
-// scrolling up (see ThemeToggle.tsx). Waiting for React to mount and correct
-// the scroll position would flash the bar first, so this hides the page
-// (via a CSS rule keyed on this attribute) the instant parsing reaches this
-// script — before the browser paints the mis-scrolled frame at all — and
-// ThemeToggle's layout effect removes it once the scroll is fixed. The
-// timeout is a safety net so the page can't stay blank if JS fails to load.
-//
-// scrollRestoration is forced to 'manual' unconditionally (not just on
-// mobile/home) because on a reload the browser's default 'auto' restores
-// whatever scroll position the page was at before the reload — racing our
-// own scrollTo and, depending on timing, winning and putting the reader
-// back wherever they last scrolled instead of past the toggle bar.
-const SCROLL_HIDE_INIT = `(function(){try{if('scrollRestoration' in window.history){window.history.scrollRestoration='manual';}if(window.location.pathname==='/'&&window.innerWidth<768){document.documentElement.setAttribute('data-mobile-toggle-pending','');setTimeout(function(){document.documentElement.removeAttribute('data-mobile-toggle-pending')},1500);}}catch(e){}})();`
+// The site follows the system theme; this only points the favicon at the
+// matching variant before first paint.
+const THEME_INIT = `(function(){try{var dark=window.matchMedia('(prefers-color-scheme: dark)').matches;var link=document.querySelector('link[rel="icon"]');if(link)link.href=dark?'/favicon-dark.svg':'/favicon-light.svg';}catch(e){}})();`
 
 const dmSans = DM_Sans({
   subsets: ['latin'],
@@ -67,10 +49,6 @@ export default function RootLayout({
         <Script id="theme-init" strategy="beforeInteractive">
           {THEME_INIT}
         </Script>
-        <Script id="scroll-hide-init" strategy="beforeInteractive">
-          {SCROLL_HIDE_INIT}
-        </Script>
-        <ThemeToggle />
         <PageShell>{children}</PageShell>
         <Analytics />
       </body>

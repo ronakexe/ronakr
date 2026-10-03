@@ -5,7 +5,6 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { pieces, finds, initiatives, Piece } from '@/app/pieces/pieces'
-import ThemeToggle from '@/components/ThemeToggle'
 
 type Tab = 'initiatives' | 'pieces' | 'finds'
 type View = 'list' | 'grid'
@@ -82,7 +81,6 @@ export default function Sidebar() {
           >
             <GridIcon />
           </button>
-          <ThemeToggle />
         </div>
       </div>
 
