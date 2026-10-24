@@ -21,3 +21,4 @@ out/
 
 # typescript
 *.tsbuildinfo
+.vercel
